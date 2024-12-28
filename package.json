@@ -1,0 +1,33 @@
+{
+	"name": "sdk-js",
+	"module": "src/main.ts",
+	"type": "module",
+	"devDependencies": {
+		"@kirick/eslint-config": "^0.1.21",
+		"@types/node": "^22.2",
+		"eslint": "9.8.0",
+		"valibot": "^0.37",
+		"vitest": "^1.6"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mnplone/sdk-js.git"
+	},
+	"keywords": [
+		"mnplone",
+		"monopoly",
+		"one",
+		"sdk",
+		"javascript",
+		"typescript"
+	],
+	"author": "Daniil Kirichenko (https://twitter.com/kirickme)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/mnplone/sdk-js/issues"
+	},
+	"homepage": "https://github.com/mnplone/sdk-js#readme"
+}
