@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import { bit, positiveNumberSchema, nonNegativeNumberSchema, nonEmptyStringSchema, } from './common.js';
 export const itemVariantSchema = v.object({
-    id: positiveNumberSchema,
+    id: v.number(),
     is_default: bit(0),
     is_selected: bit(0),
     is_unlocked: bit(0),
@@ -23,8 +23,8 @@ export const thingPrototypeSchema = v.object({
     image: nonEmptyStringSchema,
     title: nonEmptyStringSchema,
     description: v.string(),
-    group: v.optional(v.pipe(v.number(), v.minValue(0), v.maxValue(9))),
-    quality: v.pipe(v.number(), v.minValue(0), v.maxValue(5)),
+    group: v.optional(v.pipe(v.nullable(v.number()), v.transform((value) => (typeof value === 'number' ? value : undefined)))),
+    quality: v.number(),
     collection: v.optional(nonNegativeNumberSchema),
     twin_thing_prototype_id: v.optional(v.array(positiveNumberSchema)),
     delete_price: v.optional(nonNegativeNumberSchema),
@@ -70,7 +70,7 @@ export const thingSchema = v.object({
     ])),
     uses_left: v.optional(positiveNumberSchema),
     uses_origin: v.optional(positiveNumberSchema),
-    variants: v.optional(itemVariantSchema),
+    variants: v.optional(v.array(itemVariantSchema)),
 });
 export const itemProtoSchema = v.object({
     item_proto_id: positiveNumberSchema,

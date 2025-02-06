@@ -9,14 +9,14 @@ export declare const valiObjectUserShortSchema: v.SchemaWithPipe<[v.ObjectSchema
     readonly online: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly current_game: v.OptionalSchema<v.ObjectSchema<{
         readonly gs_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-        readonly game_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
+        readonly gs_game_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
     }, undefined>, never>;
-    readonly rank: v.UnionSchema<[v.ObjectSchema<{
+    readonly rank: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
         readonly hidden: v.UnionSchema<[v.LiteralSchema<1, undefined>], undefined>;
     }, undefined>, v.ObjectSchema<{
         readonly id: v.NumberSchema<undefined>;
         readonly pts: v.NumberSchema<undefined>;
-    }, undefined>], undefined>;
+    }, undefined>], undefined>, never>;
     readonly vip: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly bot: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly bot_owner: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
@@ -26,12 +26,6 @@ export declare const valiObjectUserShortSchema: v.SchemaWithPipe<[v.ObjectSchema
     nick: string;
     gender: 0 | 1;
     avatar: string;
-    rank: {
-        hidden: 1;
-    } | {
-        id: number;
-        pts: number;
-    };
     approved: boolean;
     online: boolean;
     vip: boolean;
@@ -40,32 +34,41 @@ export declare const valiObjectUserShortSchema: v.SchemaWithPipe<[v.ObjectSchema
     domain?: string | undefined;
     current_game?: {
         gs_id: string;
-        game_id: string;
+        gs_game_id: string;
     } | undefined;
-    bot_owner?: number | undefined;
-}, {
-    bot: {
-        owner_user_id: number;
-    } | null;
-    user_id: number;
-    nick: string;
-    gender: 0 | 1;
-    avatar: string;
-    rank: {
+    rank?: {
         hidden: 1;
     } | {
         id: number;
         pts: number;
-    };
+    } | undefined;
+    bot_owner?: number | undefined;
+}, Omit<{
+    user_id: number;
+    nick: string;
+    gender: 0 | 1;
+    avatar: string;
     approved: boolean;
     online: boolean;
     vip: boolean;
+    bot: boolean;
     moderator: boolean;
     domain?: string | undefined;
     current_game?: {
         gs_id: string;
-        game_id: string;
+        gs_game_id: string;
     } | undefined;
+    rank?: {
+        hidden: 1;
+    } | {
+        id: number;
+        pts: number;
+    } | undefined;
+    bot_owner?: number | undefined;
+}, "bot_owner" | "bot"> & {
+    bot: {
+        owner_user_id: number;
+    } | null;
 }>]>;
 export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     readonly nicks_old: v.ArraySchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 2, undefined>]>, undefined>;
@@ -75,7 +78,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     readonly games_wins: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
     readonly xp: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
     readonly xp_level: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-    readonly badge: v.ObjectSchema<{
+    readonly badge: v.OptionalSchema<v.ObjectSchema<{
         readonly thing_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
         readonly user_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
         readonly owned_time: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
@@ -96,8 +99,8 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
         }, undefined>], undefined>, never>;
         readonly uses_left: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
         readonly uses_origin: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-        readonly variants: v.OptionalSchema<v.ObjectSchema<{
-            readonly id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
+        readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
+            readonly id: v.NumberSchema<undefined>;
             readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
             readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
             readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
@@ -108,15 +111,15 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
                 readonly buy_tokens_sp: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
                 readonly buy_tokens_cmpt: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
             }, undefined>, never>;
-        }, undefined>, never>;
+        }, undefined>, undefined>, never>;
         readonly thing_prototype_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
         readonly thing_prototype_status: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
         readonly thing_type: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 9, undefined>]>;
         readonly image: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
         readonly title: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
         readonly description: v.StringSchema<undefined>;
-        readonly group: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 9, undefined>]>, never>;
-        readonly quality: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 5, undefined>]>;
+        readonly group: v.OptionalSchema<v.SchemaWithPipe<[v.NullableSchema<v.NumberSchema<undefined>, never>, v.TransformAction<number | null, number | undefined>]>, never>;
+        readonly quality: v.NumberSchema<undefined>;
         readonly collection: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
         readonly twin_thing_prototype_id: v.OptionalSchema<v.ArraySchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, undefined>, never>;
         readonly delete_price: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
@@ -128,7 +131,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
             readonly thing_prototype_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
             readonly hidden: v.OptionalSchema<v.BooleanSchema<undefined>, never>;
         }, undefined>, never>;
-    }, undefined>;
+    }, undefined>, never>;
     readonly friendship: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 6, undefined>]>, never>;
     readonly muted: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly mfp_ban_history: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, never>;
@@ -141,14 +144,14 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     readonly online: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly current_game: v.OptionalSchema<v.ObjectSchema<{
         readonly gs_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-        readonly game_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
+        readonly gs_game_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
     }, undefined>, never>;
-    readonly rank: v.UnionSchema<[v.ObjectSchema<{
+    readonly rank: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
         readonly hidden: v.UnionSchema<[v.LiteralSchema<1, undefined>], undefined>;
     }, undefined>, v.ObjectSchema<{
         readonly id: v.NumberSchema<undefined>;
         readonly pts: v.NumberSchema<undefined>;
-    }, undefined>], undefined>;
+    }, undefined>], undefined>, never>;
     readonly vip: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly bot: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly bot_owner: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
@@ -158,77 +161,23 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     nick: string;
     gender: 0 | 1;
     avatar: string;
-    rank: {
-        hidden: 1;
-    } | {
-        id: number;
-        pts: number;
-    };
     approved: boolean;
     online: boolean;
     vip: boolean;
     bot: boolean;
     moderator: boolean;
     nicks_old: string[];
-    badge: {
-        description: string;
-        image: string;
-        thing_prototype_status: 0 | 1;
-        thing_type: number;
-        quality: number;
-        thing_prototype_id: number;
-        title: string;
-        can_be_upgraded: boolean;
-        user_id: number;
-        thing_id: number;
-        owned_time: number;
-        key?: number | undefined;
-        moneybox?: {
-            transactions: number;
-            money: number;
-        } | {
-            numbers: number[];
-        } | {
-            count: number;
-        } | undefined;
-        group?: number | undefined;
-        collection?: number | undefined;
-        twin_thing_prototype_id?: number[] | undefined;
-        delete_price?: number | undefined;
-        buy_cost?: number | undefined;
-        cases?: number[] | undefined;
-        drop?: {
-            thing_prototype_id: number;
-            hidden?: boolean | undefined;
-        } | undefined;
-        variants?: {
-            id: number;
-            is_default: boolean;
-            is_selected: boolean;
-            is_unlocked: boolean;
-            description?: string | undefined;
-            image?: string | undefined;
-            unlock?: {
-                moneybox?: number | undefined;
-                buy_tokens_sp?: number | undefined;
-                buy_tokens_cmpt?: number | undefined;
-            } | undefined;
-        } | undefined;
-        can_give?: number | undefined;
-        can_sell?: number | undefined;
-        souvenir?: string | undefined;
-        autograph?: {
-            user_id: number;
-            text?: string | undefined;
-        } | undefined;
-        uses_left?: number | undefined;
-        uses_origin?: number | undefined;
-    };
     muted: boolean;
     domain?: string | undefined;
     current_game?: {
         gs_id: string;
-        game_id: string;
+        gs_game_id: string;
+    } | undefined;
+    rank?: {
+        hidden: 1;
+    } | {
+        id: number;
+        pts: number;
     } | undefined;
     bot_owner?: number | undefined;
     profile_cover?: string | undefined;
@@ -237,39 +186,14 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     games_wins?: number | undefined;
     xp?: number | undefined;
     xp_level?: number | undefined;
-    friendship?: number | undefined;
-    mfp_ban_history?: {
-        [x: string]: unknown;
-    } | undefined;
-}, {
-    games: {
-        total: number | undefined;
-        won: number | undefined;
-    };
-    user_id: number;
-    nick: string;
-    gender: 0 | 1;
-    avatar: string;
-    rank: {
-        hidden: 1;
-    } | {
-        id: number;
-        pts: number;
-    };
-    approved: boolean;
-    online: boolean;
-    vip: boolean;
-    bot: boolean;
-    moderator: boolean;
-    nicks_old: string[];
-    badge: {
+    badge?: {
         description: string;
         image: string;
         thing_prototype_status: 0 | 1;
         thing_type: number;
-        quality: number;
         thing_prototype_id: number;
         title: string;
+        quality: number;
         can_be_upgraded: boolean;
         user_id: number;
         thing_id: number;
@@ -305,7 +229,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
                 buy_tokens_sp?: number | undefined;
                 buy_tokens_cmpt?: number | undefined;
             } | undefined;
-        } | undefined;
+        }[] | undefined;
         can_give?: number | undefined;
         can_sell?: number | undefined;
         souvenir?: string | undefined;
@@ -315,22 +239,286 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
         } | undefined;
         uses_left?: number | undefined;
         uses_origin?: number | undefined;
-    };
-    muted: boolean;
-    domain?: string | undefined;
-    current_game?: {
-        gs_id: string;
-        game_id: string;
     } | undefined;
-    bot_owner?: number | undefined;
-    profile_cover?: string | undefined;
-    social_vk?: number | undefined;
-    xp?: number | undefined;
-    xp_level?: number | undefined;
     friendship?: number | undefined;
     mfp_ban_history?: {
         [x: string]: unknown;
     } | undefined;
+}, Omit<{
+    user_id: number;
+    nick: string;
+    gender: 0 | 1;
+    avatar: string;
+    approved: boolean;
+    online: boolean;
+    vip: boolean;
+    bot: boolean;
+    moderator: boolean;
+    nicks_old: string[];
+    muted: boolean;
+    domain?: string | undefined;
+    current_game?: {
+        gs_id: string;
+        gs_game_id: string;
+    } | undefined;
+    rank?: {
+        hidden: 1;
+    } | {
+        id: number;
+        pts: number;
+    } | undefined;
+    bot_owner?: number | undefined;
+    profile_cover?: string | undefined;
+    social_vk?: number | undefined;
+    games?: number | undefined;
+    games_wins?: number | undefined;
+    xp?: number | undefined;
+    xp_level?: number | undefined;
+    badge?: {
+        description: string;
+        image: string;
+        thing_prototype_status: 0 | 1;
+        thing_type: number;
+        thing_prototype_id: number;
+        title: string;
+        quality: number;
+        can_be_upgraded: boolean;
+        user_id: number;
+        thing_id: number;
+        owned_time: number;
+        key?: number | undefined;
+        moneybox?: {
+            transactions: number;
+            money: number;
+        } | {
+            numbers: number[];
+        } | {
+            count: number;
+        } | undefined;
+        group?: number | undefined;
+        collection?: number | undefined;
+        twin_thing_prototype_id?: number[] | undefined;
+        delete_price?: number | undefined;
+        buy_cost?: number | undefined;
+        cases?: number[] | undefined;
+        drop?: {
+            thing_prototype_id: number;
+            hidden?: boolean | undefined;
+        } | undefined;
+        variants?: {
+            id: number;
+            is_default: boolean;
+            is_selected: boolean;
+            is_unlocked: boolean;
+            description?: string | undefined;
+            image?: string | undefined;
+            unlock?: {
+                moneybox?: number | undefined;
+                buy_tokens_sp?: number | undefined;
+                buy_tokens_cmpt?: number | undefined;
+            } | undefined;
+        }[] | undefined;
+        can_give?: number | undefined;
+        can_sell?: number | undefined;
+        souvenir?: string | undefined;
+        autograph?: {
+            user_id: number;
+            text?: string | undefined;
+        } | undefined;
+        uses_left?: number | undefined;
+        uses_origin?: number | undefined;
+    } | undefined;
+    friendship?: number | undefined;
+    mfp_ban_history?: {
+        [x: string]: unknown;
+    } | undefined;
+}, "bot_owner" | "bot"> & {
+    bot: {
+        owner_user_id: number;
+    } | null;
+}>, v.TransformAction<Omit<{
+    user_id: number;
+    nick: string;
+    gender: 0 | 1;
+    avatar: string;
+    approved: boolean;
+    online: boolean;
+    vip: boolean;
+    bot: boolean;
+    moderator: boolean;
+    nicks_old: string[];
+    muted: boolean;
+    domain?: string | undefined;
+    current_game?: {
+        gs_id: string;
+        gs_game_id: string;
+    } | undefined;
+    rank?: {
+        hidden: 1;
+    } | {
+        id: number;
+        pts: number;
+    } | undefined;
+    bot_owner?: number | undefined;
+    profile_cover?: string | undefined;
+    social_vk?: number | undefined;
+    games?: number | undefined;
+    games_wins?: number | undefined;
+    xp?: number | undefined;
+    xp_level?: number | undefined;
+    badge?: {
+        description: string;
+        image: string;
+        thing_prototype_status: 0 | 1;
+        thing_type: number;
+        thing_prototype_id: number;
+        title: string;
+        quality: number;
+        can_be_upgraded: boolean;
+        user_id: number;
+        thing_id: number;
+        owned_time: number;
+        key?: number | undefined;
+        moneybox?: {
+            transactions: number;
+            money: number;
+        } | {
+            numbers: number[];
+        } | {
+            count: number;
+        } | undefined;
+        group?: number | undefined;
+        collection?: number | undefined;
+        twin_thing_prototype_id?: number[] | undefined;
+        delete_price?: number | undefined;
+        buy_cost?: number | undefined;
+        cases?: number[] | undefined;
+        drop?: {
+            thing_prototype_id: number;
+            hidden?: boolean | undefined;
+        } | undefined;
+        variants?: {
+            id: number;
+            is_default: boolean;
+            is_selected: boolean;
+            is_unlocked: boolean;
+            description?: string | undefined;
+            image?: string | undefined;
+            unlock?: {
+                moneybox?: number | undefined;
+                buy_tokens_sp?: number | undefined;
+                buy_tokens_cmpt?: number | undefined;
+            } | undefined;
+        }[] | undefined;
+        can_give?: number | undefined;
+        can_sell?: number | undefined;
+        souvenir?: string | undefined;
+        autograph?: {
+            user_id: number;
+            text?: string | undefined;
+        } | undefined;
+        uses_left?: number | undefined;
+        uses_origin?: number | undefined;
+    } | undefined;
+    friendship?: number | undefined;
+    mfp_ban_history?: {
+        [x: string]: unknown;
+    } | undefined;
+}, "bot_owner" | "bot"> & {
+    bot: {
+        owner_user_id: number;
+    } | null;
+}, {
+    games: {
+        total: number | undefined;
+        won: number | undefined;
+    };
+    user_id: number;
+    domain?: string | undefined;
+    nick: string;
+    gender: 0 | 1;
+    avatar: string;
+    current_game?: {
+        gs_id: string;
+        gs_game_id: string;
+    } | undefined;
+    rank?: {
+        hidden: 1;
+    } | {
+        id: number;
+        pts: number;
+    } | undefined;
+    approved: boolean;
+    online: boolean;
+    vip: boolean;
+    moderator: boolean;
+    nicks_old: string[];
+    profile_cover?: string | undefined;
+    social_vk?: number | undefined;
+    xp?: number | undefined;
+    xp_level?: number | undefined;
+    badge?: {
+        description: string;
+        image: string;
+        thing_prototype_status: 0 | 1;
+        thing_type: number;
+        thing_prototype_id: number;
+        title: string;
+        quality: number;
+        can_be_upgraded: boolean;
+        user_id: number;
+        thing_id: number;
+        owned_time: number;
+        key?: number | undefined;
+        moneybox?: {
+            transactions: number;
+            money: number;
+        } | {
+            numbers: number[];
+        } | {
+            count: number;
+        } | undefined;
+        group?: number | undefined;
+        collection?: number | undefined;
+        twin_thing_prototype_id?: number[] | undefined;
+        delete_price?: number | undefined;
+        buy_cost?: number | undefined;
+        cases?: number[] | undefined;
+        drop?: {
+            thing_prototype_id: number;
+            hidden?: boolean | undefined;
+        } | undefined;
+        variants?: {
+            id: number;
+            is_default: boolean;
+            is_selected: boolean;
+            is_unlocked: boolean;
+            description?: string | undefined;
+            image?: string | undefined;
+            unlock?: {
+                moneybox?: number | undefined;
+                buy_tokens_sp?: number | undefined;
+                buy_tokens_cmpt?: number | undefined;
+            } | undefined;
+        }[] | undefined;
+        can_give?: number | undefined;
+        can_sell?: number | undefined;
+        souvenir?: string | undefined;
+        autograph?: {
+            user_id: number;
+            text?: string | undefined;
+        } | undefined;
+        uses_left?: number | undefined;
+        uses_origin?: number | undefined;
+    } | undefined;
+    friendship?: number | undefined;
+    mfp_ban_history?: {
+        [x: string]: unknown;
+    } | undefined;
+    muted: boolean;
+    bot: {
+        owner_user_id: number;
+    } | null;
 }>]>;
 export type User = v.InferOutput<typeof valiObjectUserSchema>;
 export type UserShort = v.InferOutput<typeof valiObjectUserShortSchema>;

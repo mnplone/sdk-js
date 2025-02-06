@@ -1,7 +1,6 @@
 import { array, pipe, transform, } from 'valibot';
-import { M1 } from '../../m1.js';
-import { valiObjectUserSchema, valiObjectUserShortSchema, } from '../../valibot/users.js';
-import { isIterableIterator, isRecord, } from '../../utils.js';
+import { valiObjectUserSchema, valiObjectUserShortSchema, } from '../valibot/users.js';
+import { isIterableIterator, isRecord, } from '../utils.js';
 // eslint-disable-next-line jsdoc/require-jsdoc
 function transformer(value) {
     const result = new Map();
@@ -16,11 +15,11 @@ const valiApiResponseUsersGetOneSchema = pipe(array(valiObjectUserSchema), trans
 const valiApiResponseUsersGetShortOneSchema = pipe(array(valiObjectUserShortSchema), transform((value) => value[0]));
 export class M1ApiUsers {
     baseClient;
+    // eslint-disable-next-line no-useless-constructor
     constructor(baseClient) {
         this.baseClient = baseClient;
-        if (baseClient instanceof M1 === false) {
-            throw new TypeError('baseClient must be an instance of M1');
-        }
+        // do nothing
+        // win
     }
     get(arg0, arg1) {
         let user_ids = null;
@@ -37,6 +36,9 @@ export class M1ApiUsers {
         else if (Array.isArray(arg0)) {
             user_ids = arg0;
             is_multiple_users = true;
+        }
+        else if (arg0 !== undefined) {
+            user_ids = [arg0];
         }
         if (isRecord(arg1)) {
             options = arg1;

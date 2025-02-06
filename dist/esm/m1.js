@@ -1,7 +1,23 @@
 import { ExtWSClient } from '@extws/client';
-import { minValue, never, number, object, optional, parse, pipe, string, } from 'valibot';
-import { M1ApiUsers } from './api/users/index.js';
-const API_HOSTNAME = globalThis.location?.hostname ?? 'monopoly-one.com';
+import { getDotPath, minValue, never, number, object, optional, parse, pipe, safeParse, string, } from 'valibot';
+import { M1ApiUsers } from './api/users.js';
+/**
+ * Parses value with schema like valibot, but prints issue paths.
+ * @param schema Valibot schema.
+ * @param value Value to parse.
+ * @returns Parsed value.
+ */
+function parseWithNotice(schema, value) {
+    const result = safeParse(schema, value);
+    if (result.success) {
+        return result.output;
+    }
+    for (const issue of result.issues) {
+        // console.error('issue', issue);
+        console.error(`Valibot found an issue at ${getDotPath(issue)}`);
+    }
+    throw new TypeError('Valibot found an issues.');
+}
 /**
  * @class M1
  * @classdesc A class to interact with Monopoly One API
@@ -14,15 +30,17 @@ const API_HOSTNAME = globalThis.location?.hostname ?? 'monopoly-one.com';
  */
 export class M1 {
     options;
-    // options: M1Options;
     ws = null;
     users = new M1ApiUsers(this);
     constructor(options) {
-        this.options = options;
-        const { websocket } = options;
-        if (websocket?.connect) {
+        this.options = {
+            hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
+            ...options,
+        };
+        const { websocket } = this.options;
+        if (websocket) {
             const { access_token, headers, } = this.options;
-            const ws_url = new URL('/ws', `wss://${API_HOSTNAME}`);
+            const ws_url = new URL('/ws', `wss://${this.options.hostname}`);
             if (access_token !== undefined) {
                 ws_url.searchParams.set('access_token', access_token);
             }
@@ -49,7 +67,7 @@ export class M1 {
      * @returns - API response.
      */
     async callMethod(options) {
-        const url = new URL(`/api/${options.api_method}`, `https://${API_HOSTNAME}`);
+        const url = new URL(`/api/${options.api_method}`, `https://${this.options.hostname}`);
         let body;
         const request_headers = structuredClone(this.options.headers ?? {});
         const request_data = {
@@ -77,7 +95,7 @@ export class M1 {
             code: pipe(number(), minValue(0)),
         }), response_data);
         if (code === 0) {
-            const { data } = parse(object({
+            const { data } = parseWithNotice(object({
                 data: options.valiResponseSchema,
             }), response_data);
             return {

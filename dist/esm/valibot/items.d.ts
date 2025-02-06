@@ -1,6 +1,6 @@
 import * as v from 'valibot';
 export declare const itemVariantSchema: v.ObjectSchema<{
-    readonly id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
+    readonly id: v.NumberSchema<undefined>;
     readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
@@ -19,8 +19,8 @@ export declare const thingPrototypeSchema: v.ObjectSchema<{
     readonly image: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
     readonly title: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
     readonly description: v.StringSchema<undefined>;
-    readonly group: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 9, undefined>]>, never>;
-    readonly quality: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 5, undefined>]>;
+    readonly group: v.OptionalSchema<v.SchemaWithPipe<[v.NullableSchema<v.NumberSchema<undefined>, never>, v.TransformAction<number | null, number | undefined>]>, never>;
+    readonly quality: v.NumberSchema<undefined>;
     readonly collection: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
     readonly twin_thing_prototype_id: v.OptionalSchema<v.ArraySchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, undefined>, never>;
     readonly delete_price: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
@@ -33,7 +33,7 @@ export declare const thingPrototypeSchema: v.ObjectSchema<{
         readonly hidden: v.OptionalSchema<v.BooleanSchema<undefined>, never>;
     }, undefined>, never>;
     readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
-        readonly id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
+        readonly id: v.NumberSchema<undefined>;
         readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
@@ -67,8 +67,8 @@ export declare const thingSchema: v.ObjectSchema<{
     }, undefined>], undefined>, never>;
     readonly uses_left: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
     readonly uses_origin: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-    readonly variants: v.OptionalSchema<v.ObjectSchema<{
-        readonly id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
+    readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
+        readonly id: v.NumberSchema<undefined>;
         readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
@@ -79,15 +79,15 @@ export declare const thingSchema: v.ObjectSchema<{
             readonly buy_tokens_sp: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
             readonly buy_tokens_cmpt: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
         }, undefined>, never>;
-    }, undefined>, never>;
+    }, undefined>, undefined>, never>;
     readonly thing_prototype_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
     readonly thing_prototype_status: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
     readonly thing_type: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 9, undefined>]>;
     readonly image: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
     readonly title: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
     readonly description: v.StringSchema<undefined>;
-    readonly group: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 9, undefined>]>, never>;
-    readonly quality: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 5, undefined>]>;
+    readonly group: v.OptionalSchema<v.SchemaWithPipe<[v.NullableSchema<v.NumberSchema<undefined>, never>, v.TransformAction<number | null, number | undefined>]>, never>;
+    readonly quality: v.NumberSchema<undefined>;
     readonly collection: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
     readonly twin_thing_prototype_id: v.OptionalSchema<v.ArraySchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, undefined>, never>;
     readonly delete_price: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
@@ -110,7 +110,7 @@ export declare const itemProtoSchema: v.ObjectSchema<{
     readonly quality_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 5, undefined>]>;
     readonly moneybox: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
-        readonly id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
+        readonly id: v.NumberSchema<undefined>;
         readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
@@ -149,7 +149,7 @@ declare const itemShortSchema: v.ObjectSchema<{
     readonly moneybox: v.OptionalSchema<v.RecordSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>, v.UnknownSchema, undefined>, never>;
     readonly seed: v.OptionalSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>, never>;
     readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
-        readonly id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
+        readonly id: v.NumberSchema<undefined>;
         readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
@@ -183,7 +183,7 @@ export declare const itemSchema: v.ObjectSchema<{
     readonly moneybox: v.OptionalSchema<v.RecordSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>, v.UnknownSchema, undefined>, never>;
     readonly seed: v.OptionalSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>, never>;
     readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
-        readonly id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
+        readonly id: v.NumberSchema<undefined>;
         readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
