@@ -15,14 +15,12 @@
 		"declarationDir": "dist/esm",
 		"target": "esnext",
 		"module": "nodenext",
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"noEmit": true,
-		"allowImportingTsExtensions": true,
 		"lib": [
 			"ESNext",
-			"ES2021.String"
+			"ES2021.String",
+			"DOM"
 		],
+		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"removeComments": false

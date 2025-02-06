@@ -1,17 +1,30 @@
-
-import { type Dictionary } from './types.ts';
-import {
-	httpGetRequest,
-	httpPostRequest,
-} from './http.ts';
 import { ExtWSClient } from '@extws/client';
-import { UsersApi } from './api/users/index.ts';
+import {
+	minValue,
+	never,
+	number,
+	object,
+	optional,
+	parse,
+	pipe,
+	string,
+	type InferOutput,
+} from 'valibot';
+import { M1ApiUsers } from './api/users/index.js';
+import { type ValiBaseSchema } from './types.js';
 
-const M1_API_URL = 'https://monopoly-one.com/api';
-const REQUESTS = {
-	GET: httpGetRequest,
-	POST: httpPostRequest,
+type M1Options = {
+	access_token?: string,
+	refresh_token?: string,
+	websocket?: {
+		connect: boolean,
+		subs?: string,
+	},
+	// headers?: Headers,
+	headers?: Record<string, string>,
 };
+
+const API_HOSTNAME = globalThis.location?.hostname ?? 'monopoly-one.com';
 
 /**
  * @class M1
@@ -24,75 +37,148 @@ const REQUESTS = {
  * @param options.headers - Headers
  */
 export class M1 {
-	private access_token: string;
-	private refresh_token: string;
-	private headers: Dictionary<string>;
-	public users: UsersApi;
-	public ws: ExtWSClient | null;
+	// options: M1Options;
+	ws: ExtWSClient | null = null;
+	users = new M1ApiUsers(this);
 
-	constructor({
-		access_token,
-		refresh_token,
-		polling = false,
-		subs = '',
-		headers = {},
-	}: {
-		access_token?: string,
-		refresh_token?: string,
-		polling?: boolean,
-		subs?: string,
-		headers?: Dictionary<string>,
-	}) {
-		this.access_token = access_token ?? '';
-		this.refresh_token = refresh_token ?? '';
-		this.headers = headers;
+	constructor(public options: M1Options) {
+		const { websocket } = options;
+		if (websocket?.connect) {
+			const {
+				access_token,
+				headers,
+			} = this.options;
 
-		this.users = new UsersApi(this);
-
-		if (polling === true) {
-			const ws_url = new URL('wss://monopoly-one.com/ws');
-			if (this.access_token.length > 0) {
-				ws_url.searchParams.set('access_token', this.access_token);
+			const ws_url = new URL('/ws', `wss://${API_HOSTNAME}`);
+			if (access_token !== undefined) {
+				ws_url.searchParams.set('access_token', access_token);
 			}
 
-			if (subs.length > 0) {
-				ws_url.searchParams.set('subs', subs);
+			if (typeof websocket.subs === 'string') {
+				ws_url.searchParams.set('subs', websocket.subs);
 			}
 
-			const has_headers = Object.keys(this.headers).length > 0;
 			this.ws = new ExtWSClient(
 				ws_url as URL,
 				{
-					connect: has_headers === false,
+					connect: false,
 				},
 			);
-			if (has_headers) {
-				this.ws.headers = this.headers;
-				this.ws.connect();
+
+			if (headers) {
+				this.ws.headers = headers;
 			}
-		}
-		else {
-			this.ws = null;
+
+			this.ws.connect();
 		}
 	}
 
-	async callMethod(
-		method: string,
-		parameters: Dictionary<unknown>,
-		api_method?: 'GET' | 'POST',
-	) {
-		const url = `${M1_API_URL}/${method}`;
-		const sendRequest = REQUESTS[api_method ?? 'GET'];
+	/**
+	 * Makes an API call.
+	 * @param options -
+	 * @param options.http_method - HTTP method.
+	 * @param options.api_method - API method.
+	 * @param options.data - Data to send.
+	 * @param options.valiResponseSchema - Response validator.
+	 * @param options.valiErrorDataSchema - Error data validator.
+	 * @returns - API response.
+	 */
+	async callMethod<
+		const ValiResponseSchema extends ValiBaseSchema,
+		const ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+	>(options: {
+		http_method: 'GET' | 'POST',
+		api_method: string,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		data?: Record<string, any>,
+		valiResponseSchema: ValiResponseSchema,
+		valiErrorDataSchema?: ValiErrorDataSchema,
+	}): Promise<{
+		success: true,
+		data: InferOutput<ValiResponseSchema>,
+	} | {
+		success: false,
+		code: number,
+		description?: string,
+		data: ValiErrorDataSchema extends undefined
+			? never
+			: InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
+	}> {
+		const url = new URL(
+			`/api/${options.api_method}`,
+			`https://${API_HOSTNAME}`,
+		);
+		let body;
 
-		const response = await sendRequest(
+		const request_headers = structuredClone(this.options.headers ?? {});
+		const request_data = {
+			...options.data,
+			access_token: this.options.access_token,
+		};
+
+		if (options.http_method === 'GET') {
+			for (const [ key, value ] of Object.entries(request_data)) {
+				if (typeof value === 'string') {
+					url.searchParams.set(key, value);
+				}
+			}
+		}
+		else {
+			request_headers['Content-Type'] = 'application/json';
+			body = JSON.stringify(request_data);
+		}
+
+		const response = await fetch(
 			url,
 			{
-				access_token: this.access_token,
-				...parameters,
+				method: options.http_method,
+				headers: request_headers,
+				body,
 			},
-			this.headers,
 		);
 
-		return response;
+		const response_data = await response.json();
+
+		const { code } = parse(
+			object({
+				code: pipe(
+					number(),
+					minValue(0),
+				),
+			}),
+			response_data,
+		);
+
+		if (code === 0) {
+			const { data } = parse(
+				object({
+					data: options.valiResponseSchema as ValiBaseSchema,
+				}),
+				response_data,
+			);
+
+			return {
+				success: true,
+				data,
+			};
+		}
+
+		const {
+			description,
+			data,
+		} = parse(
+			object({
+				description: optional(string()),
+				data: optional(options.valiErrorDataSchema ?? never() as ValiBaseSchema),
+			}),
+			response_data,
+		);
+
+		return {
+			success: false,
+			code,
+			description,
+			data,
+		};
 	}
 }

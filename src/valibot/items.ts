@@ -1,16 +1,16 @@
 import * as v from 'valibot';
 import {
-	bitSchema,
+	bit,
 	positiveNumberSchema,
 	nonNegativeNumberSchema,
 	nonEmptyStringSchema,
-} from './common.ts';
+} from './common.js';
 
 export const itemVariantSchema = v.object({
 	id: positiveNumberSchema,
-	is_default: v.optional(bitSchema),
-	is_selected: v.optional(bitSchema),
-	is_unlocked: v.optional(bitSchema),
+	is_default: bit(0),
+	is_selected: bit(0),
+	is_unlocked: bit(0),
 	image: v.optional(nonEmptyStringSchema),
 	description: v.optional(nonEmptyStringSchema),
 	unlock: v.optional(
@@ -53,7 +53,7 @@ export const thingPrototypeSchema = v.object({
 		v.array(positiveNumberSchema),
 	),
 	delete_price: v.optional(nonNegativeNumberSchema),
-	can_be_upgraded: v.optional(bitSchema),
+	can_be_upgraded: bit(0),
 	buy_cost: v.optional(nonNegativeNumberSchema),
 	key: v.optional(positiveNumberSchema),
 	cases: v.optional(
@@ -141,7 +141,7 @@ export const itemProtoSchema = v.object({
 		v.minValue(0),
 		v.maxValue(5),
 	),
-	moneybox: v.optional(bitSchema),
+	moneybox: bit(0),
 	variants: v.optional(
 		v.array(itemVariantSchema),
 	),
@@ -181,7 +181,7 @@ export const itemProtoSchema = v.object({
 			v.unknown(),
 		),
 	),
-	can_craft: v.optional(bitSchema),
+	can_craft: bit(0),
 });
 
 const itemShortSchema = v.object({
@@ -224,7 +224,7 @@ const itemShortSchema = v.object({
 
 export const itemSchema = v.object({
 	...itemShortSchema.entries,
-	can_delete: v.optional(bitSchema),
+	can_delete: bit(0),
 	previous_owners_user_ids: v.optional(
 		v.array(positiveNumberSchema),
 	),

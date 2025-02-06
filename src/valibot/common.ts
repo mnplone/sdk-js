@@ -1,13 +1,21 @@
 import * as v from 'valibot';
 
-export const bitSchema = v.pipe(
-	v.optional(
-		v.literal(1),
-	),
-	v.transform(
-		(value) => value === 1,
-	),
-);
+/**
+ * Creates bit schema.
+ * @param default_value -
+ * @returns -
+ */
+export function bit(default_value: 0 | 1) {
+	return v.pipe(
+		v.optional(
+			v.picklist([ 0, 1 ]),
+			default_value,
+		),
+		v.transform(
+			(value) => value === 1,
+		),
+	);
+}
 
 export const positiveNumberSchema = v.pipe(
 	v.number(),
