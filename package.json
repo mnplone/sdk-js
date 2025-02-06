@@ -7,7 +7,8 @@
 		"@types/node": "^22.2",
 		"eslint": "9.8.0",
 		"valibot": "^0.37",
-		"vitest": "^1.6"
+		"vitest": "^1.6",
+		"@extws/client": "^0.2.1-beta.1"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"

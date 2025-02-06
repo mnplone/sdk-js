@@ -1,6 +1,8 @@
 import * as v from 'valibot';
+import { bitSchema } from './common.ts';
+import { thingSchema } from './items.ts';
 
-const userShortSchema = v.object({
+export const userShortSchema = v.object({
 	user_id: v.pipe(
 		v.number(),
 		v.minValue(1),
@@ -8,18 +10,13 @@ const userShortSchema = v.object({
 	domain: v.optional(
 		v.pipe(
 			v.string(),
-			v.minLength(1),
+			v.minLength(2),
 		),
 	),
-	approved: v.optional(
-		v.union([
-			v.literal(0),
-			v.literal(1),
-		]),
-	),
+	approved: bitSchema,
 	nick: v.pipe(
 		v.string(),
-		v.minLength(1),
+		v.minLength(2),
 	),
 	gender: v.union([
 		v.literal(0),
@@ -29,16 +26,7 @@ const userShortSchema = v.object({
 		v.string(),
 		v.minLength(1),
 	),
-	avatar_key: v.pipe(
-		v.string(),
-		v.minLength(1),
-	),
-	online: v.optional(
-		v.union([
-			v.literal(0),
-			v.literal(1),
-		]),
-	),
+	online: bitSchema,
 	current_game: v.optional(
 		v.object({
 			gs_id: v.pipe(
@@ -54,7 +42,6 @@ const userShortSchema = v.object({
 	rank: v.union([
 		v.object({
 			hidden: v.union([
-				v.literal(0),
 				v.literal(1),
 			]),
 		}),
@@ -63,38 +50,23 @@ const userShortSchema = v.object({
 			pts: v.number(),
 		}),
 	]),
-	vip: v.optional(
-		v.union([
-			v.literal(0),
-			v.literal(1),
-		]),
-	),
-	bot: v.optional(
-		v.union([
-			v.literal(0),
-			v.literal(1),
-		]),
-	),
+	vip: bitSchema,
+	bot: bitSchema,
 	bot_owner: v.optional(
 		v.pipe(
 			v.number(),
 			v.minValue(1),
 		),
 	),
-	moderator: v.optional(
-		v.union([
-			v.literal(0),
-			v.literal(1),
-		]),
-	),
+	moderator: bitSchema,
 });
 
-const userSchema = v.object({
+export const userSchema = v.object({
 	...userShortSchema.entries,
 	nicks_old: v.array(
 		v.pipe(
 			v.string(),
-			v.minLength(1),
+			v.minLength(2),
 		),
 	),
 	profile_cover: v.optional(
@@ -133,7 +105,7 @@ const userSchema = v.object({
 			v.minValue(0),
 		),
 	),
-	// badge: thingSchema,
+	badge: thingSchema,
 	friendship: v.optional(
 		v.pipe(
 			v.number(),
@@ -141,12 +113,7 @@ const userSchema = v.object({
 			v.maxValue(6),
 		),
 	),
-	muted: v.optional(
-		v.union([
-			v.literal(0),
-			v.literal(1),
-		]),
-	),
+	muted: bitSchema,
 	mfp_ban_history: v.optional(
 		v.record(
 			v.string(),
@@ -154,3 +121,6 @@ const userSchema = v.object({
 		),
 	),
 });
+
+export type User = v.InferOutput<typeof userSchema>;
+export type UserShort = v.InferOutput<typeof userShortSchema>;
