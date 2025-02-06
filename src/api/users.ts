@@ -3,18 +3,18 @@ import {
 	pipe,
 	transform,
 } from 'valibot';
-import { M1 } from '../../m1.js';
+import { type M1 } from '../m1.js';
 import {
 	type User,
 	type UserShort,
 	valiObjectUserSchema,
 	valiObjectUserShortSchema,
-} from '../../valibot/users.js';
+} from '../valibot/users.js';
 import {
 	isIterableIterator,
 	isRecord,
-} from '../../utils.js';
-import { type ApiResponse } from '../../types.js';
+} from '../utils.js';
+import { type ApiResponse } from '../types.js';
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 function transformer<T extends User | UserShort>(value: T[]) {
@@ -51,10 +51,10 @@ const valiApiResponseUsersGetShortOneSchema = pipe(
 );
 
 export class M1ApiUsers {
-	constructor(public baseClient: M1) {
-		if (baseClient instanceof M1 === false) {
-			throw new TypeError('baseClient must be an instance of M1');
-		}
+	// eslint-disable-next-line no-useless-constructor
+	constructor(private baseClient: M1) {
+		// do nothing
+		// win
 	}
 
 	/**
@@ -122,6 +122,9 @@ export class M1ApiUsers {
 		else if (Array.isArray(arg0)) {
 			user_ids = arg0;
 			is_multiple_users = true;
+		}
+		else if (arg0 !== undefined) {
+			user_ids = [ arg0 ];
 		}
 
 		if (isRecord(arg1)) {

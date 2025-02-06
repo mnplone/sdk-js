@@ -2,45 +2,63 @@ import * as v from 'valibot';
 import { bit } from './common.js';
 import { thingSchema } from './items.js';
 
-export const valiObjectUserShortSchema = v.pipe(
-	v.object({
-		user_id: v.pipe(
-			v.number(),
-			v.minValue(1),
-		),
-		domain: v.optional(
-			v.pipe(
-				v.string(),
-				v.minLength(2),
-			),
-		),
-		approved: bit(0),
-		nick: v.pipe(
+// eslint-disable-next-line jsdoc/require-jsdoc
+function transformerBot<const T extends v.InferOutput<typeof valiInputUserShortSchema>>(value: T) {
+	const {
+		bot,
+		bot_owner,
+		...value_rest
+	} = value;
+
+	return {
+		...value_rest,
+		bot: bot
+			? {
+				owner_user_id: bot_owner!,
+			}
+			: null,
+	};
+}
+
+const valiInputUserShortSchema = v.object({
+	user_id: v.pipe(
+		v.number(),
+		v.minValue(1),
+	),
+	domain: v.optional(
+		v.pipe(
 			v.string(),
 			v.minLength(2),
 		),
-		gender: v.union([
-			v.literal(0),
-			v.literal(1),
-		]),
-		avatar: v.pipe(
-			v.string(),
-			v.minLength(1),
-		),
-		online: bit(0),
-		current_game: v.optional(
-			v.object({
-				gs_id: v.pipe(
-					v.string(),
-					v.minLength(1),
-				),
-				game_id: v.pipe(
-					v.string(),
-					v.minLength(1),
-				),
-			}),
-		),
-		rank: v.union([
+	),
+	approved: bit(0),
+	nick: v.pipe(
+		v.string(),
+		v.minLength(2),
+	),
+	gender: v.union([
+		v.literal(0),
+		v.literal(1),
+	]),
+	avatar: v.pipe(
+		v.string(),
+		v.minLength(1),
+	),
+	online: bit(0),
+	current_game: v.optional(
+		v.object({
+			gs_id: v.pipe(
+				v.string(),
+				v.minLength(1),
+			),
+			gs_game_id: v.pipe(
+				v.string(),
+				v.minLength(1),
+			),
+		}),
+	),
+	rank: v.optional(
+		v.union([
 			v.object({
 				hidden: v.union([
 					v.literal(1),
@@ -51,37 +69,26 @@ export const valiObjectUserShortSchema = v.pipe(
 				pts: v.number(),
 			}),
 		]),
-		vip: bit(0),
-		bot: bit(0),
-		bot_owner: v.optional(
-			v.pipe(
-				v.number(),
-				v.minValue(1),
-			),
+	),
+	vip: bit(0),
+	bot: bit(0),
+	bot_owner: v.optional(
+		v.pipe(
+			v.number(),
+			v.minValue(1),
 		),
-		moderator: bit(0),
-	}),
-	v.transform((value) => {
-		const {
-			bot,
-			bot_owner,
-			...value_rest
-		} = value;
+	),
+	moderator: bit(0),
+});
 
-		return {
-			...value_rest,
-			bot: bot
-				? {
-					owner_user_id: bot_owner!,
-				}
-				: null,
-		};
-	}),
+export const valiObjectUserShortSchema = v.pipe(
+	valiInputUserShortSchema,
+	v.transform(transformerBot),
 );
 
 export const valiObjectUserSchema = v.pipe(
 	v.object({
-		...valiObjectUserShortSchema.entries,
+		...valiInputUserShortSchema.entries,
 		nicks_old: v.array(
 			v.pipe(
 				v.string(),
@@ -124,7 +131,7 @@ export const valiObjectUserSchema = v.pipe(
 				v.minValue(0),
 			),
 		),
-		badge: thingSchema,
+		badge: v.optional(thingSchema),
 		friendship: v.optional(
 			v.pipe(
 				v.number(),
@@ -140,6 +147,7 @@ export const valiObjectUserSchema = v.pipe(
 			),
 		),
 	}),
+	v.transform(transformerBot),
 	v.transform((value) => {
 		const {
 			games,

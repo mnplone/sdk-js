@@ -1,5 +1,10 @@
 {
-	"name": "@kirick/sdk-js",
+	"name": "@mnplone/sdk",
+	"version": "0.1.0-beta.1",
+	"description": "SDK for mnpl.one",
+	"publishConfig": {
+		"access": "public"
+	},
 	"type": "module",
 	"main": "dist/esm/main.js",
 	"types": "dist/esm/main.d.ts",
@@ -34,11 +39,7 @@
 	},
 	"keywords": [
 		"mnplone",
-		"monopoly",
-		"one",
-		"sdk",
-		"javascript",
-		"typescript"
+		"sdk"
 	],
 	"author": "Daniil Kirichenko (https://twitter.com/kirickme)",
 	"license": "MIT",
