@@ -1,5 +1,10 @@
 {
-	"name": "@kirick/sdk-js",
+	"name": "@mnplone/sdk",
+	"version": "0.1.0-beta.1",
+	"description": "SDK for mnpl.one",
+	"publishConfig": {
+		"access": "public"
+	},
 	"type": "module",
 	"main": "dist/esm/main.js",
 	"types": "dist/esm/main.d.ts",
@@ -11,7 +16,7 @@
 		"node": ">=21"
 	},
 	"dependencies": {
-		"@extws/client": "^0.2.1-beta.1",
+		"@extws/client": "github:extws-team/client#b308dfed0becd80747ec638fadcb09ba4737d073",
 		"valibot": "^0.42.1"
 	},
 	"devDependencies": {
@@ -22,10 +27,8 @@
 		"vitest": "2.1.2"
 	},
 	"scripts": {
-		"build": "rm -r dist ; bun run build:ts && bun run build:cjs # && bun run build:browser",
-		"# build:browser": "rm -r dist/browser ; bun run build.ts",
-		"build:cjs": "bun build src/main.ts --outfile=dist/main.cjs --platform=node --format=cjs --packages=external",
-		"build:ts": "rm -r dist/esm ; tsc && rm dist/esm/websocket.browser.*",
+		"build": "rm -r dist ; bun run build:ts",
+		"build:ts": "rm -r dist/esm ; tsc",
 		"lint": "eslint . && tsc --skipLibCheck --noemit",
 		"publish:npm": "bun run lint && bun run build && bun run test && npm publish",
 		"test": "vitest run --no-file-parallelism && bun test --coverage"
@@ -36,11 +39,7 @@
 	},
 	"keywords": [
 		"mnplone",
-		"monopoly",
-		"one",
-		"sdk",
-		"javascript",
-		"typescript"
+		"sdk"
 	],
 	"author": "Daniil Kirichenko (https://twitter.com/kirickme)",
 	"license": "MIT",

@@ -7,7 +7,7 @@ import {
 } from './common.js';
 
 export const itemVariantSchema = v.object({
-	id: positiveNumberSchema,
+	id: v.number(),
 	is_default: bit(0),
 	is_selected: bit(0),
 	is_unlocked: bit(0),
@@ -38,16 +38,11 @@ export const thingPrototypeSchema = v.object({
 	description: v.string(),
 	group: v.optional(
 		v.pipe(
-			v.number(),
-			v.minValue(0),
-			v.maxValue(9),
+			v.nullable(v.number()),
+			v.transform((value) => (typeof value === 'number' ? value : undefined)),
 		),
 	),
-	quality: v.pipe(
-		v.number(),
-		v.minValue(0),
-		v.maxValue(5),
-	),
+	quality: v.number(),
 	collection: v.optional(nonNegativeNumberSchema),
 	twin_thing_prototype_id: v.optional(
 		v.array(positiveNumberSchema),
@@ -116,7 +111,9 @@ export const thingSchema = v.object({
 	),
 	uses_left: v.optional(positiveNumberSchema),
 	uses_origin: v.optional(positiveNumberSchema),
-	variants: v.optional(itemVariantSchema),
+	variants: v.optional(
+		v.array(itemVariantSchema),
+	),
 });
 
 export const itemProtoSchema = v.object({

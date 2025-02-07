@@ -1,5 +1,6 @@
 import { ExtWSClient } from '@extws/client';
 import {
+	getDotPath,
 	minValue,
 	never,
 	number,
@@ -7,24 +8,44 @@ import {
 	optional,
 	parse,
 	pipe,
+	safeParse,
 	string,
 	type InferOutput,
 } from 'valibot';
-import { M1ApiUsers } from './api/users/index.js';
+import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
 
 type M1Options = {
+	hostname?: string,
 	access_token?: string,
 	refresh_token?: string,
 	websocket?: {
-		connect: boolean,
 		subs?: string,
 	},
 	// headers?: Headers,
 	headers?: Record<string, string>,
 };
 
-const API_HOSTNAME = globalThis.location?.hostname ?? 'monopoly-one.com';
+/**
+ * Parses value with schema like valibot, but prints issue paths.
+ * @param schema Valibot schema.
+ * @param value Value to parse.
+ * @returns Parsed value.
+ */
+function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unknown): InferOutput<V> {
+	const result = safeParse(schema, value);
+
+	if (result.success) {
+		return result.output;
+	}
+
+	for (const issue of result.issues) {
+		// console.error('issue', issue);
+		console.error(`Valibot found an issue at ${getDotPath(issue)}`);
+	}
+
+	throw new TypeError('Valibot found an issues.');
+}
 
 /**
  * @class M1
@@ -37,19 +58,24 @@ const API_HOSTNAME = globalThis.location?.hostname ?? 'monopoly-one.com';
  * @param options.headers - Headers
  */
 export class M1 {
-	// options: M1Options;
+	options: M1Options;
 	ws: ExtWSClient | null = null;
 	users = new M1ApiUsers(this);
 
-	constructor(public options: M1Options) {
-		const { websocket } = options;
-		if (websocket?.connect) {
+	constructor(options?: M1Options) {
+		this.options = {
+			hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
+			...options,
+		};
+
+		const { websocket } = this.options;
+		if (websocket) {
 			const {
 				access_token,
 				headers,
 			} = this.options;
 
-			const ws_url = new URL('/ws', `wss://${API_HOSTNAME}`);
+			const ws_url = new URL('/ws', `wss://${this.options.hostname}`);
 			if (access_token !== undefined) {
 				ws_url.searchParams.set('access_token', access_token);
 			}
@@ -106,7 +132,7 @@ export class M1 {
 	}> {
 		const url = new URL(
 			`/api/${options.api_method}`,
-			`https://${API_HOSTNAME}`,
+			`https://${this.options.hostname}`,
 		);
 		let body;
 
@@ -150,7 +176,7 @@ export class M1 {
 		);
 
 		if (code === 0) {
-			const { data } = parse(
+			const { data } = parseWithNotice(
 				object({
 					data: options.valiResponseSchema as ValiBaseSchema,
 				}),
