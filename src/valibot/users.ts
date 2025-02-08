@@ -5,12 +5,10 @@ import {
 	pipe,
 	number,
 	optional,
-	record,
 	union,
 	literal,
 	string,
 	transform,
-	unknown,
 } from 'valibot';
 import { bit } from './common.js';
 import { valiObjectThingSchema } from './items.js';

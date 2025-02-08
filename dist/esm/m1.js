@@ -1,5 +1,6 @@
 import { ExtWSClient } from '@extws/client';
 import { getDotPath, minValue, never, number, object, optional, parse, pipe, safeParse, string, } from 'valibot';
+import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
 /**
  * Parses value with schema like valibot, but prints issue paths.
@@ -13,10 +14,14 @@ function parseWithNotice(schema, value) {
         return result.output;
     }
     for (const issue of result.issues) {
-        // console.error('issue', issue);
+        // eslint-disable-next-line no-console
+        console.error();
+        // eslint-disable-next-line no-console
         console.error(`Valibot found an issue at ${getDotPath(issue)}`);
+        // eslint-disable-next-line no-console
+        console.error('issue', JSON.stringify(issue));
     }
-    throw new TypeError('Valibot found an issues.');
+    throw new TypeError('Valibot found issues.');
 }
 /**
  * @class M1
@@ -32,6 +37,7 @@ export class M1 {
     options;
     ws = null;
     users = new M1ApiUsers(this);
+    data = new M1ApiData(this);
     constructor(options) {
         this.options = {
             hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
@@ -76,7 +82,8 @@ export class M1 {
         };
         if (options.http_method === 'GET') {
             for (const [key, value] of Object.entries(request_data)) {
-                if (typeof value === 'string') {
+                if (value !== undefined
+                    && value !== null) {
                     url.searchParams.set(key, value);
                 }
             }
