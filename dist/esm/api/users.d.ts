@@ -2,7 +2,7 @@ import { type M1 } from '../m1.js';
 import { type User, type UserShort } from '../valibot/users.js';
 import { type ApiResponse } from '../types.js';
 export declare class M1ApiUsers {
-    private baseClient;
+    protected baseClient: M1;
     constructor(baseClient: M1);
     /**
      * Returns current user.

@@ -2,7 +2,7 @@ import { type M1 } from '../m1.js';
 import { type ApiResponse } from '../types.js';
 import { type ItemProto, type ThingPrototype } from '../valibot/items.js';
 export declare class M1ApiData {
-    private baseClient;
+    protected baseClient: M1;
     constructor(baseClient: M1);
     /**
      * Returns item prototypes by their IDs.

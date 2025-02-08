@@ -52,7 +52,7 @@ const valiApiResponseUsersGetShortOneSchema = pipe(
 
 export class M1ApiUsers {
 	// eslint-disable-next-line no-useless-constructor
-	constructor(private baseClient: M1) {
+	constructor(protected baseClient: M1) {
 		// do nothing
 		// win
 	}

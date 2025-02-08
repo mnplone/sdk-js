@@ -17,7 +17,7 @@ import {
 
 export class M1ApiData {
 	// eslint-disable-next-line no-useless-constructor
-	constructor(private baseClient: M1) {
+	constructor(protected baseClient: M1) {
 		// do nothing
 		// win
 	}
