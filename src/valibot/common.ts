@@ -1,4 +1,9 @@
-import * as v from 'valibot';
+import {
+	optional,
+	picklist,
+	transform,
+	pipe,
+} from 'valibot';
 
 /**
  * Creates bit schema.
@@ -6,28 +11,13 @@ import * as v from 'valibot';
  * @returns -
  */
 export function bit(default_value: 0 | 1) {
-	return v.pipe(
-		v.optional(
-			v.picklist([ 0, 1 ]),
+	return pipe(
+		optional(
+			picklist([ 0, 1 ]),
 			default_value,
 		),
-		v.transform(
+		transform(
 			(value) => value === 1,
 		),
 	);
 }
-
-export const positiveNumberSchema = v.pipe(
-	v.number(),
-	v.minValue(1),
-);
-
-export const nonNegativeNumberSchema = v.pipe(
-	v.number(),
-	v.minValue(0),
-);
-
-export const nonEmptyStringSchema = v.pipe(
-	v.string(),
-	v.minLength(1),
-);
