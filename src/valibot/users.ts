@@ -1,9 +1,22 @@
-import * as v from 'valibot';
+import {
+	array,
+	InferOutput,
+	object,
+	pipe,
+	number,
+	optional,
+	record,
+	union,
+	literal,
+	string,
+	transform,
+	unknown,
+} from 'valibot';
 import { bit } from './common.js';
-import { thingSchema } from './items.js';
+import { valiObjectThingSchema } from './items.js';
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-function transformerBot<const T extends v.InferOutput<typeof valiInputUserShortSchema>>(value: T) {
+function transformerBot<const T extends InferOutput<typeof valiInputUserShortSchema>>(value: T) {
 	const {
 		bot,
 		bot_owner,
@@ -20,135 +33,96 @@ function transformerBot<const T extends v.InferOutput<typeof valiInputUserShortS
 	};
 }
 
-const valiInputUserShortSchema = v.object({
-	user_id: v.pipe(
-		v.number(),
-		v.minValue(1),
-	),
-	domain: v.optional(
-		v.pipe(
-			v.string(),
-			v.minLength(2),
-		),
+const valiInputUserShortSchema = object({
+	user_id: number(),
+	domain: optional(
+		string(),
 	),
 	approved: bit(0),
-	nick: v.pipe(
-		v.string(),
-		v.minLength(2),
-	),
-	gender: v.union([
-		v.literal(0),
-		v.literal(1),
+	nick: string(),
+	gender: union([
+		literal(0),
+		literal(1),
 	]),
-	avatar: v.pipe(
-		v.string(),
-		v.minLength(1),
-	),
+	avatar: string(),
 	online: bit(0),
-	current_game: v.optional(
-		v.object({
-			gs_id: v.pipe(
-				v.string(),
-				v.minLength(1),
-			),
-			gs_game_id: v.pipe(
-				v.string(),
-				v.minLength(1),
-			),
+	current_game: optional(
+		object({
+			gs_id: string(),
+			gs_game_id: string(),
 		}),
 	),
-	rank: v.optional(
-		v.union([
-			v.object({
-				hidden: v.union([
-					v.literal(1),
-				]),
+	rank: optional(
+		union([
+			object({
+				hidden: literal(1),
 			}),
-			v.object({
-				id: v.number(),
-				pts: v.number(),
+			object({
+				id: number(),
+				pts: number(),
 			}),
 		]),
 	),
 	vip: bit(0),
 	bot: bit(0),
-	bot_owner: v.optional(
-		v.pipe(
-			v.number(),
-			v.minValue(1),
-		),
+	bot_owner: optional(
+		number(),
 	),
 	moderator: bit(0),
 });
 
-export const valiObjectUserShortSchema = v.pipe(
+export const valiObjectUserShortSchema = pipe(
 	valiInputUserShortSchema,
-	v.transform(transformerBot),
+	transform(transformerBot),
 );
 
-export const valiObjectUserSchema = v.pipe(
-	v.object({
+export const valiObjectUserSchema = pipe(
+	object({
 		...valiInputUserShortSchema.entries,
-		nicks_old: v.array(
-			v.pipe(
-				v.string(),
-				v.minLength(2),
-			),
+		nicks_old: array(string()),
+		profile_cover: optional(
+			string(),
 		),
-		profile_cover: v.optional(
-			v.pipe(
-				v.string(),
-				v.minLength(1),
-			),
+		social_vk: optional(
+			number(),
 		),
-		social_vk: v.optional(
-			v.pipe(
-				v.number(),
-				v.minValue(1),
-			),
+		games: optional(
+			number(),
 		),
-		games: v.optional(
-			v.pipe(
-				v.number(),
-				v.minValue(0),
-			),
+		games_wins: optional(
+			number(),
 		),
-		games_wins: v.optional(
-			v.pipe(
-				v.number(),
-				v.minValue(0),
-			),
+		xp: optional(
+			number(),
 		),
-		xp: v.optional(
-			v.pipe(
-				v.number(),
-				v.minValue(0),
-			),
+		xp_level: optional(
+			number(),
 		),
-		xp_level: v.optional(
-			v.pipe(
-				v.number(),
-				v.minValue(0),
-			),
-		),
-		badge: v.optional(thingSchema),
-		friendship: v.optional(
-			v.pipe(
-				v.number(),
-				v.minValue(0),
-				v.maxValue(6),
-			),
+		badge: optional(valiObjectThingSchema),
+		friendship: optional(
+			number(),
 		),
 		muted: bit(0),
-		mfp_ban_history: v.optional(
-			v.record(
-				v.string(),
-				v.unknown(),
-			),
+		mfp_ban_history: optional(
+			union([
+				object({
+					type: literal(0),
+					count: number(),
+					last_ban: number(),
+					ts_last_ban: number(),
+					ts_end: optional(
+						number(),
+					),
+				}),
+				object({
+					type: literal(1),
+					ts_end: number(),
+				}),
+			]),
 		),
 	}),
-	v.transform(transformerBot),
-	v.transform((value) => {
+	transform(transformerBot),
+	transform((value) => {
 		const {
 			games,
 			games_wins,
@@ -165,5 +139,5 @@ export const valiObjectUserSchema = v.pipe(
 	}),
 );
 
-export type User = v.InferOutput<typeof valiObjectUserSchema>;
-export type UserShort = v.InferOutput<typeof valiObjectUserShortSchema>;
+export type User = InferOutput<typeof valiObjectUserSchema>;
+export type UserShort = InferOutput<typeof valiObjectUserShortSchema>;
