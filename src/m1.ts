@@ -13,6 +13,7 @@ import {
 	type InferOutput,
 } from 'valibot';
 import { M1ApiUsers } from './api/users.js';
+import { M1ApiAuth } from './api/auth.js';
 import { type ValiBaseSchema } from './types.js';
 
 type M1Options = {
@@ -61,6 +62,7 @@ export class M1 {
 	options: M1Options;
 	ws: ExtWSClient | null = null;
 	users = new M1ApiUsers(this);
+	auth = new M1ApiAuth(this);
 
 	constructor(options?: M1Options) {
 		this.options = {

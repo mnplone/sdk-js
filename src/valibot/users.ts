@@ -5,12 +5,10 @@ import {
 	pipe,
 	number,
 	optional,
-	record,
 	union,
 	literal,
 	string,
 	transform,
-	unknown,
 } from 'valibot';
 import { bit } from './common.js';
 import { valiObjectThingSchema } from './items.js';
@@ -108,7 +106,6 @@ export const valiObjectUserSchema = pipe(
 				object({
 					type: literal(0),
 					count: number(),
-					last_ban: number(),
 					ts_last_ban: number(),
 					ts_end: optional(
 						number(),
