@@ -15,6 +15,7 @@ import {
 import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
 import { M1ApiAuth } from './api/auth.js';
+import { M1ApiBots } from './api/bots.js';
 import { type ValiBaseSchema } from './types.js';
 
 type M1Options = {
@@ -69,7 +70,8 @@ export class M1 {
 	users = new M1ApiUsers(this);
 	data = new M1ApiData(this);
 	auth = new M1ApiAuth(this);
-  
+	bots = new M1ApiBots(this);
+
 	constructor(options?: M1Options) {
 		this.options = {
 			hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
