@@ -2,7 +2,7 @@
 
 Currently in development. Not all methods from [documentation](https://docs.mnpl.one) are available yet.
 
-## Current progress:
+### Current progress:
 
 - [x] auth.signin
 - [x] auth.totpVerify
