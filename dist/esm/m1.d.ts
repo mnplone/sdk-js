@@ -1,5 +1,6 @@
 import { ExtWSClient } from '@extws/client';
 import { type InferOutput } from 'valibot';
+import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
 type M1Options = {
@@ -25,6 +26,7 @@ export declare class M1 {
     options: M1Options;
     ws: ExtWSClient | null;
     users: M1ApiUsers;
+    data: M1ApiData;
     constructor(options?: M1Options);
     /**
      * Makes an API call.
@@ -39,7 +41,7 @@ export declare class M1 {
     callMethod<const ValiResponseSchema extends ValiBaseSchema, const ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined>(options: {
         http_method: 'GET' | 'POST';
         api_method: string;
-        data?: Record<string, any>;
+        data?: Record<string, string | number | undefined | null>;
         valiResponseSchema: ValiResponseSchema;
         valiErrorDataSchema?: ValiErrorDataSchema;
     }): Promise<{

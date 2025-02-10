@@ -12,6 +12,7 @@ import {
 	string,
 	type InferOutput,
 } from 'valibot';
+import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
 import { M1ApiAuth } from './api/auth.js';
 import { type ValiBaseSchema } from './types.js';
@@ -41,11 +42,15 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
 	}
 
 	for (const issue of result.issues) {
-		// console.error('issue', issue);
+		// eslint-disable-next-line no-console
+		console.error();
+		// eslint-disable-next-line no-console
 		console.error(`Valibot found an issue at ${getDotPath(issue)}`);
+		// eslint-disable-next-line no-console
+		console.error('issue', JSON.stringify(issue));
 	}
 
-	throw new TypeError('Valibot found an issues.');
+	throw new TypeError('Valibot found issues.');
 }
 
 /**
@@ -62,8 +67,9 @@ export class M1 {
 	options: M1Options;
 	ws: ExtWSClient | null = null;
 	users = new M1ApiUsers(this);
+	data = new M1ApiData(this);
 	auth = new M1ApiAuth(this);
-
+  
 	constructor(options?: M1Options) {
 		this.options = {
 			hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
@@ -117,8 +123,10 @@ export class M1 {
 	>(options: {
 		http_method: 'GET' | 'POST',
 		api_method: string,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		data?: Record<string, any>,
+		data?: Record<
+			string,
+			string | number | undefined | null
+		>,
 		valiResponseSchema: ValiResponseSchema,
 		valiErrorDataSchema?: ValiErrorDataSchema,
 	}): Promise<{
@@ -146,7 +154,10 @@ export class M1 {
 
 		if (options.http_method === 'GET') {
 			for (const [ key, value ] of Object.entries(request_data)) {
-				if (typeof value === 'string') {
+				if (
+					value !== undefined
+					&& value !== null
+				) {
 					url.searchParams.set(key, value);
 				}
 			}

@@ -1,32 +1,32 @@
-import * as v from 'valibot';
-export declare const valiObjectUserShortSchema: v.SchemaWithPipe<[v.ObjectSchema<{
-    readonly user_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-    readonly domain: v.OptionalSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 2, undefined>]>, never>;
-    readonly approved: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly nick: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 2, undefined>]>;
-    readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
-    readonly avatar: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-    readonly online: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly current_game: v.OptionalSchema<v.ObjectSchema<{
-        readonly gs_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-        readonly gs_game_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
+import { InferOutput } from 'valibot';
+export declare const valiObjectUserShortSchema: import("valibot").SchemaWithPipe<[import("valibot").ObjectSchema<{
+    readonly user_id: import("valibot").NumberSchema<undefined>;
+    readonly domain: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
+    readonly approved: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly nick: import("valibot").StringSchema<undefined>;
+    readonly gender: import("valibot").UnionSchema<[import("valibot").LiteralSchema<0, undefined>, import("valibot").LiteralSchema<1, undefined>], undefined>;
+    readonly avatar: import("valibot").StringSchema<undefined>;
+    readonly online: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly current_game: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+        readonly gs_id: import("valibot").StringSchema<undefined>;
+        readonly gs_game_id: import("valibot").StringSchema<undefined>;
     }, undefined>, never>;
-    readonly rank: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
-        readonly hidden: v.UnionSchema<[v.LiteralSchema<1, undefined>], undefined>;
-    }, undefined>, v.ObjectSchema<{
-        readonly id: v.NumberSchema<undefined>;
-        readonly pts: v.NumberSchema<undefined>;
+    readonly rank: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").ObjectSchema<{
+        readonly hidden: import("valibot").LiteralSchema<1, undefined>;
+    }, undefined>, import("valibot").ObjectSchema<{
+        readonly id: import("valibot").NumberSchema<undefined>;
+        readonly pts: import("valibot").NumberSchema<undefined>;
     }, undefined>], undefined>, never>;
-    readonly vip: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly bot: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly bot_owner: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-    readonly moderator: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-}, undefined>, v.TransformAction<{
+    readonly vip: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly bot: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly bot_owner: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly moderator: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+}, undefined>, import("valibot").TransformAction<{
     user_id: number;
-    nick: string;
     gender: 0 | 1;
-    avatar: string;
     approved: boolean;
+    nick: string;
+    avatar: string;
     online: boolean;
     vip: boolean;
     bot: boolean;
@@ -45,10 +45,10 @@ export declare const valiObjectUserShortSchema: v.SchemaWithPipe<[v.ObjectSchema
     bot_owner?: number | undefined;
 }, Omit<{
     user_id: number;
-    nick: string;
     gender: 0 | 1;
-    avatar: string;
     approved: boolean;
+    nick: string;
+    avatar: string;
     online: boolean;
     vip: boolean;
     bot: boolean;
@@ -70,98 +70,107 @@ export declare const valiObjectUserShortSchema: v.SchemaWithPipe<[v.ObjectSchema
         owner_user_id: number;
     } | null;
 }>]>;
-export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
-    readonly nicks_old: v.ArraySchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 2, undefined>]>, undefined>;
-    readonly profile_cover: v.OptionalSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>, never>;
-    readonly social_vk: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-    readonly games: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-    readonly games_wins: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-    readonly xp: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-    readonly xp_level: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-    readonly badge: v.OptionalSchema<v.ObjectSchema<{
-        readonly thing_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-        readonly user_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-        readonly owned_time: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-        readonly can_give: v.OptionalSchema<v.UnionSchema<[v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, v.LiteralSchema<-1, undefined>], undefined>, never>;
-        readonly can_sell: v.OptionalSchema<v.UnionSchema<[v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, v.LiteralSchema<-1, undefined>], undefined>, never>;
-        readonly souvenir: v.OptionalSchema<v.StringSchema<undefined>, never>;
-        readonly autograph: v.OptionalSchema<v.ObjectSchema<{
-            readonly user_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-            readonly text: v.OptionalSchema<v.StringSchema<undefined>, never>;
+export declare const valiObjectUserSchema: import("valibot").SchemaWithPipe<[import("valibot").ObjectSchema<{
+    readonly nicks_old: import("valibot").ArraySchema<import("valibot").StringSchema<undefined>, undefined>;
+    readonly profile_cover: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
+    readonly social_vk: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly games: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly games_wins: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly xp: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly xp_level: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly badge: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+        readonly thing_id: import("valibot").NumberSchema<undefined>;
+        readonly user_id: import("valibot").NumberSchema<undefined>;
+        readonly owned_time: import("valibot").NumberSchema<undefined>;
+        readonly can_give: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly can_sell: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly souvenir: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
+        readonly autograph: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+            readonly user_id: import("valibot").NumberSchema<undefined>;
+            readonly text: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
         }, undefined>, never>;
-        readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
-            readonly transactions: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>;
-            readonly money: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>;
-        }, undefined>, v.ObjectSchema<{
-            readonly numbers: v.ArraySchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, undefined>;
-        }, undefined>, v.ObjectSchema<{
-            readonly count: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>;
+        readonly moneybox: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").ObjectSchema<{
+            readonly transactions: import("valibot").NumberSchema<undefined>;
+            readonly money: import("valibot").NumberSchema<undefined>;
+        }, undefined>, import("valibot").ObjectSchema<{
+            readonly numbers: import("valibot").ArraySchema<import("valibot").NumberSchema<undefined>, undefined>;
+        }, undefined>, import("valibot").ObjectSchema<{
+            readonly count: import("valibot").NumberSchema<undefined>;
         }, undefined>], undefined>, never>;
-        readonly uses_left: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-        readonly uses_origin: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-        readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
-            readonly id: v.NumberSchema<undefined>;
-            readonly is_default: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-            readonly is_selected: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-            readonly is_unlocked: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-            readonly image: v.OptionalSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>, never>;
-            readonly description: v.OptionalSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>, never>;
-            readonly unlock: v.OptionalSchema<v.ObjectSchema<{
-                readonly moneybox: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-                readonly buy_tokens_sp: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-                readonly buy_tokens_cmpt: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
+        readonly uses_left: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly uses_origin: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly variants: import("valibot").OptionalSchema<import("valibot").ArraySchema<import("valibot").ObjectSchema<{
+            readonly id: import("valibot").NumberSchema<undefined>;
+            readonly is_default: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+            readonly is_selected: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+            readonly is_unlocked: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+            readonly image: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
+            readonly description: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
+            readonly unlock: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+                readonly moneybox: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+                readonly buy_tokens_sp: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+                readonly buy_tokens_cmpt: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
             }, undefined>, never>;
         }, undefined>, undefined>, never>;
-        readonly thing_prototype_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-        readonly thing_prototype_status: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
-        readonly thing_type: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 9, undefined>]>;
-        readonly image: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-        readonly title: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-        readonly description: v.StringSchema<undefined>;
-        readonly group: v.OptionalSchema<v.SchemaWithPipe<[v.NullableSchema<v.NumberSchema<undefined>, never>, v.TransformAction<number | null, number | undefined>]>, never>;
-        readonly quality: v.NumberSchema<undefined>;
-        readonly collection: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-        readonly twin_thing_prototype_id: v.OptionalSchema<v.ArraySchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, undefined>, never>;
-        readonly delete_price: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-        readonly can_be_upgraded: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-        readonly buy_cost: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>]>, never>;
-        readonly key: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-        readonly cases: v.OptionalSchema<v.ArraySchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, undefined>, never>;
-        readonly drop: v.OptionalSchema<v.ObjectSchema<{
-            readonly thing_prototype_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-            readonly hidden: v.OptionalSchema<v.BooleanSchema<undefined>, never>;
+        readonly thing_prototype_id: import("valibot").NumberSchema<undefined>;
+        readonly thing_prototype_status: import("valibot").UnionSchema<[import("valibot").LiteralSchema<0, undefined>, import("valibot").LiteralSchema<1, undefined>], undefined>;
+        readonly thing_type: import("valibot").NumberSchema<undefined>;
+        readonly image: import("valibot").StringSchema<undefined>;
+        readonly title: import("valibot").StringSchema<undefined>;
+        readonly description: import("valibot").StringSchema<undefined>;
+        readonly group: import("valibot").OptionalSchema<import("valibot").SchemaWithPipe<[import("valibot").NullableSchema<import("valibot").NumberSchema<undefined>, never>, import("valibot").TransformAction<number | null, number | undefined>]>, never>;
+        readonly quality: import("valibot").NumberSchema<undefined>;
+        readonly collection: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly twin_thing_prototype_id: import("valibot").OptionalSchema<import("valibot").ArraySchema<import("valibot").NumberSchema<undefined>, undefined>, never>;
+        readonly delete_price: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly can_be_upgraded: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+        readonly buy_cost: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly key: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+        readonly cases: import("valibot").OptionalSchema<import("valibot").ArraySchema<import("valibot").NumberSchema<undefined>, undefined>, never>;
+        readonly drop: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+            readonly thing_prototype_id: import("valibot").NumberSchema<undefined>;
+            readonly hidden: import("valibot").OptionalSchema<import("valibot").BooleanSchema<undefined>, never>;
         }, undefined>, never>;
     }, undefined>, never>;
-    readonly friendship: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 0, undefined>, v.MaxValueAction<number, 6, undefined>]>, never>;
-    readonly muted: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly mfp_ban_history: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, never>;
-    readonly user_id: v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>;
-    readonly domain: v.OptionalSchema<v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 2, undefined>]>, never>;
-    readonly approved: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly nick: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 2, undefined>]>;
-    readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
-    readonly avatar: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-    readonly online: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly current_game: v.OptionalSchema<v.ObjectSchema<{
-        readonly gs_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-        readonly gs_game_id: v.SchemaWithPipe<[v.StringSchema<undefined>, v.MinLengthAction<string, 1, undefined>]>;
-    }, undefined>, never>;
-    readonly rank: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
-        readonly hidden: v.UnionSchema<[v.LiteralSchema<1, undefined>], undefined>;
-    }, undefined>, v.ObjectSchema<{
-        readonly id: v.NumberSchema<undefined>;
-        readonly pts: v.NumberSchema<undefined>;
+    readonly friendship: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly muted: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly mfp_ban_history: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").ObjectSchema<{
+        readonly type: import("valibot").LiteralSchema<0, undefined>;
+        readonly count: import("valibot").NumberSchema<undefined>;
+        readonly last_ban: import("valibot").NumberSchema<undefined>;
+        readonly ts_last_ban: import("valibot").NumberSchema<undefined>;
+        readonly ts_end: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    }, undefined>, import("valibot").ObjectSchema<{
+        readonly type: import("valibot").LiteralSchema<1, undefined>;
+        readonly ts_end: import("valibot").NumberSchema<undefined>;
     }, undefined>], undefined>, never>;
-    readonly vip: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly bot: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    readonly bot_owner: v.OptionalSchema<v.SchemaWithPipe<[v.NumberSchema<undefined>, v.MinValueAction<number, 1, undefined>]>, never>;
-    readonly moderator: v.SchemaWithPipe<[v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-}, undefined>, v.TransformAction<{
+    readonly user_id: import("valibot").NumberSchema<undefined>;
+    readonly domain: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
+    readonly approved: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly nick: import("valibot").StringSchema<undefined>;
+    readonly gender: import("valibot").UnionSchema<[import("valibot").LiteralSchema<0, undefined>, import("valibot").LiteralSchema<1, undefined>], undefined>;
+    readonly avatar: import("valibot").StringSchema<undefined>;
+    readonly online: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly current_game: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+        readonly gs_id: import("valibot").StringSchema<undefined>;
+        readonly gs_game_id: import("valibot").StringSchema<undefined>;
+    }, undefined>, never>;
+    readonly rank: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").ObjectSchema<{
+        readonly hidden: import("valibot").LiteralSchema<1, undefined>;
+    }, undefined>, import("valibot").ObjectSchema<{
+        readonly id: import("valibot").NumberSchema<undefined>;
+        readonly pts: import("valibot").NumberSchema<undefined>;
+    }, undefined>], undefined>, never>;
+    readonly vip: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly bot: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+    readonly bot_owner: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
+    readonly moderator: import("valibot").SchemaWithPipe<[import("valibot").OptionalSchema<import("valibot").PicklistSchema<[0, 1], undefined>, 0 | 1>, import("valibot").TransformAction<0 | 1, boolean>]>;
+}, undefined>, import("valibot").TransformAction<{
     user_id: number;
-    nick: string;
     gender: 0 | 1;
-    avatar: string;
     approved: boolean;
+    nick: string;
+    avatar: string;
     online: boolean;
     vip: boolean;
     bot: boolean;
@@ -187,18 +196,17 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     xp?: number | undefined;
     xp_level?: number | undefined;
     badge?: {
-        description: string;
         image: string;
+        description: string;
         thing_prototype_status: 0 | 1;
-        thing_type: number;
         thing_prototype_id: number;
+        thing_type: number;
         title: string;
         quality: number;
         can_be_upgraded: boolean;
         user_id: number;
         thing_id: number;
         owned_time: number;
-        key?: number | undefined;
         moneybox?: {
             transactions: number;
             money: number;
@@ -212,6 +220,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
         twin_thing_prototype_id?: number[] | undefined;
         delete_price?: number | undefined;
         buy_cost?: number | undefined;
+        key?: number | undefined;
         cases?: number[] | undefined;
         drop?: {
             thing_prototype_id: number;
@@ -222,8 +231,8 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
             is_default: boolean;
             is_selected: boolean;
             is_unlocked: boolean;
-            description?: string | undefined;
             image?: string | undefined;
+            description?: string | undefined;
             unlock?: {
                 moneybox?: number | undefined;
                 buy_tokens_sp?: number | undefined;
@@ -242,14 +251,21 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     } | undefined;
     friendship?: number | undefined;
     mfp_ban_history?: {
-        [x: string]: unknown;
+        type: 0;
+        count: number;
+        last_ban: number;
+        ts_last_ban: number;
+        ts_end?: number | undefined;
+    } | {
+        type: 1;
+        ts_end: number;
     } | undefined;
 }, Omit<{
     user_id: number;
-    nick: string;
     gender: 0 | 1;
-    avatar: string;
     approved: boolean;
+    nick: string;
+    avatar: string;
     online: boolean;
     vip: boolean;
     bot: boolean;
@@ -275,18 +291,17 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     xp?: number | undefined;
     xp_level?: number | undefined;
     badge?: {
-        description: string;
         image: string;
+        description: string;
         thing_prototype_status: 0 | 1;
-        thing_type: number;
         thing_prototype_id: number;
+        thing_type: number;
         title: string;
         quality: number;
         can_be_upgraded: boolean;
         user_id: number;
         thing_id: number;
         owned_time: number;
-        key?: number | undefined;
         moneybox?: {
             transactions: number;
             money: number;
@@ -300,6 +315,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
         twin_thing_prototype_id?: number[] | undefined;
         delete_price?: number | undefined;
         buy_cost?: number | undefined;
+        key?: number | undefined;
         cases?: number[] | undefined;
         drop?: {
             thing_prototype_id: number;
@@ -310,8 +326,8 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
             is_default: boolean;
             is_selected: boolean;
             is_unlocked: boolean;
-            description?: string | undefined;
             image?: string | undefined;
+            description?: string | undefined;
             unlock?: {
                 moneybox?: number | undefined;
                 buy_tokens_sp?: number | undefined;
@@ -330,18 +346,25 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     } | undefined;
     friendship?: number | undefined;
     mfp_ban_history?: {
-        [x: string]: unknown;
+        type: 0;
+        count: number;
+        last_ban: number;
+        ts_last_ban: number;
+        ts_end?: number | undefined;
+    } | {
+        type: 1;
+        ts_end: number;
     } | undefined;
 }, "bot_owner" | "bot"> & {
     bot: {
         owner_user_id: number;
     } | null;
-}>, v.TransformAction<Omit<{
+}>, import("valibot").TransformAction<Omit<{
     user_id: number;
-    nick: string;
     gender: 0 | 1;
-    avatar: string;
     approved: boolean;
+    nick: string;
+    avatar: string;
     online: boolean;
     vip: boolean;
     bot: boolean;
@@ -367,18 +390,17 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     xp?: number | undefined;
     xp_level?: number | undefined;
     badge?: {
-        description: string;
         image: string;
+        description: string;
         thing_prototype_status: 0 | 1;
-        thing_type: number;
         thing_prototype_id: number;
+        thing_type: number;
         title: string;
         quality: number;
         can_be_upgraded: boolean;
         user_id: number;
         thing_id: number;
         owned_time: number;
-        key?: number | undefined;
         moneybox?: {
             transactions: number;
             money: number;
@@ -392,6 +414,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
         twin_thing_prototype_id?: number[] | undefined;
         delete_price?: number | undefined;
         buy_cost?: number | undefined;
+        key?: number | undefined;
         cases?: number[] | undefined;
         drop?: {
             thing_prototype_id: number;
@@ -402,8 +425,8 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
             is_default: boolean;
             is_selected: boolean;
             is_unlocked: boolean;
-            description?: string | undefined;
             image?: string | undefined;
+            description?: string | undefined;
             unlock?: {
                 moneybox?: number | undefined;
                 buy_tokens_sp?: number | undefined;
@@ -422,7 +445,14 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     } | undefined;
     friendship?: number | undefined;
     mfp_ban_history?: {
-        [x: string]: unknown;
+        type: 0;
+        count: number;
+        last_ban: number;
+        ts_last_ban: number;
+        ts_end?: number | undefined;
+    } | {
+        type: 1;
+        ts_end: number;
     } | undefined;
 }, "bot_owner" | "bot"> & {
     bot: {
@@ -435,9 +465,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     };
     user_id: number;
     domain?: string | undefined;
-    nick: string;
     gender: 0 | 1;
-    avatar: string;
     current_game?: {
         gs_id: string;
         gs_game_id: string;
@@ -449,6 +477,8 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
         pts: number;
     } | undefined;
     approved: boolean;
+    nick: string;
+    avatar: string;
     online: boolean;
     vip: boolean;
     moderator: boolean;
@@ -458,18 +488,17 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     xp?: number | undefined;
     xp_level?: number | undefined;
     badge?: {
-        description: string;
         image: string;
+        description: string;
         thing_prototype_status: 0 | 1;
-        thing_type: number;
         thing_prototype_id: number;
+        thing_type: number;
         title: string;
         quality: number;
         can_be_upgraded: boolean;
         user_id: number;
         thing_id: number;
         owned_time: number;
-        key?: number | undefined;
         moneybox?: {
             transactions: number;
             money: number;
@@ -483,6 +512,7 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
         twin_thing_prototype_id?: number[] | undefined;
         delete_price?: number | undefined;
         buy_cost?: number | undefined;
+        key?: number | undefined;
         cases?: number[] | undefined;
         drop?: {
             thing_prototype_id: number;
@@ -493,8 +523,8 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
             is_default: boolean;
             is_selected: boolean;
             is_unlocked: boolean;
-            description?: string | undefined;
             image?: string | undefined;
+            description?: string | undefined;
             unlock?: {
                 moneybox?: number | undefined;
                 buy_tokens_sp?: number | undefined;
@@ -513,12 +543,19 @@ export declare const valiObjectUserSchema: v.SchemaWithPipe<[v.ObjectSchema<{
     } | undefined;
     friendship?: number | undefined;
     mfp_ban_history?: {
-        [x: string]: unknown;
+        type: 0;
+        count: number;
+        last_ban: number;
+        ts_last_ban: number;
+        ts_end?: number | undefined;
+    } | {
+        type: 1;
+        ts_end: number;
     } | undefined;
     muted: boolean;
     bot: {
         owner_user_id: number;
     } | null;
 }>]>;
-export type User = v.InferOutput<typeof valiObjectUserSchema>;
-export type UserShort = v.InferOutput<typeof valiObjectUserShortSchema>;
+export type User = InferOutput<typeof valiObjectUserSchema>;
+export type UserShort = InferOutput<typeof valiObjectUserShortSchema>;

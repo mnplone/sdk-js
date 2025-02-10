@@ -31,7 +31,7 @@
 		"build:ts": "rm -r dist/esm ; tsc",
 		"lint": "eslint . && tsc --skipLibCheck --noemit",
 		"publish:npm": "bun run lint && bun run build && bun run test && npm publish",
-		"test": "vitest run --no-file-parallelism && bun test --coverage"
+		"test": "NODE_TLS_REJECT_UNAUTHORIZED=0 bun test --coverage"
 	},
 	"repository": {
 		"type": "git",

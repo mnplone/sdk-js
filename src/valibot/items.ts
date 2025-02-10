@@ -1,7 +1,6 @@
 import {
 	array,
 	boolean,
-	InferOutput,
 	literal,
 	nullable,
 	number,
@@ -13,6 +12,8 @@ import {
 	union,
 	record,
 	unknown,
+	picklist,
+	type InferOutput,
 } from 'valibot';
 import { bit } from './common.js';
 
@@ -136,10 +137,10 @@ export const valiObjectThingSchema = object({
 
 export const valiObjectItemProtoSchema = object({
 	item_proto_id: number(),
-	item_proto_status: union([
-		literal(0),
-		literal(1),
-	]),
+	item_proto_status: optional(
+		picklist([ 0, 1 ]),
+		0,
+	),
 	type: number(),
 	image: string(),
 	title: string(),
@@ -240,6 +241,11 @@ export const valiObjectItemSchema = object({
 			origin: optional(number()),
 		}),
 	),
+});
+
+export const valiObjectItemProtoLegacySchema = object({
+	...valiObjectThingPrototypeSchema.entries,
+	...valiObjectItemProtoSchema.entries,
 });
 
 export type ThingPrototype = InferOutput<typeof valiObjectThingPrototypeSchema>;
