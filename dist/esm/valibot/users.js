@@ -33,6 +33,12 @@ const valiInputUserShortSchema = object({
             hidden: literal(1),
         }),
         object({
+            qual: number(),
+        }),
+        object({
+            expired: literal(1),
+        }),
+        object({
             id: number(),
             pts: number(),
         }),
