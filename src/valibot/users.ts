@@ -112,7 +112,6 @@ export const valiObjectUserSchema = pipe(
 				object({
 					type: literal(0),
 					count: number(),
-					last_ban: number(),
 					ts_last_ban: number(),
 					ts_end: optional(
 						number(),
