@@ -6,7 +6,7 @@ import {
 	string,
 	transform,
 } from 'valibot';
-import { type M1 } from '../m1.js';
+import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
 import {
 	valiObjectItemProtoLegacySchema,
@@ -15,13 +15,7 @@ import {
 	type ThingPrototype,
 } from '../valibot/items.js';
 
-export class M1ApiData {
-	// eslint-disable-next-line no-useless-constructor
-	constructor(protected baseClient: M1) {
-		// do nothing
-		// win
-	}
-
+export class M1ApiData extends M1ApiBase {
 	/**
 	 * Returns item prototypes by their IDs.
 	 * @param item_proto_ids - The IDs of the item prototypes.

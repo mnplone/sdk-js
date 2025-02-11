@@ -3,7 +3,7 @@ import {
 	pipe,
 	transform,
 } from 'valibot';
-import { type M1 } from '../m1.js';
+import { M1ApiBase } from './base.js';
 import {
 	type User,
 	type UserShort,
@@ -50,13 +50,7 @@ const valiApiResponseUsersGetShortOneSchema = pipe(
 	transform((value) => value[0]),
 );
 
-export class M1ApiUsers {
-	// eslint-disable-next-line no-useless-constructor
-	constructor(protected baseClient: M1) {
-		// do nothing
-		// win
-	}
-
+export class M1ApiUsers extends M1ApiBase {
 	/**
 	 * Returns current user.
 	 * @returns -

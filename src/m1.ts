@@ -69,7 +69,7 @@ export class M1 {
 	users = new M1ApiUsers(this);
 	data = new M1ApiData(this);
 	auth = new M1ApiAuth(this);
-  
+
 	constructor(options?: M1Options) {
 		this.options = {
 			hostname: globalThis.location?.hostname ?? 'monopoly-one.com',

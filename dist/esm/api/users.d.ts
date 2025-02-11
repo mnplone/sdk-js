@@ -1,9 +1,7 @@
-import { type M1 } from '../m1.js';
+import { M1ApiBase } from './base.js';
 import { type User, type UserShort } from '../valibot/users.js';
 import { type ApiResponse } from '../types.js';
-export declare class M1ApiUsers {
-    protected baseClient: M1;
-    constructor(baseClient: M1);
+export declare class M1ApiUsers extends M1ApiBase {
     /**
      * Returns current user.
      * @returns -

@@ -1,13 +1,7 @@
 import { array, number, object, pipe, string, transform, } from 'valibot';
+import { M1ApiBase } from './base.js';
 import { valiObjectItemProtoLegacySchema, valiObjectItemProtoSchema, } from '../valibot/items.js';
-export class M1ApiData {
-    baseClient;
-    // eslint-disable-next-line no-useless-constructor
-    constructor(baseClient) {
-        this.baseClient = baseClient;
-        // do nothing
-        // win
-    }
+export class M1ApiData extends M1ApiBase {
     // generic for typescript 5.8
     // getItemProtos<
     // 	const OL extends boolean | undefined = undefined,

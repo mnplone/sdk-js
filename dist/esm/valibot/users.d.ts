@@ -149,7 +149,6 @@ export declare const valiObjectUserSchema: import("valibot").SchemaWithPipe<[imp
     readonly mfp_ban_history: import("valibot").OptionalSchema<import("valibot").UnionSchema<[import("valibot").ObjectSchema<{
         readonly type: import("valibot").LiteralSchema<0, undefined>;
         readonly count: import("valibot").NumberSchema<undefined>;
-        readonly last_ban: import("valibot").NumberSchema<undefined>;
         readonly ts_last_ban: import("valibot").NumberSchema<undefined>;
         readonly ts_end: import("valibot").OptionalSchema<import("valibot").NumberSchema<undefined>, never>;
     }, undefined>, import("valibot").ObjectSchema<{
@@ -273,7 +272,6 @@ export declare const valiObjectUserSchema: import("valibot").SchemaWithPipe<[imp
     mfp_ban_history?: {
         type: 0;
         count: number;
-        last_ban: number;
         ts_last_ban: number;
         ts_end?: number | undefined;
     } | {
@@ -372,7 +370,6 @@ export declare const valiObjectUserSchema: import("valibot").SchemaWithPipe<[imp
     mfp_ban_history?: {
         type: 0;
         count: number;
-        last_ban: number;
         ts_last_ban: number;
         ts_end?: number | undefined;
     } | {
@@ -475,7 +472,6 @@ export declare const valiObjectUserSchema: import("valibot").SchemaWithPipe<[imp
     mfp_ban_history?: {
         type: 0;
         count: number;
-        last_ban: number;
         ts_last_ban: number;
         ts_end?: number | undefined;
     } | {
@@ -577,7 +573,6 @@ export declare const valiObjectUserSchema: import("valibot").SchemaWithPipe<[imp
     mfp_ban_history?: {
         type: 0;
         count: number;
-        last_ban: number;
         ts_last_ban: number;
         ts_end?: number | undefined;
     } | {

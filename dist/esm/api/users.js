@@ -1,4 +1,5 @@
 import { array, pipe, transform, } from 'valibot';
+import { M1ApiBase } from './base.js';
 import { valiObjectUserSchema, valiObjectUserShortSchema, } from '../valibot/users.js';
 import { isIterableIterator, isRecord, } from '../utils.js';
 // eslint-disable-next-line jsdoc/require-jsdoc
@@ -13,14 +14,7 @@ const valiApiResponseUsersGetSchema = pipe(array(valiObjectUserSchema), transfor
 const valiApiResponseUsersGetShortSchema = pipe(array(valiObjectUserShortSchema), transform(transformer));
 const valiApiResponseUsersGetOneSchema = pipe(array(valiObjectUserSchema), transform((value) => value[0]));
 const valiApiResponseUsersGetShortOneSchema = pipe(array(valiObjectUserShortSchema), transform((value) => value[0]));
-export class M1ApiUsers {
-    baseClient;
-    // eslint-disable-next-line no-useless-constructor
-    constructor(baseClient) {
-        this.baseClient = baseClient;
-        // do nothing
-        // win
-    }
+export class M1ApiUsers extends M1ApiBase {
     get(arg0, arg1) {
         let user_ids = null;
         let is_multiple_users = false;
