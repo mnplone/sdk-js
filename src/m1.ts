@@ -15,6 +15,8 @@ import {
 import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
 import { M1ApiAuth } from './api/auth.js';
+import { M1ApiBots } from './api/bots.js';
+import { M1ApiFriends } from './api/friends.js';
 import { type ValiBaseSchema } from './types.js';
 
 type M1Options = {
@@ -66,9 +68,10 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
 export class M1 {
 	options: M1Options;
 	ws: ExtWSClient | null = null;
-	users = new M1ApiUsers(this);
-	data = new M1ApiData(this);
 	auth = new M1ApiAuth(this);
+  bots = new M1ApiBots(this);
+	data = new M1ApiData(this);
+	users = new M1ApiUsers(this);
 
 	constructor(options?: M1Options) {
 		this.options = {

@@ -7,8 +7,8 @@ Currently in development. Not all methods from [documentation](https://docs.mnpl
 - [x] auth.signin
 - [x] auth.totpVerify
 - [x] auth.refresh
-- [ ] bots.create
-- [ ] bots.getToken
+- [x] bots.create
+- [x] bots.getToken
 - [x] users.get
 - [ ] friends.get
 - [ ] friends.getRequests
@@ -18,6 +18,6 @@ Currently in development. Not all methods from [documentation](https://docs.mnpl
 - [ ] gchat.send
 - [ ] inventory.get
 - [ ] inventory.craft
-- [ ] data.getItemProtos
+- [x] data.getItemProtos
 - [ ] data.searchItemProtos
 - [ ] oauth.exchangeCode
