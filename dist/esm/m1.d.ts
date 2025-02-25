@@ -2,6 +2,7 @@ import { ExtWSClient } from '@extws/client';
 import { type InferOutput } from 'valibot';
 import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
+import { M1ApiAuth } from './api/auth.js';
 import { type ValiBaseSchema } from './types.js';
 type M1Options = {
     hostname?: string;
@@ -27,6 +28,7 @@ export declare class M1 {
     ws: ExtWSClient | null;
     users: M1ApiUsers;
     data: M1ApiData;
+    auth: M1ApiAuth;
     constructor(options?: M1Options);
     /**
      * Makes an API call.

@@ -33,6 +33,12 @@ const valiInputUserShortSchema = object({
             hidden: literal(1),
         }),
         object({
+            qual: number(),
+        }),
+        object({
+            expired: literal(1),
+        }),
+        object({
             id: number(),
             pts: number(),
         }),
@@ -59,7 +65,6 @@ export const valiObjectUserSchema = pipe(object({
         object({
             type: literal(0),
             count: number(),
-            last_ban: number(),
             ts_last_ban: number(),
             ts_end: optional(number()),
         }),

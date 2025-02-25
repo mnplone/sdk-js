@@ -1,9 +1,7 @@
-import { type M1 } from '../m1.js';
+import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
 import { type ItemProto, type ThingPrototype } from '../valibot/items.js';
-export declare class M1ApiData {
-    protected baseClient: M1;
-    constructor(baseClient: M1);
+export declare class M1ApiData extends M1ApiBase {
     /**
      * Returns item prototypes by their IDs.
      * @param item_proto_ids - The IDs of the item prototypes.

@@ -2,6 +2,7 @@ import { ExtWSClient } from '@extws/client';
 import { getDotPath, minValue, never, number, object, optional, parse, pipe, safeParse, string, } from 'valibot';
 import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
+import { M1ApiAuth } from './api/auth.js';
 /**
  * Parses value with schema like valibot, but prints issue paths.
  * @param schema Valibot schema.
@@ -38,6 +39,7 @@ export class M1 {
     ws = null;
     users = new M1ApiUsers(this);
     data = new M1ApiData(this);
+    auth = new M1ApiAuth(this);
     constructor(options) {
         this.options = {
             hostname: globalThis.location?.hostname ?? 'monopoly-one.com',

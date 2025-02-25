@@ -68,10 +68,10 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
 export class M1 {
 	options: M1Options;
 	ws: ExtWSClient | null = null;
-	users = new M1ApiUsers(this);
-	data = new M1ApiData(this);
 	auth = new M1ApiAuth(this);
-	bots = new M1ApiBots(this);
+  bots = new M1ApiBots(this);
+	data = new M1ApiData(this);
+	users = new M1ApiUsers(this);
 
 	constructor(options?: M1Options) {
 		this.options = {

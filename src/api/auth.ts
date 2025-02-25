@@ -1,6 +1,5 @@
 import { union } from 'valibot';
-
-import { type M1 } from '../m1.js';
+import { M1ApiBase } from './base.js';
 import {
 	valiObjectSessionSchema,
 	valiResponseTotpSessionTokenSchema,
@@ -15,13 +14,7 @@ const valiResponseAuthSigninSchema = union([
 	valiResponseTotpSessionTokenSchema,
 ]);
 
-export class M1ApiAuth {
-	// eslint-disable-next-line no-useless-constructor
-	constructor(protected baseClient: M1) {
-		// do nothing
-		// win
-	}
-
+export class M1ApiAuth extends M1ApiBase {
 	/**
 	 * Sign in with email and password.
 	 * @param email The email address of the user.
