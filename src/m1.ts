@@ -19,6 +19,34 @@ import { M1ApiBots } from './api/bots.js';
 import { M1ApiFriends } from './api/friends.js';
 import { type ValiBaseSchema } from './types.js';
 
+export type CallMethodOptions<
+	ValiResponseSchema extends ValiBaseSchema,
+	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+> = {
+	http_method: 'GET' | 'POST',
+	api_method: string,
+	data?: Record<
+		string,
+		string | number | undefined | null
+	>,
+	valiResponseSchema: ValiResponseSchema,
+	valiErrorDataSchema?: ValiErrorDataSchema,
+};
+
+type CallMethodResponse<
+	ValiResponseSchema extends ValiBaseSchema,
+	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+> = {
+	success: true,
+	data: InferOutput<ValiResponseSchema>,
+} | {
+	success: false,
+	code: number,
+	description?: string,
+	data: ValiErrorDataSchema extends undefined
+		? never
+		: InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
+};
 type M1Options = {
 	hostname?: string,
 	access_token?: string,
@@ -26,8 +54,16 @@ type M1Options = {
 	websocket?: {
 		subs?: string,
 	},
-	// headers?: Headers,
 	headers?: Record<string, string>,
+	hooks?: {
+		[key: string]: <
+			ValiResponseSchema extends ValiBaseSchema,
+			ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+		>(
+			options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
+			data: Record<string, unknown>
+		) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>,
+	},
 };
 
 /**
@@ -64,13 +100,15 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
  * @param options.polling - Connect to WebSocket
  * @param options.subs - Websocket subscriptions
  * @param options.headers - Headers
+ * @param options.hooks - Hooks
  */
 export class M1 {
 	options: M1Options;
 	ws: ExtWSClient | null = null;
 	auth = new M1ApiAuth(this);
-  bots = new M1ApiBots(this);
+	bots = new M1ApiBots(this);
 	data = new M1ApiData(this);
+	friends = new M1ApiFriends(this);
 	users = new M1ApiUsers(this);
 
 	constructor(options?: M1Options) {
@@ -87,7 +125,8 @@ export class M1 {
 			} = this.options;
 
 			const ws_url = new URL('/ws', `wss://${this.options.hostname}`);
-			if (access_token !== undefined) {
+
+			if (access_token) {
 				ws_url.searchParams.set('access_token', access_token);
 			}
 
@@ -121,28 +160,9 @@ export class M1 {
 	 * @returns - API response.
 	 */
 	async callMethod<
-		const ValiResponseSchema extends ValiBaseSchema,
-		const ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
-	>(options: {
-		http_method: 'GET' | 'POST',
-		api_method: string,
-		data?: Record<
-			string,
-			string | number | undefined | null
-		>,
-		valiResponseSchema: ValiResponseSchema,
-		valiErrorDataSchema?: ValiErrorDataSchema,
-	}): Promise<{
-		success: true,
-		data: InferOutput<ValiResponseSchema>,
-	} | {
-		success: false,
-		code: number,
-		description?: string,
-		data: ValiErrorDataSchema extends undefined
-			? never
-			: InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
-	}> {
+		ValiResponseSchema extends ValiBaseSchema,
+		ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+	>(options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>): Promise<CallMethodResponse<ValiResponseSchema, ValiErrorDataSchema>> {
 		const url = new URL(
 			`/api/${options.api_method}`,
 			`https://${this.options.hostname}`,
@@ -215,6 +235,16 @@ export class M1 {
 			}),
 			response_data,
 		);
+
+		if (this.options.hooks && code in this.options.hooks) {
+			const hook = this.options.hooks[code];
+
+			const new_request_options = await hook<ValiResponseSchema, ValiErrorDataSchema>(options, request_data);
+
+			if (new_request_options) {
+				return this.callMethod(new_request_options);
+			}
+		}
 
 		return {
 			success: false,

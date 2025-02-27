@@ -1,6 +1,6 @@
 # JavaScript SDK for mnpl.one
 
-Currently in development. Not all methods from [documentation](https://docs.mnpl.one) are available yet.
+Currently in development. Not all the methods from [documentation](https://docs.mnpl.one) are available yet.
 
 ### Current progress:
 
@@ -10,10 +10,10 @@ Currently in development. Not all methods from [documentation](https://docs.mnpl
 - [x] bots.create
 - [x] bots.getToken
 - [x] users.get
-- [ ] friends.get
-- [ ] friends.getRequests
-- [ ] friends.add
-- [ ] friends.delete
+- [x] friends.get
+- [x] friends.getRequests
+- [x] friends.add
+- [x] friends.delete
 - [ ] gchat.get
 - [ ] gchat.send
 - [ ] inventory.get
