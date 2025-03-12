@@ -1,4 +1,3 @@
-import { type M1 } from '../m1.js';
 import {
 	object,
 	number,
@@ -8,15 +7,14 @@ import {
 	type Session,
 } from '../valibot/auth.js';
 import { type ApiResponse } from '../types.js';
-// import { isRecord } from '../utils.js';
+import { M1ApiBase } from './base.js';
 
-export class M1ApiBots {
-	// eslint-disable-next-line no-useless-constructor
-	constructor(protected baseClient: M1) {
-		// do nothing
-		// win
-	}
-
+export class M1ApiBots extends M1ApiBase {
+	/**
+	 * Creates a new bot.
+	 * @param nick - A nickname of a new bot.
+	 * @returns -
+	 */
 	create(nick: string): Promise<ApiResponse<{ user_id: number }>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -30,6 +28,12 @@ export class M1ApiBots {
 		});
 	}
 
+	/**
+	 * Generates access_token for a bot.
+	 * @param user_id - The ID of the bot.
+	 * @param ip - The IP address (IPv4 or IPv6).
+	 * @returns -
+	 */
 	getToken(user_id: number, ip?: string): Promise<ApiResponse<Session>> {
 		const options: {
 			user_id: number,
