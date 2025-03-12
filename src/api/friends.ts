@@ -1,4 +1,3 @@
-import { type M1 } from '../m1.js';
 import { void as voidSchema } from 'valibot';
 import {
 	valiResponseFriendsGetRequestsSchema,
@@ -11,15 +10,10 @@ import {
 	type ResponseFriendsGetShort,
 } from '../valibot/friends.js';
 import { type ApiResponse } from '../types.js';
-// import { isRecord } from '../utils.js';
+import { M1ApiBase } from './base.js';
+import { isRecord } from '../utils.js';
 
-export class M1ApiFriends {
-	// eslint-disable-next-line no-useless-constructor
-	constructor(protected baseClient: M1) {
-		// do nothing
-		// win
-	}
-
+export class M1ApiFriends extends M1ApiBase {
 	/**
 	 * Adds a friend.
 	 * @param user_id - The ID of the user to add.
@@ -113,6 +107,12 @@ export class M1ApiFriends {
 
 	/**
 	 * Returns a list of friends.
+	 * @param user_id - The ID of the user to get friends for.
+	 * @returns A list of friends and their count.
+	 */
+	get(user_id: number | string): Promise<ApiResponse<ResponseFriendsGet>>;
+	/**
+	 * Returns a list of friends.
 	 * @param options -
 	 * @param options.user_id The ID of the user to get friends for.
 	 * @param options.online Whether to return online friends.
@@ -122,14 +122,7 @@ export class M1ApiFriends {
 	 * @param options.count The number of friends to return.
 	 * @returns A list of friends and their count.
 	 */
-	get({
-		user_id,
-		online,
-		add_user,
-		short,
-		offset,
-		count,
-	}: {
+	get(options: {
 		user_id?: number | string,
 		online?: boolean,
 		add_user?: boolean,
@@ -148,14 +141,7 @@ export class M1ApiFriends {
 	 * @param options.count The number of friends to return.
 	 * @returns A list of friends and their count.
 	 */
-	get({
-		user_id,
-		online,
-		add_user,
-		short,
-		offset,
-		count,
-	}: {
+	get(options: {
 		user_id?: number | string,
 		online?: boolean,
 		add_user?: boolean,
@@ -163,14 +149,7 @@ export class M1ApiFriends {
 		offset?: number,
 		count?: number,
 	}): Promise<ApiResponse<ResponseFriendsGet>>;
-	get({
-		user_id,
-		online = false,
-		add_user = false,
-		short = false,
-		offset = 0,
-		count = 20,
-	}: {
+	get(param0: number | string | {
 		user_id?: number | string,
 		online?: boolean,
 		add_user?: boolean,
@@ -187,35 +166,43 @@ export class M1ApiFriends {
 			count?: number,
 		} = {};
 
-		if (user_id) {
-			options.user_id = Number(user_id);
-		}
+		let is_short = false;
 
-		if (online) {
-			options.online = 1;
+		if (typeof param0 === 'number' || typeof param0 === 'string') {
+			options.user_id = param0;
 		}
+		else if (isRecord(param0)) {
+			if (param0.user_id) {
+				options.user_id = param0.user_id;
+			}
 
-		if (add_user) {
-			options.add_user = 1;
-		}
+			if (param0.online) {
+				options.online = 1;
+			}
 
-		if (short) {
-			options.type = 'short';
-		}
+			if (param0.add_user) {
+				options.add_user = 1;
+			}
 
-		if (offset) {
-			options.offset = offset;
-		}
+			if (param0.short) {
+				options.type = 'short';
+				is_short = true;
+			}
 
-		if (count) {
-			options.count = count;
+			if (param0.offset) {
+				options.offset = param0.offset;
+			}
+
+			if (param0.count) {
+				options.count = param0.count;
+			}
 		}
 
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'friends.get',
 			data: options,
-			valiResponseSchema: short
+			valiResponseSchema: is_short
 				? valiResponseFriendsGetShortSchema
 				: valiResponseFriendsGetSchema,
 		});
