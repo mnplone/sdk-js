@@ -33,7 +33,7 @@ export type CallMethodOptions<
 	valiErrorDataSchema?: ValiErrorDataSchema,
 };
 
-type CallMethodResponse<
+export type CallMethodResponse<
 	ValiResponseSchema extends ValiBaseSchema,
 	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
 > = {
@@ -60,6 +60,7 @@ type M1Options = {
 			ValiResponseSchema extends ValiBaseSchema,
 			ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
 		>(
+			this: M1,
 			options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
 			data: Record<string, unknown>
 		) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>,
@@ -239,7 +240,7 @@ export class M1 {
 		if (this.options.hooks && code in this.options.hooks) {
 			const hook = this.options.hooks[code];
 
-			const new_request_options = await hook<ValiResponseSchema, ValiErrorDataSchema>(options, request_data);
+			const new_request_options = await hook.call(this, options, request_data);
 
 			if (new_request_options) {
 				return this.callMethod(new_request_options);
