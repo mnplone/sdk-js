@@ -18,6 +18,7 @@ import { M1ApiAuth } from './api/auth.js';
 import { M1ApiBots } from './api/bots.js';
 import { M1ApiFriends } from './api/friends.js';
 import { type ValiBaseSchema } from './types.js';
+import { refresh_hook } from './hooks/refresh.js';
 
 export type CallMethodOptions<
 	ValiResponseSchema extends ValiBaseSchema,
@@ -65,6 +66,10 @@ type M1Options = {
 			data: Record<string, unknown>
 		) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>,
 	},
+};
+
+const default_hooks = {
+	1: refresh_hook, // Refreshing access token on authorization error
 };
 
 /**
@@ -117,6 +122,16 @@ export class M1 {
 			hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
 			...options,
 		};
+
+		if ('hooks' in this.options) {
+			this.options.hooks = {
+				...default_hooks,
+				...this.options.hooks,
+			};
+		}
+		else {
+			this.options.hooks = default_hooks;
+		}
 
 		const { websocket } = this.options;
 		if (websocket) {
