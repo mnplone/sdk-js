@@ -14,8 +14,8 @@ Currently in development. Not all the methods from [documentation](https://docs.
 - [x] friends.getRequests
 - [x] friends.add
 - [x] friends.delete
-- [ ] gchat.get
-- [ ] gchat.send
+- [x] gchat.get
+- [x] gchat.send
 - [ ] inventory.get
 - [ ] inventory.craft
 - [x] data.getItemProtos
