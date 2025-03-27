@@ -12,11 +12,12 @@ import {
 	string,
 	type InferOutput,
 } from 'valibot';
-import { M1ApiData } from './api/data.js';
-import { M1ApiUsers } from './api/users.js';
 import { M1ApiAuth } from './api/auth.js';
 import { M1ApiBots } from './api/bots.js';
+import { M1ApiData } from './api/data.js';
 import { M1ApiFriends } from './api/friends.js';
+import { M1ApiGchat } from './api/gchat.js';
+import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
 import { refresh_hook } from './hooks/refresh.js';
 
@@ -115,6 +116,7 @@ export class M1 {
 	bots = new M1ApiBots(this);
 	data = new M1ApiData(this);
 	friends = new M1ApiFriends(this);
+	gchat = new M1ApiGchat(this);
 	users = new M1ApiUsers(this);
 
 	constructor(options?: M1Options) {
