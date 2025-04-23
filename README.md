@@ -33,13 +33,13 @@ Currently in development. Not all the methods from [documentation](https://docs.
 
 #### Trade methods
 
-- [ ] trades.create
-- [ ] trades.revoke
-- [ ] trades.accept
-- [ ] trades.reject
-- [ ] trades.incoming
-- [ ] trades.outgoing
-- [ ] trades.history
+- [x] trades.create
+- [x] trades.accept
+- [x] trades.decline
+- [x] trades.revoke
+- [x] trades.incoming
+- [x] trades.outgoing
+- [x] trades.history
 
 #### Inventory methods
 

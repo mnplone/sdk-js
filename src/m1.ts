@@ -17,6 +17,7 @@ import { M1ApiBots } from './api/bots.js';
 import { M1ApiData } from './api/data.js';
 import { M1ApiFriends } from './api/friends.js';
 import { M1ApiGchat } from './api/gchat.js';
+import { M1ApiTrades } from './api/trades.js';
 import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
 import { refresh_hook } from './hooks/refresh.js';
@@ -105,7 +106,8 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
  * @param options.access_token - Access token
  * @param options.refresh_token - Refresh token
  * @param options.polling - Connect to WebSocket
- * @param options.subs - Websocket subscriptions
+ * @param options.websocket - Websocket options
+ * @param options.websocket.subs - Websocket subscriptions
  * @param options.headers - Headers
  * @param options.hooks - Hooks
  */
@@ -117,6 +119,7 @@ export class M1 {
 	data = new M1ApiData(this);
 	friends = new M1ApiFriends(this);
 	gchat = new M1ApiGchat(this);
+	trades = new M1ApiTrades(this);
 	users = new M1ApiUsers(this);
 
 	constructor(options?: M1Options) {
