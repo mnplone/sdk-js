@@ -1,5 +1,4 @@
 import { M1ApiBase } from './base.js';
-import { isRecord } from '../utils.js';
 import { type ApiResponse } from '../types.js';
 import {
 	type Session,
