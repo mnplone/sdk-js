@@ -1,8 +1,8 @@
 import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
 import {
-	ResponseGchatGet,
-	ResponseGchatSend,
+	type ResponseGchatGet,
+	type ResponseGchatSend,
 	valiResponseGchatGetSchema,
 	valiResponseGchatSendSchema,
 } from '../valibot/gchat.js';
@@ -29,6 +29,10 @@ export class M1ApiGchat extends M1ApiBase {
 	 * @returns Returns the message id.
 	 */
 	send(message: string, options: { is_public?: boolean }): Promise<ApiResponse<ResponseGchatSend>>;
+	send(parameters: {
+		message: string,
+		is_public?: boolean,
+	}): Promise<ApiResponse<ResponseGchatSend>>;
 	send(
 		param0: string | {
 			message: string,

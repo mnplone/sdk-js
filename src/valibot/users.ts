@@ -1,6 +1,6 @@
 import {
 	array,
-	InferOutput,
+	type InferOutput,
 	object,
 	pipe,
 	number,

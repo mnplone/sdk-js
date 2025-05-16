@@ -82,7 +82,7 @@ export class M1ApiFriends extends M1ApiBase {
 		short?: boolean,
 	} = {}): Promise<ApiResponse<ResponseFriendsGetRequests | ResponseFriendsGetRequestsShort>> {
 		const is_short = short === true;
-		const options: {
+		const data: {
 			count: number,
 			offset: number,
 			type?: string,
@@ -92,13 +92,13 @@ export class M1ApiFriends extends M1ApiBase {
 		};
 
 		if (is_short) {
-			options.type = 'short';
+			data.type = 'short';
 		}
 
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'friends.getRequests',
-			data: options,
+			data,
 			valiResponseSchema: is_short
 				? valiResponseFriendsGetRequestsShortSchema
 				: valiResponseFriendsGetRequestsSchema,
@@ -157,7 +157,7 @@ export class M1ApiFriends extends M1ApiBase {
 		offset?: number,
 		count?: number,
 	}): Promise<ApiResponse<ResponseFriendsGet | ResponseFriendsGetShort>> {
-		const options: {
+		const data: {
 			user_id?: number | string,
 			online?: number,
 			add_user?: number,
@@ -169,39 +169,39 @@ export class M1ApiFriends extends M1ApiBase {
 		let is_short = false;
 
 		if (typeof param0 === 'number' || typeof param0 === 'string') {
-			options.user_id = param0;
+			data.user_id = param0;
 		}
 		else if (isRecord(param0)) {
 			if (param0.user_id) {
-				options.user_id = param0.user_id;
+				data.user_id = param0.user_id;
 			}
 
 			if (param0.online) {
-				options.online = 1;
+				data.online = 1;
 			}
 
 			if (param0.add_user) {
-				options.add_user = 1;
+				data.add_user = 1;
 			}
 
 			if (param0.short) {
-				options.type = 'short';
+				data.type = 'short';
 				is_short = true;
 			}
 
 			if (param0.offset) {
-				options.offset = param0.offset;
+				data.offset = param0.offset;
 			}
 
 			if (param0.count) {
-				options.count = param0.count;
+				data.count = param0.count;
 			}
 		}
 
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'friends.get',
-			data: options,
+			data,
 			valiResponseSchema: is_short
 				? valiResponseFriendsGetShortSchema
 				: valiResponseFriendsGetSchema,

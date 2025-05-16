@@ -102,9 +102,13 @@ export class M1ApiUsers extends M1ApiBase {
 	) {
 		let user_ids: (number | string)[] | null = null;
 		let is_multiple_users = false;
-		let options;
-		if (isRecord(arg0)) {
-			options = arg1;
+		const data: {
+			type?: string,
+			user_ids?: string,
+		} = {};
+
+		if (isRecord(arg0) && arg0.short === true) {
+			data.type = 'short';
 		}
 		else if (
 			isIterableIterator(arg0)
@@ -117,23 +121,23 @@ export class M1ApiUsers extends M1ApiBase {
 			user_ids = arg0;
 			is_multiple_users = true;
 		}
-		else if (arg0 !== undefined) {
+		else if (typeof arg0 === 'string' || typeof arg0 === 'number') {
 			user_ids = [ arg0 ];
 		}
 
-		if (isRecord(arg1)) {
-			options = arg1;
+		if (isRecord(arg1) && arg1.short === true) {
+			data.type = 'short';
+		}
+
+		if (user_ids) {
+			data.user_ids = user_ids.join(',');
 		}
 
 		return this.baseClient.callMethod({
 			http_method: 'GET',
 			api_method: 'users.get',
-			data: {
-				user_ids: user_ids
-					? user_ids.join(',')
-					: undefined,
-			},
-			valiResponseSchema: options?.short === true
+			data,
+			valiResponseSchema: data?.type === 'short'
 				? (
 					is_multiple_users
 						? valiApiResponseUsersGetShortSchema

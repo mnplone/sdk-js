@@ -17,6 +17,7 @@ import { M1ApiBots } from './api/bots.js';
 import { M1ApiData } from './api/data.js';
 import { M1ApiFriends } from './api/friends.js';
 import { M1ApiGchat } from './api/gchat.js';
+import { M1ApiIm } from './api/im.js';
 import { M1ApiTrades } from './api/trades.js';
 import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
@@ -119,6 +120,7 @@ export class M1 {
 	data = new M1ApiData(this);
 	friends = new M1ApiFriends(this);
 	gchat = new M1ApiGchat(this);
+	im = new M1ApiIm(this);
 	trades = new M1ApiTrades(this);
 	users = new M1ApiUsers(this);
 
@@ -257,13 +259,15 @@ export class M1 {
 			response_data,
 		);
 
-		if (this.options.hooks && code in this.options.hooks) {
+		if (this.options.hooks) {
 			const hook = this.options.hooks[code];
 
-			const new_request_options = await hook.call(this, options, request_data);
+			if (hook) {
+				const new_request_options = await hook.call(this, options, request_data);
 
-			if (new_request_options) {
-				return this.callMethod(new_request_options);
+				if (new_request_options) {
+					return this.callMethod(new_request_options);
+				}
 			}
 		}
 

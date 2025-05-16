@@ -31,6 +31,13 @@ Currently in development. Not all the methods from [documentation](https://docs.
 - [x] gchat.get
 - [x] gchat.send
 
+#### IM methods
+
+- [x] im.send
+- [x] im.dialogsGet
+- [x] im.historyGet
+- [ ] im.sync
+
 #### Trade methods
 
 - [x] trades.create
@@ -49,7 +56,7 @@ Currently in development. Not all the methods from [documentation](https://docs.
 #### Data methods
 
 - [x] data.getItemProtos
-- [ ] data.searchItemProtos
+- [x] data.searchItemProtos
 
 #### oAuth methods
 

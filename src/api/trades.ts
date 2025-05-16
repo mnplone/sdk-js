@@ -131,11 +131,27 @@ export class M1ApiTrades extends M1ApiBase {
 		});
 	}
 
+	/**
+	 * Get the history of trades.
+	 * @param param0 -
+	 * @param param0.user_id - The user ID.
+	 * @param param0.count - The count of trades to return.
+	 * @param param0.offset - The offset of the trades to return.
+	 * @returns The history of trades.
+	 */
 	history(param0: {
 		user_id?: number,
 		count?: number,
 		offset?: number,
 	}): Promise<ApiResponse<ObjectTradeList>>;
+	/**
+	 * Get the history of trades.
+	 * @param user_id - The user ID.
+	 * @param param1 -
+	 * @param param1.count - The count of trades to return.
+	 * @param param1.offset - The offset of the trades to return.
+	 * @returns The history of trades.
+	 */
 	history(user_id: number, param1?: {
 		count?: number,
 		offset?: number,

@@ -1,5 +1,5 @@
 import {
-	InferOutput,
+	type InferOutput,
 	array,
 	boolean,
 	literal,

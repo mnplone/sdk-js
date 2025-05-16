@@ -1,7 +1,6 @@
 import {
 	array,
 	boolean,
-	literal,
 	nullable,
 	number,
 	object,
@@ -45,10 +44,7 @@ export const valiObjectItemVariantSchema = object({
 
 export const valiObjectThingPrototypeSchema = object({
 	thing_prototype_id: number(),
-	thing_prototype_status: union([
-		literal(0),
-		literal(1),
-	]),
+	thing_prototype_status: number(),
 	thing_type: number(),
 	image: string(),
 	title: string(),

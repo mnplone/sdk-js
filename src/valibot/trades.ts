@@ -1,6 +1,6 @@
 import {
 	array,
-	InferOutput,
+	type InferOutput,
 	null_,
 	number,
 	object,
