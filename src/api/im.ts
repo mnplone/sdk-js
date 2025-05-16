@@ -23,16 +23,16 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param parameters - The object with the user ID of the recipient and the message text
 	 * @returns The message ID
 	 */
-	send(parameters: {
+	send(
 		user_id: number,
 		text: string,
-		send_id?: string,
-	}): Promise<ApiResponse<ResponseImSend>>;
-	send(param0: number | {
+		options: { send_id: string },
+	): Promise<ApiResponse<ResponseImSend>>;
+	send(
 		user_id: number,
 		text: string,
-		send_id?: string,
-	}, param1?: string): Promise<ApiResponse<ResponseImSend>> {
+		options?: { send_id: string },
+	): Promise<ApiResponse<ResponseImSend>> {
 		const data = {} as {
 			user_id: number,
 			text: string,
@@ -69,11 +69,7 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param parameters.count -
 	 * @returns -
 	 */
-	dialogsGet({
-		id_last,
-		offset,
-		count,
-	}: {
+	getDialogs(options?: {
 		id_last?: string,
 		offset?: number,
 		count?: number,
@@ -105,26 +101,6 @@ export class M1ApiIm extends M1ApiBase {
 
 	/**
 	 * Get history
-	 * @param parameters -
-	 * @param parameters.user_id -
-	 * @param parameters.id_last -
-	 * @param parameters.offset -
-	 * @param parameters.count -
-	 * @returns -
-	 */
-	historyGet({
-		user_id,
-		id_last,
-		offset,
-		count,
-	}: {
-		user_id: number,
-		id_last?: string,
-		offset?: number,
-		count?: number,
-	}): Promise<ApiResponse<ResponseImHistoryGet>>;
-	/**
-	 * Get history
 	 * @param user_id -
 	 * @param parameters -
 	 * @param parameters.id_last -
@@ -132,17 +108,18 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param parameters.count -
 	 * @returns -
 	 */
-	historyGet(user_id: number, parameters: {
+	getHistory(user_id: number): Promise<ApiResponse<ResponseImHistoryGet>>;
+	getHistory(user_id: number, options: {
 		id_last?: string,
 		offset?: number,
 		count?: number,
 	}): Promise<ApiResponse<ResponseImHistoryGet>>;
-	historyGet(param0: number | {
+	getHistory(arg0: number | {
 		user_id: number,
 		id_last?: string,
 		offset?: number,
 		count?: number,
-	}, param1?: {
+	}, arg1?: {
 		id_last?: string,
 		offset?: number,
 		count?: number,
@@ -204,6 +181,12 @@ export class M1ApiIm extends M1ApiBase {
 			throw new Error('WebSocket is not connected');
 		}
 
-		this.baseClient.ws.send(`4api["im.sync",{"id_last":${id_last}}]`);
+		this.baseClient.ws.emit(
+			'api',
+			[
+				'im.sync',
+				{ id_last },
+			],
+		);
 	}
 }

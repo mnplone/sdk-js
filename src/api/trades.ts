@@ -9,9 +9,9 @@ import {
 } from '../valibot/trades.js';
 
 export class M1ApiTrades extends M1ApiBase {
-	create(param0: {
-		item_ids_to?: (number | string)[],
-		item_ids_from?: (number | string)[],
+	create(options: {
+		item_ids_to?: number[],
+		item_ids_from?: number[],
 		user_id: number,
 	}): Promise<ApiResponse<ObjectTradeId>> {
 		if (param0.item_ids_to === undefined && param0.item_ids_from === undefined) {
@@ -20,10 +20,6 @@ export class M1ApiTrades extends M1ApiBase {
 
 		const data = {
 			user_id: param0.user_id,
-		} as {
-			user_id: number,
-			thing_ids_to?: string,
-			thing_ids_from?: string,
 		};
 
 		if (param0.item_ids_to !== undefined) {
@@ -75,75 +71,30 @@ export class M1ApiTrades extends M1ApiBase {
 		});
 	}
 
-	incoming({
-		count = 20,
-		offset = 0,
-	}: {
+	getIncoming(options: {
 		count?: number,
 		offset?: number,
 	}): Promise<ApiResponse<ObjectTradeList>> {
-		const data = {} as {
-			count?: number,
-			offset?: number,
-		};
-
-		if (count !== undefined) {
-			data.count = count;
-		}
-
-		if (offset !== undefined) {
-			data.offset = offset;
-		}
-
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'trades.getIncome',
-			data,
+			data: options,
 			valiResponseSchema: valiObjectTradeListSchema,
 		});
 	}
 
-	outgoing({
-		count = 20,
-		offset = 0,
-	}: {
+	getOutgoing(options: {
 		count?: number,
 		offset?: number,
 	}): Promise<ApiResponse<ObjectTradeList>> {
-		const data = {} as {
-			count?: number,
-			offset?: number,
-		};
-
-		if (count !== undefined) {
-			data.count = count;
-		}
-
-		if (offset !== undefined) {
-			data.offset = offset;
-		}
-
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'trades.getOutbound',
-			data,
+			data: options,
 			valiResponseSchema: valiObjectTradeListSchema,
 		});
 	}
 
-	/**
-	 * Get the history of trades.
-	 * @param param0 -
-	 * @param param0.user_id - The user ID.
-	 * @param param0.count - The count of trades to return.
-	 * @param param0.offset - The offset of the trades to return.
-	 * @returns The history of trades.
-	 */
-	history(param0: {
-		user_id?: number,
-		count?: number,
-		offset?: number,
-	}): Promise<ApiResponse<ObjectTradeList>>;
 	/**
 	 * Get the history of trades.
 	 * @param user_id - The user ID.
@@ -152,18 +103,28 @@ export class M1ApiTrades extends M1ApiBase {
 	 * @param param1.offset - The offset of the trades to return.
 	 * @returns The history of trades.
 	 */
-	history(user_id: number, param1?: {
+	history(options?: {
 		count?: number,
 		offset?: number,
 	}): Promise<ApiResponse<ObjectTradeList>>;
-	history(param0: number | {
-		user_id?: number,
-		count?: number,
-		offset?: number,
-	}, param1?: {
-		count?: number,
-		offset?: number,
-	}): Promise<ApiResponse<ObjectTradeList>> {
+	history(
+		user_id: number,
+		options?: {
+			count?: number,
+			offset?: number,
+		},
+	): Promise<ApiResponse<ObjectTradeList>>;
+	history(
+		arg0: number | {
+			user_id?: number,
+			count?: number,
+			offset?: number,
+		},
+		arg1?: {
+			count?: number,
+			offset?: number,
+		},
+	): Promise<ApiResponse<ObjectTradeList>> {
 		let api_method = 'trades.history';
 		const data = {} as {
 			count?: number,

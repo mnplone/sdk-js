@@ -1,6 +1,5 @@
 import { ExtWSClient } from '@extws/client';
 import {
-	getDotPath,
 	minValue,
 	never,
 	number,
@@ -10,6 +9,7 @@ import {
 	pipe,
 	safeParse,
 	string,
+	summarize,
 	type InferOutput,
 } from 'valibot';
 import { M1ApiAuth } from './api/auth.js';
@@ -23,16 +23,18 @@ import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
 import { refresh_hook } from './hooks/refresh.js';
 
+export type CallMethodOptionsData = Record<
+	string,
+	string | number | undefined | null
+>;
+
 export type CallMethodOptions<
 	ValiResponseSchema extends ValiBaseSchema,
 	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
 > = {
 	http_method: 'GET' | 'POST',
 	api_method: string,
-	data?: Record<
-		string,
-		string | number | undefined | null
-	>,
+	data?: CallMethodOptionsData,
 	valiResponseSchema: ValiResponseSchema,
 	valiErrorDataSchema?: ValiErrorDataSchema,
 };
@@ -88,14 +90,17 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
 		return result.output;
 	}
 
-	for (const issue of result.issues) {
-		// eslint-disable-next-line no-console
-		console.error();
-		// eslint-disable-next-line no-console
-		console.error(`Valibot found an issue at ${getDotPath(issue)}`);
-		// eslint-disable-next-line no-console
-		console.error('issue', JSON.stringify(issue));
-	}
+	// for (const issue of result.issues) {
+	// 	// eslint-disable-next-line no-console
+	// 	console.error();
+	// 	// eslint-disable-next-line no-console
+	// 	console.error(`Valibot found an issue at ${getDotPath(issue)}`);
+	// 	// eslint-disable-next-line no-console
+	// 	console.error('issue', JSON.stringify(issue));
+	// }
+
+	// eslint-disable-next-line no-console
+	console.error(summarize(result.issues));
 
 	throw new TypeError('Valibot found issues.');
 }
@@ -213,14 +218,16 @@ export class M1 {
 			body = JSON.stringify(request_data);
 		}
 
-		const response = await fetch(
-			url,
-			{
-				method: options.http_method,
-				headers: request_headers,
-				body,
-			},
-		);
+		const request_init: RequestInit = {
+			method: options.http_method,
+			headers: request_headers,
+		};
+
+		if (options.http_method !== 'GET') {
+			request_init.body = body;
+		}
+
+		const response = await fetch(url, request_init);
 
 		const response_data = await response.json();
 

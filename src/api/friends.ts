@@ -1,17 +1,27 @@
 import { void as voidSchema } from 'valibot';
+import type { CallMethodOptionsData } from '../m1.js';
+import type { ApiResponse } from '../types.js';
+import { isRecord } from '../utils.js';
 import {
-	valiResponseFriendsGetRequestsSchema,
 	valiResponseFriendsGetSchema,
-	valiResponseFriendsGetRequestsShortSchema,
 	valiResponseFriendsGetShortSchema,
+	valiResponseFriendsGetShortWithUserSchema,
+	valiResponseFriendsGetWithUserSchema,
+	valiResponseFriendsGetRequestsSchema,
+	valiResponseFriendsGetRequestsShortSchema,
 	type ResponseFriendsGetRequests,
 	type ResponseFriendsGet,
 	type ResponseFriendsGetRequestsShort,
-	type ResponseFriendsGetShort,
 } from '../valibot/friends.js';
-import { type ApiResponse } from '../types.js';
 import { M1ApiBase } from './base.js';
-import { isRecord } from '../utils.js';
+
+type FriendsGetOptions<OS extends boolean, OU extends boolean> = {
+	online?: boolean,
+	is_short?: OS,
+	add_user?: OU,
+	offset?: number,
+	count?: number,
+};
 
 export class M1ApiFriends extends M1ApiBase {
 	/**
@@ -67,26 +77,21 @@ export class M1ApiFriends extends M1ApiBase {
 	 * @param options.short Whether to return a short list of friends.
 	 * @returns A list of friends and their count.
 	 */
-	getRequests(options: {
+	getRequests(options?: {
 		count?: number,
 		offset?: number,
-		short?: false,
 	}): Promise<ApiResponse<ResponseFriendsGetRequests>>;
 	getRequests({
-		count = 20,
-		offset = 0,
-		short = false,
+		count,
+		offset,
+		short,
 	}: {
 		count?: number,
 		offset?: number,
 		short?: boolean,
 	} = {}): Promise<ApiResponse<ResponseFriendsGetRequests | ResponseFriendsGetRequestsShort>> {
 		const is_short = short === true;
-		const data: {
-			count: number,
-			offset: number,
-			type?: string,
-		} = {
+		const data: CallMethodOptionsData = {
 			count,
 			offset,
 		};
@@ -103,6 +108,82 @@ export class M1ApiFriends extends M1ApiBase {
 				? valiResponseFriendsGetRequestsShortSchema
 				: valiResponseFriendsGetRequestsSchema,
 		});
+	}
+
+	/*
+	m1.friends.get();
+	m1.friends.get(1);
+	m1.friends.get({ short: true });
+	m1.friends.get(1, { short: true });
+	m1.friends.get({ add_user: true });
+	m1.friends.get(1, { add_user: true });
+	m1.friends.get({ short: true, add_user: true });
+	m1.friends.get(1, { short: true, add_user: true });
+	*/
+
+	// TODO: refactor
+	// get();
+	// get(options: FriendsGetBaseOptions);
+	// get(options: FriendsGetBaseOptions & FriendsGetOptionsWithUser);
+	// get(options: FriendsGetBaseOptions & FriendsGetOptionsShort);
+	// get(options: FriendsGetBaseOptions & FriendsGetOptionsWithUser & FriendsGetOptionsShort);
+	// get(user_id: number);
+	// get(user_id: number, options: FriendsGetBaseOptions);
+	// get(user_id: number, options: FriendsGetBaseOptions & FriendsGetOptionsWithUser);
+	// get(user_id: number, options: FriendsGetBaseOptions & FriendsGetOptionsShort);
+	// get(user_id: number, options: FriendsGetBaseOptions & FriendsGetOptionsWithUser & FriendsGetOptionsShort);
+	// get<const ID extends boolean, WU, WS>(): ID extends true ? Schema1 : Schema2;
+
+	// get(user_id, FriendsGetBaseOptions);
+	// getShort(user_id, FriendsGetBaseOptions);
+	// getWithUser(user_id, FriendsGetBaseOptions);
+	// getShortWithUser(user_id, FriendsGetBaseOptions);
+
+	_get<
+		const OS extends boolean,
+		const OU extends boolean,
+	>(options?: FriendsGetOptions<OS, OU>): Promise<ApiResponse<ResponseFriendsGet<OS, OU>>>;
+	_get<
+		const OS extends boolean,
+		const OU extends boolean,
+	>(
+		user_id: number | string,
+		options?: FriendsGetOptions<OS, OU>,
+	): Promise<ApiResponse<ResponseFriendsGet<OS, OU>>>
+	_get<
+		const OS extends boolean,
+		const OU extends boolean,
+	>(
+		arg0?: number | string | FriendsGetOptions<OS, OU>,
+		arg1?: FriendsGetOptions<OS, OU>,
+	): Promise<ApiResponse<ResponseFriendsGet<OS, OU>>> {
+		const user_id = typeof arg0 === 'number' || typeof arg0 === 'string'
+			? arg0
+			: undefined;
+		const options = isRecord(arg0) ? arg0 : arg1;
+
+		const is_short = options?.is_short ?? false;
+		const add_user = options?.add_user ?? false;
+
+		return this.baseClient.callMethod({
+			http_method: 'POST',
+			api_method: 'friends.get',
+			data: {
+				user_id,
+				online: options?.online ? 1 : undefined,
+				add_user: add_user ? 1 : undefined,
+				type: is_short ? 'short' : undefined,
+				offset: options?.offset,
+				count: options?.count,
+			},
+			valiResponseSchema: options?.is_short
+				? (options?.add_user
+					? valiResponseFriendsGetShortWithUserSchema
+					: valiResponseFriendsGetShortSchema)
+				: (options?.add_user
+					? valiResponseFriendsGetWithUserSchema
+					: valiResponseFriendsGetSchema),
+		}) as Promise<ApiResponse<ResponseFriendsGet<OS, OU>>>;
 	}
 
 	/**

@@ -6,6 +6,7 @@ import {
 	valiResponseGchatGetSchema,
 	valiResponseGchatSendSchema,
 } from '../valibot/gchat.js';
+import type { CallMethodOptionsData } from '../m1.js';
 
 export class M1ApiGchat extends M1ApiBase {
 	/**
@@ -24,44 +25,32 @@ export class M1ApiGchat extends M1ApiBase {
 	/**
 	 * Send a message to the chat.
 	 * @param message The message to send.
+	 * @returns Message id.
+	 */
+	send(message: string): Promise<ApiResponse<ResponseGchatSend>>;
+	/**
+	 * Send a message to the chat.
+	 * @param message The message to send.
 	 * @param options -
 	 * @param options.is_public Whether the message is public.
-	 * @returns Returns the message id.
+	 * @returns Message id.
 	 */
-	send(message: string, options: { is_public?: boolean }): Promise<ApiResponse<ResponseGchatSend>>;
-	send(parameters: {
-		message: string,
-		is_public?: boolean,
-	}): Promise<ApiResponse<ResponseGchatSend>>;
 	send(
-		param0: string | {
-			message: string,
-			is_public?: boolean,
+		message: string,
+		options: {
+			is_public: boolean,
 		},
-		param1?: {
-			is_public?: boolean,
+	): Promise<ApiResponse<ResponseGchatSend>>;
+	send(
+		message: string,
+		options?: {
+			is_public: boolean,
 		},
 	): Promise<ApiResponse<ResponseGchatSend>> {
-		const data = {
-			message: '',
-		} as {
-			message: string,
-			is_public?: 0 | 1,
-		};
+		const data: CallMethodOptionsData = { message };
 
-		let is_public;
-
-		if (typeof param0 === 'string') {
-			data.message = param0;
-			is_public = Boolean(param1?.is_public);
-		}
-		else {
-			data.message = param0.message;
-			is_public = Boolean(param0?.is_public);
-		}
-
-		if (is_public) {
-			data.is_public = 1; // if not public - we don't need to send this field (at least for now)
+		if (options?.is_public) {
+			data.is_public = 1;
 		}
 
 		return this.baseClient.callMethod({
