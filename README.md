@@ -60,4 +60,4 @@ Currently in development. Not all the methods from [documentation](https://docs.
 
 #### oAuth methods
 
-- [ ] oauth.exchangeCode
+- [x] oauth.exchangeCode
