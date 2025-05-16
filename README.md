@@ -36,7 +36,7 @@ Currently in development. Not all the methods from [documentation](https://docs.
 - [x] im.send
 - [x] im.dialogsGet
 - [x] im.historyGet
-- [ ] im.sync
+- [x] im.sync
 
 #### Trade methods
 
