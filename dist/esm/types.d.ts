@@ -1,5 +1,5 @@
-import { type BaseSchema } from 'valibot';
-export type ValiBaseSchema = BaseSchema<any, any, any>;
+import { type parse } from 'valibot';
+export type ValiBaseSchema = Parameters<typeof parse>[0];
 export type ApiResponse<DR, DE = never> = {
     success: true;
     data: DR;

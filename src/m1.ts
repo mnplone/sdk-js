@@ -15,7 +15,7 @@ import {
 import { M1ApiData } from './api/data.js';
 import { M1ApiUsers } from './api/users.js';
 import { M1ApiAuth } from './api/auth.js';
-import { type ValiBaseSchema } from './types.js';
+import type { ValiBaseSchema } from './types.js';
 
 type M1Options = {
 	hostname?: string,
@@ -144,7 +144,7 @@ export class M1 {
 			`/api/${options.api_method}`,
 			`https://${this.options.hostname}`,
 		);
-		let body;
+		let body: string | undefined;
 
 		const request_headers = structuredClone(this.options.headers ?? {});
 		const request_data = {
@@ -208,7 +208,7 @@ export class M1 {
 		} = parse(
 			object({
 				description: optional(string()),
-				data: optional(options.valiErrorDataSchema ?? never() as ValiBaseSchema),
+				data: options.valiErrorDataSchema ?? never(),
 			}),
 			response_data,
 		);
@@ -217,7 +217,9 @@ export class M1 {
 			success: false,
 			code,
 			description,
-			data,
+			data: data as ValiErrorDataSchema extends undefined
+				? never
+				: InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
 		};
 	}
 }

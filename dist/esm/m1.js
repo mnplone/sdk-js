@@ -114,13 +114,13 @@ export class M1 {
         }
         const { description, data, } = parse(object({
             description: optional(string()),
-            data: optional(options.valiErrorDataSchema ?? never()),
+            data: options.valiErrorDataSchema ?? never(),
         }), response_data);
         return {
             success: false,
             code,
             description,
-            data,
+            data: data,
         };
     }
 }

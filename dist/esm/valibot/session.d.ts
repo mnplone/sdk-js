@@ -3,6 +3,6 @@ export declare const valiObjectSessionSchema: import("valibot").ObjectSchema<{
     readonly user_id: import("valibot").StringSchema<undefined>;
     readonly access_token: import("valibot").StringSchema<undefined>;
     readonly expires_in: import("valibot").NumberSchema<undefined>;
-    readonly refresh_token: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, never>;
+    readonly refresh_token: import("valibot").OptionalSchema<import("valibot").StringSchema<undefined>, undefined>;
 }, undefined>;
 export type Session = InferOutput<typeof valiObjectSessionSchema>;
