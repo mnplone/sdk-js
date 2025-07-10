@@ -5,13 +5,13 @@ import {
 	number,
 	object,
 	optional,
+	picklist,
 	pipe,
+	record,
 	string,
 	transform,
 	union,
-	record,
 	unknown,
-	picklist,
 	type InferOutput,
 } from 'valibot';
 import { bit } from './common.js';
@@ -41,6 +41,7 @@ export const valiObjectItemVariantSchema = object({
 		}),
 	),
 });
+export type ItemVariant = InferOutput<typeof valiObjectItemVariantSchema>;
 
 export const valiObjectThingPrototypeSchema = object({
 	thing_prototype_id: number(),
@@ -63,7 +64,9 @@ export const valiObjectThingPrototypeSchema = object({
 		array(number()),
 	),
 	delete_price: optional(
-		number(),
+		nullable(
+			number(),
+		),
 	),
 	can_be_upgraded: bit(0),
 	buy_cost: optional(
@@ -87,6 +90,7 @@ export const valiObjectThingPrototypeSchema = object({
 		array(valiObjectItemVariantSchema),
 	),
 });
+export type ThingPrototype = InferOutput<typeof valiObjectThingPrototypeSchema>;
 
 export const valiObjectThingSchema = object({
 	...valiObjectThingPrototypeSchema.entries,
@@ -130,6 +134,7 @@ export const valiObjectThingSchema = object({
 		array(valiObjectItemVariantSchema),
 	),
 });
+export type Thing = InferOutput<typeof valiObjectThingSchema>;
 
 export const valiObjectItemProtoSchema = object({
 	item_proto_id: number(),
@@ -184,6 +189,7 @@ export const valiObjectItemProtoSchema = object({
 	),
 	can_craft: bit(0),
 });
+export type ItemProto = InferOutput<typeof valiObjectItemProtoSchema>;
 
 const valiObjectItemShortSchema = object({
 	item_id: number(),
@@ -224,6 +230,7 @@ const valiObjectItemShortSchema = object({
 		number(),
 	),
 });
+export type ItemShort = InferOutput<typeof valiObjectItemShortSchema>;
 
 export const valiObjectItemSchema = object({
 	...valiObjectItemShortSchema.entries,
@@ -238,15 +245,9 @@ export const valiObjectItemSchema = object({
 		}),
 	),
 });
+export type Item = InferOutput<typeof valiObjectItemSchema>;
 
 export const valiObjectItemProtoLegacySchema = object({
 	...valiObjectThingPrototypeSchema.entries,
 	...valiObjectItemProtoSchema.entries,
 });
-
-export type ThingPrototype = InferOutput<typeof valiObjectThingPrototypeSchema>;
-export type Thing = InferOutput<typeof valiObjectThingSchema>;
-export type ItemProto = InferOutput<typeof valiObjectItemProtoSchema>;
-export type Item = InferOutput<typeof valiObjectItemSchema>;
-export type ItemShort = InferOutput<typeof valiObjectItemShortSchema>;
-export type ItemVariant = InferOutput<typeof valiObjectItemVariantSchema>;
