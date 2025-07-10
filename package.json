@@ -16,7 +16,8 @@
 		"node": ">=21"
 	},
 	"dependencies": {
-		"@extws/client": "0.2.1-beta.1",
+		"@extws/client": "github:extws-team/client#f506a9ab7b1222936626b327a8760e4977a32f55",
+		"vitest": "3.2.4",
 		"valibot": "^1.1.0"
 	},
 	"devDependencies": {
