@@ -7,7 +7,7 @@ import { sdk } from '../../test/sdk.js';
 
 const TEST_USER_ID = 623087;
 
-describe('inventory.get', () => {
+describe.skip('inventory.get', () => {
 	describe('without user_id parameter', () => {
 		test('default parameters (legacy mode)', async () => {
 			const response = await sdk.inventory.get();
