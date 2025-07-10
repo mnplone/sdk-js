@@ -61,7 +61,7 @@ type M1Options = {
 	websocket?: {
 		subs?: string,
 	},
-	headers?: Record<string, string>,
+	headers?: Headers | Record<string, string>,
 	hooks?: {
 		[key: string]: <
 			ValiResponseSchema extends ValiBaseSchema,
@@ -172,7 +172,9 @@ export class M1 {
 			);
 
 			if (headers) {
-				this.ws.headers = headers;
+				this.ws.headers = headers instanceof Headers
+					? headers
+					: new Headers(headers);
 			}
 
 			this.ws.connect();
@@ -199,7 +201,7 @@ export class M1 {
 		);
 		let body: string | undefined;
 
-		const request_headers = structuredClone(this.options.headers ?? {});
+		const request_headers = new Headers(this.options.headers ?? {});
 		const request_data = {
 			...options.data,
 			access_token: this.options.access_token,
@@ -216,7 +218,7 @@ export class M1 {
 			}
 		}
 		else {
-			request_headers['Content-Type'] = 'application/json';
+			request_headers.set('Content-Type', 'application/json');
 			body = JSON.stringify(request_data);
 		}
 

@@ -1,6 +1,8 @@
-import { type parse } from 'valibot';
+import * as v from 'valibot';
 
-export type ValiBaseSchema = Parameters<typeof parse>[0];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ValiBaseSchema = v.BaseSchema<any, any, any>;
+// export type ValiBaseSchema = Parameters<typeof v.parse>[0];
 
 export type ApiResponse<DR, DE = never> = {
 	success: true,

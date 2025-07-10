@@ -1,4 +1,4 @@
-import { array, boolean, getDotPath, intersect, literal, minValue, never, null_, nullable, number, object, optional, parse, picklist, pipe, record, safeParse, string, transform, union, unknown, void as void$1 } from "valibot";
+import { array, boolean, intersect, literal, minValue, never, null_, nullable, number, object, optional, parse, picklist, pipe, record, safeParse, string, summarize, transform, union, unknown, void as void$1 } from "valibot";
 import { ExtWSClient } from "@extws/client";
 
 //#region src/valibot/auth.ts
@@ -81,7 +81,7 @@ const valiObjectThingPrototypeSchema = object({
 	quality: number(),
 	collection: optional(number()),
 	twin_thing_prototype_id: optional(array(number())),
-	delete_price: optional(number()),
+	delete_price: optional(nullable(number())),
 	can_be_upgraded: bit(0),
 	buy_cost: optional(number()),
 	key: optional(number()),
@@ -196,6 +196,25 @@ var M1ApiData = class extends M1ApiBase {
 };
 
 //#endregion
+//#region src/utils.ts
+/**
+* Check if a value is a record.
+* @param value -
+* @returns -
+*/
+function isRecord(value) {
+	return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object && Object.prototype.toString.call(value) === "[object Object]";
+}
+/**
+* Check if a value is an iterator.
+* @param value -
+* @returns -
+*/
+function isIterableIterator(value) {
+	return value !== null && typeof value === "object" && typeof Symbol.iterator in value && typeof value[Symbol.iterator] === "function" && typeof value.next === "function";
+}
+
+//#endregion
 //#region src/valibot/users.ts
 function transformerBot(value) {
 	const { bot, bot_owner,...value_rest } = value;
@@ -267,43 +286,30 @@ const valiObjectUserSchema = pipe(object({
 
 //#endregion
 //#region src/valibot/friends.ts
+const valiResponseFriendsGetBaseSchema = object({
+	count: number(),
+	friends: array(valiObjectUserSchema)
+});
+const valiResponseFriendsGetWithUserSchema = object({
+	...valiResponseFriendsGetBaseSchema.entries,
+	user: valiObjectUserSchema
+});
+const valiResponseFriendsGetShortSchema = object({
+	count: number(),
+	friends: array(valiObjectUserShortSchema)
+});
+const valiResponseFriendsGetShortWithUserSchema = object({
+	...valiResponseFriendsGetShortSchema.entries,
+	user: valiObjectUserShortSchema
+});
 const valiResponseFriendsGetRequestsSchema = object({
 	count: number(),
 	requests: array(valiObjectUserSchema)
-});
-const valiResponseFriendsGetSchema = object({
-	count: number(),
-	friends: array(valiObjectUserSchema),
-	user: optional(valiObjectUserSchema)
 });
 const valiResponseFriendsGetRequestsShortSchema = object({
 	count: number(),
 	requests: array(valiObjectUserShortSchema)
 });
-const valiResponseFriendsGetShortSchema = object({
-	count: number(),
-	friends: array(valiObjectUserShortSchema),
-	user: optional(valiObjectUserShortSchema)
-});
-
-//#endregion
-//#region src/utils.ts
-/**
-* Check if a value is a record.
-* @param value -
-* @returns -
-*/
-function isRecord(value) {
-	return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object && Object.prototype.toString.call(value) === "[object Object]";
-}
-/**
-* Check if a value is an iterator.
-* @param value -
-* @returns -
-*/
-function isIterableIterator(value) {
-	return value !== null && typeof value === "object" && typeof Symbol.iterator in value && typeof value[Symbol.iterator] === "function" && typeof value.next === "function";
-}
 
 //#endregion
 //#region src/api/friends.ts
@@ -334,7 +340,7 @@ var M1ApiFriends = class extends M1ApiBase {
 			valiResponseSchema: void$1()
 		});
 	}
-	getRequests({ count = 20, offset = 0, short = false } = {}) {
+	getRequests({ count, offset, short } = {}) {
 		const is_short = short === true;
 		const data = {
 			count,
@@ -348,26 +354,23 @@ var M1ApiFriends = class extends M1ApiBase {
 			valiResponseSchema: is_short ? valiResponseFriendsGetRequestsShortSchema : valiResponseFriendsGetRequestsSchema
 		});
 	}
-	get(param0) {
-		const data = {};
-		let is_short = false;
-		if (typeof param0 === "number" || typeof param0 === "string") data.user_id = param0;
-		else if (isRecord(param0)) {
-			if (param0.user_id) data.user_id = param0.user_id;
-			if (param0.online) data.online = 1;
-			if (param0.add_user) data.add_user = 1;
-			if (param0.short) {
-				data.type = "short";
-				is_short = true;
-			}
-			if (param0.offset) data.offset = param0.offset;
-			if (param0.count) data.count = param0.count;
-		}
+	get(arg0, arg1) {
+		const user_id = typeof arg0 === "number" || typeof arg0 === "string" ? arg0 : void 0;
+		const options = isRecord(arg0) ? arg0 : arg1;
+		const is_short = options?.is_short ?? false;
+		const add_user = options?.add_user ?? false;
 		return this.baseClient.callMethod({
 			http_method: "POST",
 			api_method: "friends.get",
-			data,
-			valiResponseSchema: is_short ? valiResponseFriendsGetShortSchema : valiResponseFriendsGetSchema
+			data: {
+				user_id,
+				online: options?.online ? 1 : void 0,
+				add_user: add_user ? 1 : void 0,
+				type: is_short ? "short" : void 0,
+				offset: options?.offset,
+				count: options?.count
+			},
+			valiResponseSchema: options?.is_short ? options?.add_user ? valiResponseFriendsGetShortWithUserSchema : valiResponseFriendsGetShortSchema : options?.add_user ? valiResponseFriendsGetWithUserSchema : valiResponseFriendsGetBaseSchema
 		});
 	}
 };
@@ -429,17 +432,9 @@ var M1ApiGchat = class extends M1ApiBase {
 			valiResponseSchema: valiResponseGchatGetSchema
 		});
 	}
-	send(param0, param1) {
-		const data = { message: "" };
-		let is_public;
-		if (typeof param0 === "string") {
-			data.message = param0;
-			is_public = Boolean(param1?.is_public);
-		} else {
-			data.message = param0.message;
-			is_public = Boolean(param0?.is_public);
-		}
-		if (is_public) data.is_public = 1;
+	send(message, options) {
+		const data = { message };
+		if (options?.is_public) data.is_public = 1;
 		return this.baseClient.callMethod({
 			http_method: "POST",
 			api_method: "gchat.send",
@@ -494,36 +489,24 @@ const valiResponseImHistoryGetSchema = object({
 //#endregion
 //#region src/api/im.ts
 var M1ApiIm = class extends M1ApiBase {
-	send(param0, param1) {
-		const data = {};
-		if (typeof param0 === "number" && typeof param1 === "string") {
-			data.user_id = param0;
-			data.text = param1;
-		} else if (isRecord(param0)) {
-			data.user_id = param0.user_id;
-			data.text = param0.text;
-			if (param0.send_id) data.send_id = param0.send_id;
-		} else throw new TypeError("Invalid parameters");
+	send(options) {
 		return this.baseClient.callMethod({
 			http_method: "POST",
 			api_method: "im.send",
-			data,
+			data: options,
 			valiResponseSchema: valiResponseImSendSchema
 		});
 	}
 	/**
 	* Get dialogs
-	* @param parameters -
-	* @param parameters.id_last -
-	* @param parameters.offset -
-	* @param parameters.count -
+	* @param options -
+	* @param options.id_last -
+	* @param options.offset -
+	* @param options.count -
 	* @returns -
 	*/
-	dialogsGet({ id_last, offset, count }) {
-		const data = {};
-		if (id_last) data.id_last = id_last;
-		if (offset) data.offset = offset;
-		if (count) data.count = count;
+	getDialogs(options) {
+		const data = options ?? {};
 		return this.baseClient.callMethod({
 			http_method: "POST",
 			api_method: "im.dialogsGet",
@@ -531,20 +514,20 @@ var M1ApiIm = class extends M1ApiBase {
 			valiResponseSchema: valiResponseImDialogsGetSchema
 		});
 	}
-	historyGet(param0, param1) {
+	getHistory(arg0, arg1) {
 		const data = {};
-		if (typeof param0 === "number") {
-			data.user_id = param0;
-			if (isRecord(param1)) {
-				if (param1.id_last) data.id_last = param1.id_last;
-				if (param1.offset) data.offset = param1.offset;
-				if (param1.count) data.count = param1.count;
+		if (typeof arg0 === "number") {
+			data.user_id = arg0;
+			if (isRecord(arg1)) {
+				if (arg1.id_last) data.id_last = arg1.id_last;
+				if (arg1.offset) data.offset = arg1.offset;
+				if (arg1.count) data.count = arg1.count;
 			}
-		} else if (isRecord(param0)) {
-			data.user_id = param0.user_id;
-			if (param0.id_last) data.id_last = param0.id_last;
-			if (param0.offset) data.offset = param0.offset;
-			if (param0.count) data.count = param0.count;
+		} else if (isRecord(arg0)) {
+			data.user_id = arg0.user_id;
+			if (arg0.id_last) data.id_last = arg0.id_last;
+			if (arg0.offset) data.offset = arg0.offset;
+			if (arg0.count) data.count = arg0.count;
 		} else throw new TypeError("Invalid parameters");
 		return this.baseClient.callMethod({
 			http_method: "POST",
@@ -559,22 +542,153 @@ var M1ApiIm = class extends M1ApiBase {
 	*/
 	sync(id_last) {
 		if (!this.baseClient.ws || !this.baseClient.ws.is_connected) throw new Error("WebSocket is not connected");
-		this.baseClient.ws.send(`4api["im.sync",{"id_last":${id_last}}]`);
+		this.baseClient.ws.emit("api", ["im.sync", { id_last }]);
+	}
+};
+
+//#endregion
+//#region src/valibot/inventory.ts
+const valiCollectionSchema = object({
+	collection_id: number(),
+	title: string()
+});
+const valiThingTypeSchema = object({
+	id: number(),
+	title: string()
+});
+const valiQualitySchema = object({
+	id: number(),
+	title: string(),
+	coeff_rent: number()
+});
+const valiEquippedArraySchema = object({ item_ids_equipped: array(number()) });
+const valiEquippedTreeSchema = object({ equipped: object({ game: record(string(), object({
+	cards: record(string(), array(number())),
+	generator: number(),
+	joke: number()
+})) }) });
+const valiResponseInventoryGetBaseSchema = object({
+	count: number(),
+	collections: array(valiCollectionSchema),
+	items: array(valiObjectItemSchema)
+});
+const valiResponseInventoryGetLegacySchema = object({
+	count: number(),
+	collections: array(valiCollectionSchema),
+	things: array(valiObjectThingSchema),
+	thing_types: optional(array(valiThingTypeSchema)),
+	qualities: optional(array(valiQualitySchema))
+});
+const valiResponseInventoryGetWithUserSchema = object({
+	...valiResponseInventoryGetBaseSchema.entries,
+	user: valiObjectUserSchema
+});
+const valiResponseInventoryGetLegacyWithUserSchema = object({
+	...valiResponseInventoryGetLegacySchema.entries,
+	user: valiObjectUserSchema
+});
+const valiResponseInventoryGetWithEquippedArraySchema = object({
+	...valiResponseInventoryGetBaseSchema.entries,
+	...valiEquippedArraySchema.entries
+});
+const valiResponseInventoryGetWithEquippedTreeSchema = object({
+	...valiResponseInventoryGetBaseSchema.entries,
+	...valiEquippedTreeSchema.entries
+});
+const valiResponseInventoryGetWithUserAndEquippedArraySchema = object({
+	...valiResponseInventoryGetBaseSchema.entries,
+	...valiEquippedArraySchema.entries,
+	user: valiObjectUserSchema
+});
+const valiResponseInventoryGetWithUserAndEquippedTreeSchema = object({
+	...valiResponseInventoryGetBaseSchema.entries,
+	...valiEquippedTreeSchema.entries,
+	user: valiObjectUserSchema
+});
+const valiResponseInventoryGetLegacyWithEquippedArraySchema = object({
+	...valiResponseInventoryGetLegacySchema.entries,
+	...valiEquippedArraySchema.entries
+});
+const valiResponseInventoryGetLegacyWithEquippedTreeSchema = object({
+	...valiResponseInventoryGetLegacySchema.entries,
+	...valiEquippedTreeSchema.entries
+});
+const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema = object({
+	...valiResponseInventoryGetLegacySchema.entries,
+	...valiEquippedArraySchema.entries,
+	user: valiObjectUserSchema
+});
+const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema = object({
+	...valiResponseInventoryGetLegacySchema.entries,
+	...valiEquippedTreeSchema.entries,
+	user: valiObjectUserSchema
+});
+
+//#endregion
+//#region src/api/inventory.ts
+var M1ApiInventory = class extends M1ApiBase {
+	get(arg0, arg1) {
+		const user_id = typeof arg0 === "number" || typeof arg0 === "string" ? arg0 : void 0;
+		const options = isRecord(arg0) ? arg0 : arg1;
+		const add_legacy = options?.add_legacy ?? true;
+		const add_user = options?.add_user ?? false;
+		const add_equipped = options?.add_equipped;
+		const data = {
+			user_id,
+			include_stock: options?.include_stock ? 1 : void 0,
+			order: options?.order,
+			count: options?.count,
+			add_user: add_user ? 1 : void 0,
+			add_legacy: add_legacy ? 1 : void 0,
+			add_equipped,
+			shrink: options?.shrink ? 1 : void 0
+		};
+		let valiResponseSchema;
+		if (add_legacy) if (add_user) if (add_equipped === "array") valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema;
+		else if (add_equipped === "tree") valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema;
+		else valiResponseSchema = valiResponseInventoryGetLegacyWithUserSchema;
+		else if (add_equipped === "array") valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedArraySchema;
+		else if (add_equipped === "tree") valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedTreeSchema;
+		else valiResponseSchema = valiResponseInventoryGetLegacySchema;
+		else if (add_user) if (add_equipped === "array") valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedArraySchema;
+		else if (add_equipped === "tree") valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedTreeSchema;
+		else valiResponseSchema = valiResponseInventoryGetWithUserSchema;
+		else if (add_equipped === "array") valiResponseSchema = valiResponseInventoryGetWithEquippedArraySchema;
+		else if (add_equipped === "tree") valiResponseSchema = valiResponseInventoryGetWithEquippedTreeSchema;
+		else valiResponseSchema = valiResponseInventoryGetBaseSchema;
+		return this.baseClient.callMethod({
+			http_method: "GET",
+			api_method: "inventory.get",
+			data,
+			valiResponseSchema
+		});
 	}
 };
 
 //#endregion
 //#region src/valibot/trades.ts
 const valiObjectTradeIdSchema = object({ trade_id: number() });
+const valiObjectTradeSideSchema = object({
+	user_id: number(),
+	item_ids: array(valiObjectItemSchema)
+});
 const valiObjectTradeSchema = object({
 	create_time: number(),
-	reaction_time: union([number(), null_()]),
+	reaction_time: nullable(number()),
 	status: number(),
 	trade_id: number(),
 	things_from: array(valiObjectThingSchema),
 	things_to: array(valiObjectThingSchema),
 	user_id_from: number(),
 	user_id_to: number()
+});
+const valiObjectNewTradeSchema = object({
+	trade_id: number(),
+	status: number(),
+	ts_created: number(),
+	ts_completed: nullable(number()),
+	initiator: valiObjectTradeSideSchema,
+	receiver: valiObjectTradeSideSchema
 });
 const valiObjectTradeListSchema = object({
 	collections: array(number()),
@@ -588,11 +702,11 @@ const valiObjectTradeListSchema = object({
 //#endregion
 //#region src/api/trades.ts
 var M1ApiTrades = class extends M1ApiBase {
-	create(param0) {
-		if (param0.item_ids_to === void 0 && param0.item_ids_from === void 0) throw new Error("One of item_ids_to or item_ids_from is required");
-		const data = { user_id: param0.user_id };
-		if (param0.item_ids_to !== void 0) data.thing_ids_to = param0.item_ids_to.join(",");
-		if (param0.item_ids_from !== void 0) data.thing_ids_from = param0.item_ids_from.join(",");
+	create(options) {
+		if (options.item_ids_request === void 0 && options.item_ids_offer === void 0) throw new Error("One of item_ids_to or item_ids_from is required");
+		const data = { user_id: options.user_id };
+		if (options.item_ids_request !== void 0) data.thing_ids_to = options.item_ids_request.join(",");
+		if (options.item_ids_offer !== void 0) data.thing_ids_from = options.item_ids_offer.join(",");
 		return this.baseClient.callMethod({
 			http_method: "POST",
 			api_method: "trades.create",
@@ -624,39 +738,33 @@ var M1ApiTrades = class extends M1ApiBase {
 			valiResponseSchema: void$1()
 		});
 	}
-	incoming({ count = 20, offset = 0 }) {
-		const data = {};
-		if (count !== void 0) data.count = count;
-		if (offset !== void 0) data.offset = offset;
+	getIncoming(options) {
 		return this.baseClient.callMethod({
 			http_method: "POST",
 			api_method: "trades.getIncome",
-			data,
+			data: options,
 			valiResponseSchema: valiObjectTradeListSchema
 		});
 	}
-	outgoing({ count = 20, offset = 0 }) {
-		const data = {};
-		if (count !== void 0) data.count = count;
-		if (offset !== void 0) data.offset = offset;
+	getOutgoing(options) {
 		return this.baseClient.callMethod({
 			http_method: "POST",
 			api_method: "trades.getOutbound",
-			data,
+			data: options,
 			valiResponseSchema: valiObjectTradeListSchema
 		});
 	}
-	history(param0, param1) {
+	history(arg0, arg1) {
 		let api_method = "trades.history";
 		const data = {};
-		if (typeof param0 === "number") {
-			data.user_id = param0;
-			data.count = param1?.count || 20;
-			data.offset = param1?.offset || 0;
-		} else if (typeof param0 === "object") {
-			if (param0.user_id !== void 0) data.user_id = param0.user_id;
-			data.count = param0.count || 20;
-			data.offset = param0.offset || 0;
+		if (typeof arg0 === "number") {
+			data.user_id = arg0;
+			data.count = arg1?.count;
+			data.offset = arg1?.offset;
+		} else if (typeof arg0 === "object") {
+			if (arg0.user_id !== void 0) data.user_id = arg0.user_id;
+			data.count = arg0.count;
+			data.offset = arg0.offset;
 		}
 		if (data.user_id !== void 0) api_method = "trades.historyWith";
 		return this.baseClient.callMethod({
@@ -742,11 +850,7 @@ const default_hooks = { 1: refresh_hook };
 function parseWithNotice(schema, value) {
 	const result = safeParse(schema, value);
 	if (result.success) return result.output;
-	for (const issue of result.issues) {
-		console.error();
-		console.error(`Valibot found an issue at ${getDotPath(issue)}`);
-		console.error("issue", JSON.stringify(issue));
-	}
+	console.error(summarize(result.issues));
 	throw new TypeError("Valibot found issues.");
 }
 /**
@@ -769,6 +873,7 @@ var M1 = class {
 	friends = new M1ApiFriends(this);
 	gchat = new M1ApiGchat(this);
 	im = new M1ApiIm(this);
+	inventory = new M1ApiInventory(this);
 	trades = new M1ApiTrades(this);
 	users = new M1ApiUsers(this);
 	constructor(options) {
@@ -788,7 +893,7 @@ var M1 = class {
 			if (access_token) ws_url.searchParams.set("access_token", access_token);
 			if (typeof websocket.subs === "string") ws_url.searchParams.set("subs", websocket.subs);
 			this.ws = new ExtWSClient(ws_url, { connect: false });
-			if (headers) this.ws.headers = headers;
+			if (headers) this.ws.headers = headers instanceof Headers ? headers : new Headers(headers);
 			this.ws.connect();
 		}
 	}
@@ -805,7 +910,7 @@ var M1 = class {
 	async callMethod(options) {
 		const url = new URL(`/api/${options.api_method}`, `https://${this.options.hostname}`);
 		let body;
-		const request_headers = structuredClone(this.options.headers ?? {});
+		const request_headers = new Headers(this.options.headers ?? {});
 		const request_data = {
 			...options.data,
 			access_token: this.options.access_token
@@ -813,14 +918,15 @@ var M1 = class {
 		if (options.http_method === "GET") {
 			for (const [key, value] of Object.entries(request_data)) if (value !== void 0 && value !== null) url.searchParams.set(key, value);
 		} else {
-			request_headers["Content-Type"] = "application/json";
+			request_headers.set("Content-Type", "application/json");
 			body = JSON.stringify(request_data);
 		}
-		const response = await fetch(url, {
+		const request_init = {
 			method: options.http_method,
-			headers: request_headers,
-			body
-		});
+			headers: request_headers
+		};
+		if (options.http_method !== "GET") request_init.body = body;
+		const response = await fetch(url, request_init);
 		const response_data = await response.json();
 		const { code } = parse(object({ code: pipe(number(), minValue(0)) }), response_data);
 		if (code === 0) {
@@ -832,7 +938,7 @@ var M1 = class {
 		}
 		const { description, data } = parse(object({
 			description: optional(string()),
-			data: optional(options.valiErrorDataSchema ?? never())
+			data: options.valiErrorDataSchema ?? never()
 		}), response_data);
 		if (this.options.hooks) {
 			const hook = this.options.hooks[code];
@@ -912,4 +1018,4 @@ var M1ApiAuth = class extends M1ApiBase {
 };
 
 //#endregion
-export { M1, M1ApiAuth, M1ApiBase, M1ApiBots, M1ApiData, M1ApiFriends, M1ApiUsers, valiObjectItemProtoLegacySchema, valiObjectItemProtoSchema, valiObjectItemSchema, valiObjectItemVariantSchema, valiObjectSessionSchema, valiObjectThingPrototypeSchema, valiObjectThingSchema, valiObjectUserSchema, valiObjectUserShortSchema, valiResponseFriendsGetRequestsSchema, valiResponseFriendsGetRequestsShortSchema, valiResponseFriendsGetSchema, valiResponseFriendsGetShortSchema, valiResponseTotpSessionTokenSchema };
+export { M1, M1ApiAuth, M1ApiBase, M1ApiBots, M1ApiData, M1ApiFriends, M1ApiGchat, M1ApiIm, M1ApiTrades, M1ApiUsers, valiObjectDialogSchema, valiObjectGchatMessageAdditionalDataSchema, valiObjectGchatMessageBaseSchema, valiObjectGchatMessageSchema, valiObjectItemProtoLegacySchema, valiObjectItemProtoSchema, valiObjectItemSchema, valiObjectItemVariantSchema, valiObjectMessageSchema, valiObjectNewTradeSchema, valiObjectSessionSchema, valiObjectThingPrototypeSchema, valiObjectThingSchema, valiObjectTradeIdSchema, valiObjectTradeListSchema, valiObjectTradeSchema, valiObjectUserSchema, valiObjectUserShortSchema, valiResponseFriendsGetBaseSchema, valiResponseFriendsGetRequestsSchema, valiResponseFriendsGetRequestsShortSchema, valiResponseFriendsGetShortSchema, valiResponseFriendsGetShortWithUserSchema, valiResponseFriendsGetWithUserSchema, valiResponseGchatGetSchema, valiResponseGchatSendSchema, valiResponseImDialogsGetSchema, valiResponseImHistoryGetSchema, valiResponseImSendSchema, valiResponseTotpSessionTokenSchema };

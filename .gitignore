@@ -1,5 +1,7 @@
-.cursorrules
-.DS_Store
-node_modules
-.cursorignore
 .cursor/*
+.cursorrules
+.cursorignore
+.DS_Store
+.env
+*.env
+node_modules

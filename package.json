@@ -1,7 +1,7 @@
 {
 	"name": "@mnplone/sdk",
-	"version": "0.1.0-beta.1",
-	"description": "SDK for mnpl.one",
+	"version": "0.1.0-dev",
+	"description": "SDK for M1",
 	"publishConfig": {
 		"access": "public"
 	},
@@ -34,8 +34,8 @@
 	"scripts": {
 		"build": "tsdown src/main.ts src/dev.ts --unused --dts --format esm",
 		"check": "bun run lint && bun run build && bun run test",
-		"lint": "eslint . && tsc --skipLibCheck --noemit",
-		"test": "NODE_TLS_REJECT_UNAUTHORIZED=0 bun test --coverage"
+		"lint": "eslint . && tsc && (cd test && tsc)",
+		"test": "bun test --coverage"
 	},
 	"repository": {
 		"type": "git",

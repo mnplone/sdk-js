@@ -19,7 +19,7 @@ export async function refresh_hook<
 	options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
 	data: Record<string, unknown>,
 ) {
-	console.log('refresh_hook', options, data); // eslint-disable-line no-console
+	console.log('refresh_hook', options, data);
 
 	const { refresh_token } = this.options;
 
