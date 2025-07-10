@@ -1,6 +1,6 @@
 import {
 	array,
-	InferOutput,
+	type InferOutput,
 	object,
 	pipe,
 	number,
@@ -89,6 +89,12 @@ export const valiObjectUserSchema = pipe(
 		),
 		social_vk: optional(
 			number(),
+		),
+		social_discord: optional(
+			string(),
+		),
+		social_twitch: optional(
+			string(),
 		),
 		games: optional(
 			number(),

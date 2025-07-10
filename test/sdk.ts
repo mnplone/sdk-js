@@ -1,5 +1,5 @@
 import { M1 } from '../src/m1.js';
 
 export const sdk = new M1({
-	hostname: 'new.mnpl.local',
+	access_token: process.env.TEST_ACCESS_TOKEN,
 });

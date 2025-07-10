@@ -1,23 +1,63 @@
 # JavaScript SDK for mnpl.one
 
-Currently in development. Not all methods from [documentation](https://docs.mnpl.one) are available yet.
+Currently in development. Not all the methods from [documentation](https://docs.mnpl.one) are available yet.
 
-### Current progress:
+### Current progress
+
+#### Authorization methods
 
 - [x] auth.signin
 - [x] auth.totpVerify
 - [x] auth.refresh
-- [ ] bots.create
-- [ ] bots.getToken
+
+#### Bots methods
+
+- [x] bots.create
+- [x] bots.getToken
+
+#### Users methods
+
 - [x] users.get
-- [ ] friends.get
-- [ ] friends.getRequests
-- [ ] friends.add
-- [ ] friends.delete
-- [ ] gchat.get
-- [ ] gchat.send
+
+#### Friends methods
+
+- [x] friends.get
+- [x] friends.getRequests
+- [x] friends.add
+- [x] friends.delete
+
+#### Chat methods
+
+- [x] gchat.get
+- [x] gchat.send
+
+#### IM methods
+
+- [x] im.send
+- [x] im.dialogsGet
+- [x] im.historyGet
+- [x] im.sync
+
+#### Trade methods
+
+- [x] trades.create
+- [x] trades.accept
+- [x] trades.decline
+- [x] trades.revoke
+- [x] trades.incoming
+- [x] trades.outgoing
+- [x] trades.history
+
+#### Inventory methods
+
 - [ ] inventory.get
 - [ ] inventory.craft
-- [ ] data.getItemProtos
-- [ ] data.searchItemProtos
-- [ ] oauth.exchangeCode
+
+#### Data methods
+
+- [x] data.getItemProtos
+- [x] data.searchItemProtos
+
+#### oAuth methods
+
+- [x] oauth.exchangeCode

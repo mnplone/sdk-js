@@ -1,5 +1,5 @@
 import {
-	InferOutput,
+	type InferOutput,
 	number,
 	object,
 	optional,

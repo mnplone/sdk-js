@@ -1,6 +1,5 @@
 import { ExtWSClient } from '@extws/client';
 import {
-	getDotPath,
 	minValue,
 	never,
 	number,
@@ -10,13 +9,50 @@ import {
 	pipe,
 	safeParse,
 	string,
+	summarize,
 	type InferOutput,
 } from 'valibot';
-import { M1ApiData } from './api/data.js';
-import { M1ApiUsers } from './api/users.js';
 import { M1ApiAuth } from './api/auth.js';
-import type { ValiBaseSchema } from './types.js';
+import { M1ApiBots } from './api/bots.js';
+import { M1ApiData } from './api/data.js';
+import { M1ApiFriends } from './api/friends.js';
+import { M1ApiGchat } from './api/gchat.js';
+import { M1ApiIm } from './api/im.js';
+import { M1ApiTrades } from './api/trades.js';
+import { M1ApiUsers } from './api/users.js';
+import { type ValiBaseSchema } from './types.js';
+import { refresh_hook } from './hooks/refresh.js';
 
+export type CallMethodOptionsData = Record<
+	string,
+	string | number | undefined | null
+>;
+
+export type CallMethodOptions<
+	ValiResponseSchema extends ValiBaseSchema,
+	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+> = {
+	http_method: 'GET' | 'POST',
+	api_method: string,
+	data?: CallMethodOptionsData,
+	valiResponseSchema: ValiResponseSchema,
+	valiErrorDataSchema?: ValiErrorDataSchema,
+};
+
+export type CallMethodResponse<
+	ValiResponseSchema extends ValiBaseSchema,
+	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+> = {
+	success: true,
+	data: InferOutput<ValiResponseSchema>,
+} | {
+	success: false,
+	code: number,
+	description?: string,
+	data: ValiErrorDataSchema extends undefined
+		? never
+		: InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
+};
 type M1Options = {
 	hostname?: string,
 	access_token?: string,
@@ -24,8 +60,21 @@ type M1Options = {
 	websocket?: {
 		subs?: string,
 	},
-	// headers?: Headers,
 	headers?: Record<string, string>,
+	hooks?: {
+		[key: string]: <
+			ValiResponseSchema extends ValiBaseSchema,
+			ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+		>(
+			this: M1,
+			options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
+			data: Record<string, unknown>
+		) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>,
+	},
+};
+
+const default_hooks = {
+	1: refresh_hook, // Refreshing access token on authorization error
 };
 
 /**
@@ -41,14 +90,17 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
 		return result.output;
 	}
 
-	for (const issue of result.issues) {
-		// eslint-disable-next-line no-console
-		console.error();
-		// eslint-disable-next-line no-console
-		console.error(`Valibot found an issue at ${getDotPath(issue)}`);
-		// eslint-disable-next-line no-console
-		console.error('issue', JSON.stringify(issue));
-	}
+	// for (const issue of result.issues) {
+	// 	// eslint-disable-next-line no-console
+	// 	console.error();
+	// 	// eslint-disable-next-line no-console
+	// 	console.error(`Valibot found an issue at ${getDotPath(issue)}`);
+	// 	// eslint-disable-next-line no-console
+	// 	console.error('issue', JSON.stringify(issue));
+	// }
+
+	// eslint-disable-next-line no-console
+	console.error(summarize(result.issues));
 
 	throw new TypeError('Valibot found issues.');
 }
@@ -60,21 +112,38 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
  * @param options.access_token - Access token
  * @param options.refresh_token - Refresh token
  * @param options.polling - Connect to WebSocket
- * @param options.subs - Websocket subscriptions
+ * @param options.websocket - Websocket options
+ * @param options.websocket.subs - Websocket subscriptions
  * @param options.headers - Headers
+ * @param options.hooks - Hooks
  */
 export class M1 {
 	options: M1Options;
 	ws: ExtWSClient | null = null;
-	users = new M1ApiUsers(this);
-	data = new M1ApiData(this);
 	auth = new M1ApiAuth(this);
+	bots = new M1ApiBots(this);
+	data = new M1ApiData(this);
+	friends = new M1ApiFriends(this);
+	gchat = new M1ApiGchat(this);
+	im = new M1ApiIm(this);
+	trades = new M1ApiTrades(this);
+	users = new M1ApiUsers(this);
 
 	constructor(options?: M1Options) {
 		this.options = {
 			hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
 			...options,
 		};
+
+		if ('hooks' in this.options) {
+			this.options.hooks = {
+				...default_hooks,
+				...this.options.hooks,
+			};
+		}
+		else {
+			this.options.hooks = default_hooks;
+		}
 
 		const { websocket } = this.options;
 		if (websocket) {
@@ -84,7 +153,8 @@ export class M1 {
 			} = this.options;
 
 			const ws_url = new URL('/ws', `wss://${this.options.hostname}`);
-			if (access_token !== undefined) {
+
+			if (access_token) {
 				ws_url.searchParams.set('access_token', access_token);
 			}
 
@@ -118,28 +188,9 @@ export class M1 {
 	 * @returns - API response.
 	 */
 	async callMethod<
-		const ValiResponseSchema extends ValiBaseSchema,
-		const ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
-	>(options: {
-		http_method: 'GET' | 'POST',
-		api_method: string,
-		data?: Record<
-			string,
-			string | number | undefined | null
-		>,
-		valiResponseSchema: ValiResponseSchema,
-		valiErrorDataSchema?: ValiErrorDataSchema,
-	}): Promise<{
-		success: true,
-		data: InferOutput<ValiResponseSchema>,
-	} | {
-		success: false,
-		code: number,
-		description?: string,
-		data: ValiErrorDataSchema extends undefined
-			? never
-			: InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
-	}> {
+		ValiResponseSchema extends ValiBaseSchema,
+		ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
+	>(options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>): Promise<CallMethodResponse<ValiResponseSchema, ValiErrorDataSchema>> {
 		const url = new URL(
 			`/api/${options.api_method}`,
 			`https://${this.options.hostname}`,
@@ -167,14 +218,16 @@ export class M1 {
 			body = JSON.stringify(request_data);
 		}
 
-		const response = await fetch(
-			url,
-			{
-				method: options.http_method,
-				headers: request_headers,
-				body,
-			},
-		);
+		const request_init: RequestInit = {
+			method: options.http_method,
+			headers: request_headers,
+		};
+
+		if (options.http_method !== 'GET') {
+			request_init.body = body;
+		}
+
+		const response = await fetch(url, request_init);
 
 		const response_data = await response.json();
 
@@ -212,6 +265,18 @@ export class M1 {
 			}),
 			response_data,
 		);
+
+		if (this.options.hooks) {
+			const hook = this.options.hooks[code];
+
+			if (hook) {
+				const new_request_options = await hook.call(this, options, request_data);
+
+				if (new_request_options) {
+					return this.callMethod(new_request_options);
+				}
+			}
+		}
 
 		return {
 			success: false,
