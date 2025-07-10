@@ -8,11 +8,11 @@ import {
 export class M1ApiOauth extends M1ApiBase {
 	/**
 	 * Exchange a code for a session
-	 * @param parameters - The parameters for the exchange
-	 * @param parameters.app_id - The app ID
-	 * @param parameters.app_secret - The app secret
-	 * @param parameters.code - The code
-	 * @param parameters.redirect_uri - The redirect URI
+	 * @param options - The parameters for the exchange
+	 * @param options.app_id - The app ID
+	 * @param options.app_secret - The app secret
+	 * @param options.code - The code
+	 * @param options.redirect_uri - The redirect URI
 	 * @returns Session object
 	 */
 	exchangeCode(options: {

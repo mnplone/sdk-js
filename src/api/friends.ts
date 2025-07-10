@@ -3,7 +3,7 @@ import type { CallMethodOptionsData } from '../m1.js';
 import type { ApiResponse } from '../types.js';
 import { isRecord } from '../utils.js';
 import {
-	valiResponseFriendsGetSchema,
+	valiResponseFriendsGetBaseSchema,
 	valiResponseFriendsGetShortSchema,
 	valiResponseFriendsGetShortWithUserSchema,
 	valiResponseFriendsGetWithUserSchema,
@@ -110,47 +110,39 @@ export class M1ApiFriends extends M1ApiBase {
 		});
 	}
 
-	/*
-	m1.friends.get();
-	m1.friends.get(1);
-	m1.friends.get({ short: true });
-	m1.friends.get(1, { short: true });
-	m1.friends.get({ add_user: true });
-	m1.friends.get(1, { add_user: true });
-	m1.friends.get({ short: true, add_user: true });
-	m1.friends.get(1, { short: true, add_user: true });
-	*/
-
-	// TODO: refactor
-	// get();
-	// get(options: FriendsGetBaseOptions);
-	// get(options: FriendsGetBaseOptions & FriendsGetOptionsWithUser);
-	// get(options: FriendsGetBaseOptions & FriendsGetOptionsShort);
-	// get(options: FriendsGetBaseOptions & FriendsGetOptionsWithUser & FriendsGetOptionsShort);
-	// get(user_id: number);
-	// get(user_id: number, options: FriendsGetBaseOptions);
-	// get(user_id: number, options: FriendsGetBaseOptions & FriendsGetOptionsWithUser);
-	// get(user_id: number, options: FriendsGetBaseOptions & FriendsGetOptionsShort);
-	// get(user_id: number, options: FriendsGetBaseOptions & FriendsGetOptionsWithUser & FriendsGetOptionsShort);
-	// get<const ID extends boolean, WU, WS>(): ID extends true ? Schema1 : Schema2;
-
-	// get(user_id, FriendsGetBaseOptions);
-	// getShort(user_id, FriendsGetBaseOptions);
-	// getWithUser(user_id, FriendsGetBaseOptions);
-	// getShortWithUser(user_id, FriendsGetBaseOptions);
-
-	_get<
+	/**
+	 * Returns a list of friends.
+	 * @param options -
+	 * @param options.count The number of friends to return.
+	 * @param options.offset The number of friends to skip.
+	 * @param options.short Whether to return a short list of friends.
+	 * @param options.add_user Whether to add user information to the response.
+	 * @param options.online Whether to return only online friends.
+	 * @returns A list of friends and their count.
+	 */
+	get<
 		const OS extends boolean,
 		const OU extends boolean,
 	>(options?: FriendsGetOptions<OS, OU>): Promise<ApiResponse<ResponseFriendsGet<OS, OU>>>;
-	_get<
+	/**
+	 * Returns a list of friends.
+	 * @param user_id - The ID of the user whose friends to get.
+	 * @param options -
+	 * @param options.count The number of friends to return.
+	 * @param options.offset The number of friends to skip.
+	 * @param options.short Whether to return a short list of friends.
+	 * @param options.add_user Whether to add user information to the response.
+	 * @param options.online Whether to return only online friends.
+	 * @returns A list of friends and their count.
+	 */
+	get<
 		const OS extends boolean,
 		const OU extends boolean,
 	>(
 		user_id: number | string,
 		options?: FriendsGetOptions<OS, OU>,
-	): Promise<ApiResponse<ResponseFriendsGet<OS, OU>>>
-	_get<
+	): Promise<ApiResponse<ResponseFriendsGet<OS, OU>>>;
+	get<
 		const OS extends boolean,
 		const OU extends boolean,
 	>(
@@ -182,110 +174,7 @@ export class M1ApiFriends extends M1ApiBase {
 					: valiResponseFriendsGetShortSchema)
 				: (options?.add_user
 					? valiResponseFriendsGetWithUserSchema
-					: valiResponseFriendsGetSchema),
+					: valiResponseFriendsGetBaseSchema),
 		}) as Promise<ApiResponse<ResponseFriendsGet<OS, OU>>>;
-	}
-
-	/**
-	 * Returns a list of friends.
-	 * @param user_id - The ID of the user to get friends for.
-	 * @returns A list of friends and their count.
-	 */
-	get(user_id: number | string): Promise<ApiResponse<ResponseFriendsGet>>;
-	/**
-	 * Returns a list of friends.
-	 * @param options -
-	 * @param options.user_id The ID of the user to get friends for.
-	 * @param options.online Whether to return online friends.
-	 * @param options.add_user Whether to return friends who have added the user.
-	 * @param options.short Whether to return a short list of friends.
-	 * @param options.offset The number of friends to skip.
-	 * @param options.count The number of friends to return.
-	 * @returns A list of friends and their count.
-	 */
-	get(options: {
-		user_id?: number | string,
-		online?: boolean,
-		add_user?: boolean,
-		short: true,
-		offset?: number,
-		count?: number,
-	}): Promise<ApiResponse<ResponseFriendsGetShort>>;
-	/**
-	 * Returns a list of friends.
-	 * @param options -
-	 * @param options.user_id The ID of the user to get friends for.
-	 * @param options.online Whether to return online friends.
-	 * @param options.add_user Whether to return friends who have added the user.
-	 * @param options.short Whether to return a short list of friends.
-	 * @param options.offset The number of friends to skip.
-	 * @param options.count The number of friends to return.
-	 * @returns A list of friends and their count.
-	 */
-	get(options: {
-		user_id?: number | string,
-		online?: boolean,
-		add_user?: boolean,
-		short?: false,
-		offset?: number,
-		count?: number,
-	}): Promise<ApiResponse<ResponseFriendsGet>>;
-	get(param0: number | string | {
-		user_id?: number | string,
-		online?: boolean,
-		add_user?: boolean,
-		short?: boolean,
-		offset?: number,
-		count?: number,
-	}): Promise<ApiResponse<ResponseFriendsGet | ResponseFriendsGetShort>> {
-		const data: {
-			user_id?: number | string,
-			online?: number,
-			add_user?: number,
-			type?: 'short',
-			offset?: number,
-			count?: number,
-		} = {};
-
-		let is_short = false;
-
-		if (typeof param0 === 'number' || typeof param0 === 'string') {
-			data.user_id = param0;
-		}
-		else if (isRecord(param0)) {
-			if (param0.user_id) {
-				data.user_id = param0.user_id;
-			}
-
-			if (param0.online) {
-				data.online = 1;
-			}
-
-			if (param0.add_user) {
-				data.add_user = 1;
-			}
-
-			if (param0.short) {
-				data.type = 'short';
-				is_short = true;
-			}
-
-			if (param0.offset) {
-				data.offset = param0.offset;
-			}
-
-			if (param0.count) {
-				data.count = param0.count;
-			}
-		}
-
-		return this.baseClient.callMethod({
-			http_method: 'POST',
-			api_method: 'friends.get',
-			data,
-			valiResponseSchema: is_short
-				? valiResponseFriendsGetShortSchema
-				: valiResponseFriendsGetSchema,
-		});
 	}
 }

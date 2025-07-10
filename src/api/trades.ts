@@ -1,6 +1,7 @@
 import { void as voidSchema } from 'valibot';
 import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
+import type { CallMethodOptionsData } from '../m1.js';
 import {
 	valiObjectTradeIdSchema,
 	valiObjectTradeListSchema,
@@ -10,24 +11,24 @@ import {
 
 export class M1ApiTrades extends M1ApiBase {
 	create(options: {
-		item_ids_to?: number[],
-		item_ids_from?: number[],
+		item_ids_offer?: number[],
+		item_ids_request?: number[],
 		user_id: number,
 	}): Promise<ApiResponse<ObjectTradeId>> {
-		if (param0.item_ids_to === undefined && param0.item_ids_from === undefined) {
+		if (options.item_ids_request === undefined && options.item_ids_offer === undefined) {
 			throw new Error('One of item_ids_to or item_ids_from is required');
 		}
 
-		const data = {
-			user_id: param0.user_id,
+		const data: CallMethodOptionsData = {
+			user_id: options.user_id,
 		};
 
-		if (param0.item_ids_to !== undefined) {
-			data.thing_ids_to = param0.item_ids_to.join(',');
+		if (options.item_ids_request !== undefined) {
+			data.thing_ids_to = options.item_ids_request.join(',');
 		}
 
-		if (param0.item_ids_from !== undefined) {
-			data.thing_ids_from = param0.item_ids_from.join(',');
+		if (options.item_ids_offer !== undefined) {
+			data.thing_ids_from = options.item_ids_offer.join(',');
 		}
 
 		return this.baseClient.callMethod({
@@ -97,16 +98,23 @@ export class M1ApiTrades extends M1ApiBase {
 
 	/**
 	 * Get the history of trades.
-	 * @param user_id - The user ID.
-	 * @param param1 -
-	 * @param param1.count - The count of trades to return.
-	 * @param param1.offset - The offset of the trades to return.
+	 * @param options -
+	 * @param options.count - The count of trades to return.
+	 * @param options.offset - The offset of the trades to return.
 	 * @returns The history of trades.
 	 */
 	history(options?: {
 		count?: number,
 		offset?: number,
 	}): Promise<ApiResponse<ObjectTradeList>>;
+	/**
+	 * Get the history of trades.
+	 * @param user_id - The user ID.
+	 * @param options -
+	 * @param options.count - The count of trades to return.
+	 * @param options.offset - The offset of the trades to return.
+	 * @returns The history of trades.
+	 */
 	history(
 		user_id: number,
 		options?: {
@@ -115,7 +123,7 @@ export class M1ApiTrades extends M1ApiBase {
 		},
 	): Promise<ApiResponse<ObjectTradeList>>;
 	history(
-		arg0: number | {
+		arg0?: number | {
 			user_id?: number,
 			count?: number,
 			offset?: number,
@@ -132,18 +140,18 @@ export class M1ApiTrades extends M1ApiBase {
 			user_id?: number,
 		};
 
-		if (typeof param0 === 'number') {
-			data.user_id = param0;
-			data.count = param1?.count || 20;
-			data.offset = param1?.offset || 0;
+		if (typeof arg0 === 'number') {
+			data.user_id = arg0;
+			data.count = arg1?.count;
+			data.offset = arg1?.offset;
 		}
-		else if (typeof param0 === 'object') {
-			if (param0.user_id !== undefined) {
-				data.user_id = param0.user_id;
+		else if (typeof arg0 === 'object') {
+			if (arg0.user_id !== undefined) {
+				data.user_id = arg0.user_id;
 			}
 
-			data.count = param0.count || 20;
-			data.offset = param0.offset || 0;
+			data.count = arg0.count;
+			data.offset = arg0.offset;
 		}
 
 		if (data.user_id !== undefined) {
