@@ -172,7 +172,7 @@ export class M1 {
 			);
 
 			if (headers) {
-				this.ws.headers = headers;
+				this.ws.headers = new Headers(headers);
 			}
 
 			this.ws.connect();
