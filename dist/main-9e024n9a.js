@@ -422,11 +422,20 @@ var valiResponseFriendsGetRequestsShortSchema = object6({
 import { void as voidSchema } from "valibot";
 
 // src/utils.ts
+import * as v from "valibot";
 function isRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object && Object.prototype.toString.call(value) === "[object Object]";
 }
 function isIterableIterator(value) {
   return value !== null && typeof value === "object" && typeof Symbol.iterator in value && typeof value[Symbol.iterator] === "function" && typeof value.next === "function";
+}
+function parseWithNotice(schema, value) {
+  const result = v.safeParse(schema, value);
+  if (result.success) {
+    return result.output;
+  }
+  console.error(v.summarize(result.issues));
+  throw new TypeError("Valibot found issues.");
 }
 
 // src/api/friends.ts
@@ -878,4 +887,4 @@ class M1ApiUsers extends M1ApiBase {
   }
 }
 
-export { M1ApiBase, valiObjectSessionSchema, valiResponseTotpSessionTokenSchema, M1ApiAuth, M1ApiBots, valiObjectItemVariantSchema, valiObjectThingPrototypeSchema, valiObjectThingSchema, valiObjectItemProtoSchema, valiObjectItemSchema, valiObjectItemProtoLegacySchema, M1ApiData, isRecord, valiObjectUserShortSchema, valiObjectUserSchema, valiResponseFriendsGetBaseSchema, valiResponseFriendsGetWithUserSchema, valiResponseFriendsGetShortSchema, valiResponseFriendsGetShortWithUserSchema, valiResponseFriendsGetRequestsSchema, valiResponseFriendsGetRequestsShortSchema, M1ApiFriends, valiObjectGchatMessageBaseSchema, valiObjectGchatMessageAdditionalDataSchema, valiObjectGchatMessageSchema, valiResponseGchatGetSchema, valiResponseGchatSendSchema, M1ApiGchat, valiResponseImSendSchema, valiObjectMessageSchema, valiObjectDialogSchema, valiResponseImDialogsGetSchema, valiResponseImHistoryGetSchema, M1ApiIm, valiObjectTradeIdSchema, valiObjectTradeSchema, valiObjectNewTradeSchema, valiObjectTradeListSchema, M1ApiTrades, M1ApiUsers };
+export { M1ApiBase, valiObjectSessionSchema, valiResponseTotpSessionTokenSchema, M1ApiAuth, M1ApiBots, valiObjectItemVariantSchema, valiObjectThingPrototypeSchema, valiObjectThingSchema, valiObjectItemProtoSchema, valiObjectItemSchema, valiObjectItemProtoLegacySchema, M1ApiData, isRecord, parseWithNotice, valiObjectUserShortSchema, valiObjectUserSchema, valiResponseFriendsGetBaseSchema, valiResponseFriendsGetWithUserSchema, valiResponseFriendsGetShortSchema, valiResponseFriendsGetShortWithUserSchema, valiResponseFriendsGetRequestsSchema, valiResponseFriendsGetRequestsShortSchema, M1ApiFriends, valiObjectGchatMessageBaseSchema, valiObjectGchatMessageAdditionalDataSchema, valiObjectGchatMessageSchema, valiResponseGchatGetSchema, valiResponseGchatSendSchema, M1ApiGchat, valiResponseImSendSchema, valiObjectMessageSchema, valiObjectDialogSchema, valiResponseImDialogsGetSchema, valiResponseImHistoryGetSchema, M1ApiIm, valiObjectTradeIdSchema, valiObjectTradeSchema, valiObjectNewTradeSchema, valiObjectTradeListSchema, M1ApiTrades, M1ApiUsers };

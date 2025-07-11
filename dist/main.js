@@ -9,25 +9,15 @@ import {
   M1ApiTrades,
   M1ApiUsers,
   isRecord,
+  parseWithNotice,
   valiObjectItemSchema,
   valiObjectThingSchema,
   valiObjectUserSchema
-} from "./main-t4a7hnxe.js";
+} from "./main-9e024n9a.js";
 
 // src/m1.ts
 import { ExtWSClient } from "@extws/client";
-import {
-  minValue,
-  never,
-  number as number2,
-  object as object2,
-  optional as optional2,
-  parse,
-  pipe,
-  safeParse,
-  string as string2,
-  summarize
-} from "valibot";
+import * as v from "valibot";
 
 // src/valibot/inventory.ts
 import {
@@ -179,43 +169,10 @@ class M1ApiInventory extends M1ApiBase {
   }
 }
 
-// src/hooks/refresh.ts
-async function refresh_hook(options, data) {
-  console.log("refresh_hook", options, data);
-  const { refresh_token } = this.options;
-  if (!refresh_token) {
-    return;
-  }
-  const refresh_response = await this.auth.refresh(refresh_token);
-  if (refresh_response.success !== true) {
-    return;
-  }
-  const new_options = {
-    ...options,
-    data: {
-      ...options.data,
-      access_token: refresh_response.data.access_token
-    }
-  };
-  this.options.access_token = refresh_response.data.access_token;
-  if (refresh_response.data.refresh_token) {
-    this.options.refresh_token = refresh_response.data.refresh_token;
-  }
-  return new_options;
-}
-
 // src/m1.ts
-var default_hooks = {
-  1: refresh_hook
-};
-function parseWithNotice(schema, value) {
-  const result = safeParse(schema, value);
-  if (result.success) {
-    return result.output;
-  }
-  console.error(summarize(result.issues));
-  throw new TypeError("Valibot found issues.");
-}
+var apiResponseParser = v.parser(v.object({
+  code: v.pipe(v.number(), v.minValue(0))
+}));
 
 class M1 {
   options;
@@ -234,14 +191,6 @@ class M1 {
       hostname: globalThis.location?.hostname ?? "monopoly-one.com",
       ...options
     };
-    if ("hooks" in this.options) {
-      this.options.hooks = {
-        ...default_hooks,
-        ...this.options.hooks
-      };
-    } else {
-      this.options.hooks = default_hooks;
-    }
     const { websocket } = this.options;
     if (websocket) {
       const {
@@ -291,11 +240,9 @@ class M1 {
     }
     const response = await fetch(url, request_init);
     const response_data = await response.json();
-    const { code } = parse(object2({
-      code: pipe(number2(), minValue(0))
-    }), response_data);
+    const { code } = apiResponseParser(response_data);
     if (code === 0) {
-      const { data: data2 } = parseWithNotice(object2({
+      const { data: data2 } = parseWithNotice(v.object({
         data: options.valiResponseSchema
       }), response_data);
       return {
@@ -306,9 +253,9 @@ class M1 {
     const {
       description,
       data
-    } = parse(object2({
-      description: optional2(string2()),
-      data: options.valiErrorDataSchema ?? never()
+    } = v.parse(v.object({
+      description: v.optional(v.string()),
+      data: options.valiErrorDataSchema ?? v.never()
     }), response_data);
     if (this.options.hooks) {
       const hook = this.options.hooks[code];
@@ -327,6 +274,31 @@ class M1 {
     };
   }
 }
+// src/hooks/session-refresh.ts
+var sessionRefreshHook = async function(options, data) {
+  console.log("refresh_hook", options, data);
+  const { refresh_token } = this.options;
+  if (!refresh_token) {
+    return;
+  }
+  const refresh_response = await this.auth.refresh(refresh_token);
+  if (refresh_response.success !== true) {
+    return;
+  }
+  const new_options = {
+    ...options,
+    data: {
+      ...options.data,
+      access_token: refresh_response.data.access_token
+    }
+  };
+  this.options.access_token = refresh_response.data.access_token;
+  if (refresh_response.data.refresh_token) {
+    this.options.refresh_token = refresh_response.data.refresh_token;
+  }
+  return new_options;
+};
 export {
+  sessionRefreshHook,
   M1
 };

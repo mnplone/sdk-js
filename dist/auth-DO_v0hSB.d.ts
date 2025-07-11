@@ -8745,6 +8745,9 @@ declare class M1ApiUsers extends M1ApiBase {
     }): Promise<ApiResponse<Map<number, UserShort>>>;
 }
 
+type M1ApiResponseHook = <ValiResponseSchema extends ValiBaseSchema, ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined>(this: M1, options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>, data: Record<string, unknown>) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>;
+type M1ApiResponseHooks = Record<number, M1ApiResponseHook>;
+
 type CallMethodOptionsData = Record<string, string | number | undefined | null>;
 type CallMethodOptions<ValiResponseSchema extends ValiBaseSchema, ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined> = {
     http_method: 'GET' | 'POST';
@@ -8755,12 +8758,12 @@ type CallMethodOptions<ValiResponseSchema extends ValiBaseSchema, ValiErrorDataS
 };
 type CallMethodResponse<ValiResponseSchema extends ValiBaseSchema, ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined> = {
     success: true;
-    data: InferOutput<ValiResponseSchema>;
+    data: valibot.InferOutput<ValiResponseSchema>;
 } | {
     success: false;
     code: number;
     description?: string;
-    data: ValiErrorDataSchema extends undefined ? never : InferOutput<Exclude<ValiErrorDataSchema, undefined>>;
+    data: ValiErrorDataSchema extends undefined ? never : valibot.InferOutput<Exclude<ValiErrorDataSchema, undefined>>;
 };
 type M1Options = {
     hostname?: string;
@@ -8770,9 +8773,7 @@ type M1Options = {
         subs?: string;
     };
     headers?: Headers | Record<string, string>;
-    hooks?: {
-        [key: string]: <ValiResponseSchema extends ValiBaseSchema, ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined>(this: M1, options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>, data: Record<string, unknown>) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>;
-    };
+    hooks?: M1ApiResponseHooks;
 };
 /**
  * @class M1
@@ -8780,7 +8781,6 @@ type M1Options = {
  * @param options - The options to use
  * @param options.access_token - Access token
  * @param options.refresh_token - Refresh token
- * @param options.polling - Connect to WebSocket
  * @param options.websocket - Websocket options
  * @param options.websocket.subs - Websocket subscriptions
  * @param options.headers - Headers
@@ -8840,4 +8840,4 @@ declare class M1ApiAuth extends M1ApiBase {
     refresh(refresh_token: string): Promise<ApiResponse<Session>>;
 }
 
-export { valiObjectItemProtoSchema as $, type ApiResponse as A, valiResponseGchatGetSchema as B, type CallMethodOptions as C, valiResponseGchatSendSchema as D, type ResponseGchatGet as E, type ResponseGchatSend as F, type GchatMessage as G, valiResponseImSendSchema as H, valiObjectMessageSchema as I, valiObjectDialogSchema as J, valiResponseImDialogsGetSchema as K, valiResponseImHistoryGetSchema as L, M1ApiBase as M, type ResponseImSend as N, type ResponseImDialogsGet as O, type ResponseImHistoryGet as P, type Dialog as Q, type ResponseFriendsGetBase as R, type Session as S, type TotpSessionToken as T, type Message as U, valiObjectItemVariantSchema as V, type ItemVariant as W, valiObjectThingPrototypeSchema as X, type ThingPrototype as Y, valiObjectThingSchema as Z, type Thing as _, M1ApiAuth as a, type ItemProto as a0, type ItemShort as a1, valiObjectItemSchema as a2, type Item as a3, valiObjectItemProtoLegacySchema as a4, valiObjectTradeIdSchema as a5, type ObjectTradeId as a6, valiObjectTradeSchema as a7, type ObjectTrade as a8, valiObjectNewTradeSchema as a9, type ObjectNewTrade as aa, valiObjectTradeListSchema as ab, type ObjectTradeList as ac, valiObjectUserShortSchema as ad, valiObjectUserSchema as ae, type User as af, type UserShort as ag, M1 as ah, M1ApiBots as b, M1ApiData as c, M1ApiFriends as d, M1ApiGchat as e, M1ApiIm as f, M1ApiTrades as g, M1ApiUsers as h, type CallMethodResponse as i, valiResponseTotpSessionTokenSchema as j, valiResponseFriendsGetBaseSchema as k, valiResponseFriendsGetWithUserSchema as l, type ResponseFriendsGetWithUser as m, valiResponseFriendsGetShortSchema as n, type ResponseFriendsGetShort as o, valiResponseFriendsGetShortWithUserSchema as p, type ResponseFriendsGetShortWithUser as q, type ResponseFriendsGet as r, valiResponseFriendsGetRequestsSchema as s, type ResponseFriendsGetRequests as t, valiResponseFriendsGetRequestsShortSchema as u, valiObjectSessionSchema as v, type ResponseFriendsGetRequestsShort as w, valiObjectGchatMessageBaseSchema as x, valiObjectGchatMessageAdditionalDataSchema as y, valiObjectGchatMessageSchema as z };
+export { valiObjectItemProtoSchema as $, type ApiResponse as A, valiResponseGchatGetSchema as B, type CallMethodOptions as C, valiResponseGchatSendSchema as D, type ResponseGchatGet as E, type ResponseGchatSend as F, type GchatMessage as G, valiResponseImSendSchema as H, valiObjectMessageSchema as I, valiObjectDialogSchema as J, valiResponseImDialogsGetSchema as K, valiResponseImHistoryGetSchema as L, M1ApiBase as M, type ResponseImSend as N, type ResponseImDialogsGet as O, type ResponseImHistoryGet as P, type Dialog as Q, type ResponseFriendsGetBase as R, type Session as S, type TotpSessionToken as T, type Message as U, valiObjectItemVariantSchema as V, type ItemVariant as W, valiObjectThingPrototypeSchema as X, type ThingPrototype as Y, valiObjectThingSchema as Z, type Thing as _, M1ApiAuth as a, type ItemProto as a0, type ItemShort as a1, valiObjectItemSchema as a2, type Item as a3, valiObjectItemProtoLegacySchema as a4, valiObjectTradeIdSchema as a5, type ObjectTradeId as a6, valiObjectTradeSchema as a7, type ObjectTrade as a8, valiObjectNewTradeSchema as a9, type ObjectNewTrade as aa, valiObjectTradeListSchema as ab, type ObjectTradeList as ac, valiObjectUserShortSchema as ad, valiObjectUserSchema as ae, type User as af, type UserShort as ag, type M1ApiResponseHook as ah, M1 as ai, M1ApiBots as b, M1ApiData as c, M1ApiFriends as d, M1ApiGchat as e, M1ApiIm as f, M1ApiTrades as g, M1ApiUsers as h, type CallMethodResponse as i, valiResponseTotpSessionTokenSchema as j, valiResponseFriendsGetBaseSchema as k, valiResponseFriendsGetWithUserSchema as l, type ResponseFriendsGetWithUser as m, valiResponseFriendsGetShortSchema as n, type ResponseFriendsGetShort as o, valiResponseFriendsGetShortWithUserSchema as p, type ResponseFriendsGetShortWithUser as q, type ResponseFriendsGet as r, valiResponseFriendsGetRequestsSchema as s, type ResponseFriendsGetRequests as t, valiResponseFriendsGetRequestsShortSchema as u, valiObjectSessionSchema as v, type ResponseFriendsGetRequestsShort as w, valiObjectGchatMessageBaseSchema as x, valiObjectGchatMessageAdditionalDataSchema as y, valiObjectGchatMessageSchema as z };
