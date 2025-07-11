@@ -1,25 +1,16 @@
-import {
-	type CallMethodOptions,
-	type M1,
-} from '../m1.js';
-import { type ValiBaseSchema } from '../types.js';
+/* eslint-disable @typescript-eslint/no-invalid-this */
+
+import type { M1ApiResponseHook } from '../hooks.js';
 
 /**
  * Refresh hook.
- * @this { M1 }
  * @param options Request options.
  * @param data Request data.
  * @returns New access token and refresh token.
  */
-export async function refresh_hook<
-	ValiResponseSchema extends ValiBaseSchema,
-	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
->(
-	this: M1,
-	options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
-	data: Record<string, unknown>,
-) {
-	console.log('refresh_hook', options, data); // eslint-disable-line no-console
+// eslint-disable-next-line func-style
+export const sessionRefreshHook: M1ApiResponseHook = async function (options, data) {
+	console.log('refresh_hook', options, data);
 
 	const { refresh_token } = this.options;
 
@@ -48,4 +39,4 @@ export async function refresh_hook<
 	}
 
 	return new_options;
-}
+};

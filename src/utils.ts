@@ -1,3 +1,6 @@
+import * as v from 'valibot';
+import type { ValiBaseSchema } from './types.js';
+
 /**
  * Check if a value is a record.
  * @param value -
@@ -23,4 +26,23 @@ export function isIterableIterator(value: any): value is IterableIterator<unknow
 		&& typeof Symbol.iterator in value
 		&& typeof value[Symbol.iterator] === 'function'
 		&& typeof value.next === 'function';
+}
+
+/**
+ * Parses value with schema like valibot, but prints issue paths.
+ * @param schema Valibot schema.
+ * @param value Value to parse.
+ * @returns Parsed value.
+ */
+export function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unknown): v.InferOutput<V> {
+	const result = v.safeParse(schema, value);
+
+	if (result.success) {
+		return result.output;
+	}
+
+	// eslint-disable-next-line no-console
+	console.error(v.summarize(result.issues));
+
+	throw new TypeError('Valibot found issues.');
 }

@@ -12,19 +12,17 @@
 		"module": "preserve",
 		"noEmit": true,
 		"lib": [
-			"es2022",
-			"dom",
-			"dom.iterable"
+			"ES2022",
+			"DOM",
+			"DOM.Iterable"
 		],
 		"declaration": true,
+		"isolatedDeclarations": false
 	},
 	"include": [
 		"src/"
 	],
 	"exclude": [
-		"dist/",
-		"node_modules/",
-		"test/",
-		"**/*.test.*"
+		"**/*.test.ts"
 	]
 }

@@ -1,17 +1,5 @@
 import { ExtWSClient } from '@extws/client';
-import {
-	minValue,
-	never,
-	number,
-	object,
-	optional,
-	parse,
-	pipe,
-	safeParse,
-	string,
-	summarize,
-	type InferOutput,
-} from 'valibot';
+import * as v from 'valibot';
 import { M1ApiAuth } from './api/auth.js';
 import { M1ApiBots } from './api/bots.js';
 import { M1ApiData } from './api/data.js';
@@ -22,7 +10,8 @@ import { M1ApiInventory } from './api/inventory.js';
 import { M1ApiTrades } from './api/trades.js';
 import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
-import { refresh_hook } from './hooks/refresh.js';
+import type { M1ApiResponseHooks } from './hooks.js';
+import { parseWithNotice } from './utils.js';
 
 export type CallMethodOptionsData = Record<
 	string,
@@ -45,14 +34,14 @@ export type CallMethodResponse<
 	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
 > = {
 	success: true,
-	data: InferOutput<ValiResponseSchema>,
+	data: v.InferOutput<ValiResponseSchema>,
 } | {
 	success: false,
 	code: number,
 	description?: string,
 	data: ValiErrorDataSchema extends undefined
 		? never
-		: InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
+		: v.InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
 };
 type M1Options = {
 	hostname?: string,
@@ -61,50 +50,18 @@ type M1Options = {
 	websocket?: {
 		subs?: string,
 	},
-	headers?: Record<string, string>,
-	hooks?: {
-		[key: string]: <
-			ValiResponseSchema extends ValiBaseSchema,
-			ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
-		>(
-			this: M1,
-			options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
-			data: Record<string, unknown>
-		) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>,
-	},
+	headers?: Headers | Record<string, string>,
+	hooks?: M1ApiResponseHooks,
 };
 
-const default_hooks = {
-	1: refresh_hook, // Refreshing access token on authorization error
-};
-
-/**
- * Parses value with schema like valibot, but prints issue paths.
- * @param schema Valibot schema.
- * @param value Value to parse.
- * @returns Parsed value.
- */
-function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unknown): InferOutput<V> {
-	const result = safeParse(schema, value);
-
-	if (result.success) {
-		return result.output;
-	}
-
-	// for (const issue of result.issues) {
-	// 	// eslint-disable-next-line no-console
-	// 	console.error();
-	// 	// eslint-disable-next-line no-console
-	// 	console.error(`Valibot found an issue at ${getDotPath(issue)}`);
-	// 	// eslint-disable-next-line no-console
-	// 	console.error('issue', JSON.stringify(issue));
-	// }
-
-	// eslint-disable-next-line no-console
-	console.error(summarize(result.issues));
-
-	throw new TypeError('Valibot found issues.');
-}
+const apiResponseParser = v.parser(
+	v.object({
+		code: v.pipe(
+			v.number(),
+			v.minValue(0),
+		),
+	}),
+);
 
 /**
  * @class M1
@@ -112,7 +69,6 @@ function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unkno
  * @param options - The options to use
  * @param options.access_token - Access token
  * @param options.refresh_token - Refresh token
- * @param options.polling - Connect to WebSocket
  * @param options.websocket - Websocket options
  * @param options.websocket.subs - Websocket subscriptions
  * @param options.headers - Headers
@@ -136,16 +92,6 @@ export class M1 {
 			hostname: globalThis.location?.hostname ?? 'monopoly-one.com',
 			...options,
 		};
-
-		if ('hooks' in this.options) {
-			this.options.hooks = {
-				...default_hooks,
-				...this.options.hooks,
-			};
-		}
-		else {
-			this.options.hooks = default_hooks;
-		}
 
 		const { websocket } = this.options;
 		if (websocket) {
@@ -172,7 +118,9 @@ export class M1 {
 			);
 
 			if (headers) {
-				this.ws.headers = new Headers(headers);
+				this.ws.headers = headers instanceof Headers
+					? headers
+					: new Headers(headers);
 			}
 
 			this.ws.connect();
@@ -197,9 +145,9 @@ export class M1 {
 			`/api/${options.api_method}`,
 			`https://${this.options.hostname}`,
 		);
-		let body;
+		let body: string | undefined;
 
-		const request_headers = structuredClone(this.options.headers ?? {});
+		const request_headers = new Headers(this.options.headers ?? {});
 		const request_data = {
 			...options.data,
 			access_token: this.options.access_token,
@@ -216,7 +164,7 @@ export class M1 {
 			}
 		}
 		else {
-			request_headers['Content-Type'] = 'application/json';
+			request_headers.set('Content-Type', 'application/json');
 			body = JSON.stringify(request_data);
 		}
 
@@ -233,19 +181,11 @@ export class M1 {
 
 		const response_data = await response.json();
 
-		const { code } = parse(
-			object({
-				code: pipe(
-					number(),
-					minValue(0),
-				),
-			}),
-			response_data,
-		);
+		const { code } = apiResponseParser(response_data);
 
 		if (code === 0) {
 			const { data } = parseWithNotice(
-				object({
+				v.object({
 					data: options.valiResponseSchema as ValiBaseSchema,
 				}),
 				response_data,
@@ -260,10 +200,10 @@ export class M1 {
 		const {
 			description,
 			data,
-		} = parse(
-			object({
-				description: optional(string()),
-				data: optional(options.valiErrorDataSchema ?? never() as ValiBaseSchema),
+		} = v.parse(
+			v.object({
+				description: v.optional(v.string()),
+				data: options.valiErrorDataSchema ?? v.never(),
 			}),
 			response_data,
 		);
@@ -284,7 +224,9 @@ export class M1 {
 			success: false,
 			code,
 			description,
-			data,
+			data: data as ValiErrorDataSchema extends undefined
+				? never
+				: v.InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
 		};
 	}
 }
