@@ -7,7 +7,7 @@ import {
 } from 'valibot';
 
 export const valiObjectSessionSchema = object({
-	user_id: string(),
+	user_id: number(),
 	access_token: string(),
 	expires_in: number(),
 	refresh_token: optional(

@@ -3,6 +3,7 @@ import {
 	type InferOutput,
 	object,
 	pipe,
+	null as _null,
 	number,
 	optional,
 	union,
@@ -34,14 +35,19 @@ function transformerBot<const T extends InferOutput<typeof valiInputUserShortSch
 const valiInputUserShortSchema = object({
 	user_id: number(),
 	domain: optional(
-		string(),
+		union([
+			string(),
+			_null(),
+		]),
 	),
 	approved: bit(0),
 	nick: string(),
-	gender: union([
-		literal(0),
-		literal(1),
-	]),
+	gender: optional(
+		union([
+			literal(0),
+			literal(1),
+		]),
+	),
 	avatar: string(),
 	online: bit(0),
 	current_game: optional(
@@ -83,7 +89,9 @@ export const valiObjectUserShortSchema = pipe(
 export const valiObjectUserSchema = pipe(
 	object({
 		...valiInputUserShortSchema.entries,
-		nicks_old: array(string()),
+		nicks_old: optional(
+			array(string()),
+		),
 		profile_cover: optional(
 			string(),
 		),

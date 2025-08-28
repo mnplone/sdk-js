@@ -79,12 +79,25 @@ export const valiObjectThingPrototypeSchema = object({
 		array(number()),
 	),
 	drop: optional(
-		object({
-			thing_prototype_id: number(),
-			hidden: optional(
-				boolean(),
-			),
-		}),
+		array(
+			object({
+				thing_prototype_id: optional(
+					number(),
+				),
+				hidden: optional(
+					boolean(),
+				),
+				is_primary: optional(
+					boolean(),
+				),
+				is_rare: optional(
+					number(),
+				),
+				is_secondary: optional(
+					number(),
+				),
+			}),
+		),
 	),
 	variants: optional(
 		array(valiObjectItemVariantSchema),
@@ -118,7 +131,7 @@ export const valiObjectThingSchema = object({
 		union([
 			object({
 				transactions: number(),
-				money: number(),
+				money_inside: number(),
 			}),
 			object({
 				numbers: array(number()),

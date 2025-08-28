@@ -160,8 +160,8 @@ type EquippedResponse<
 
 // Main conditional type similar to friends.ts
 export type ResponseInventoryGet<
-	OL extends boolean,
-	OU extends boolean,
+	OL extends boolean = true,
+	OU extends boolean = false,
 	OE extends 'array' | 'tree' | undefined = undefined,
 > = If<
 	OL,
