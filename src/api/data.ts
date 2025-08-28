@@ -14,6 +14,7 @@ import {
 	type ItemProto,
 	type ThingPrototype,
 } from '../valibot/items.js';
+import { valiResponseDataSearchItemProtosSchema } from '../valibot/data.js';
 
 export class M1ApiData extends M1ApiBase {
 	/**
@@ -136,6 +137,31 @@ export class M1ApiData extends M1ApiBase {
 					}),
 					transform((value) => value.item_protos),
 				),
+		});
+	}
+
+	searchItemProtos(
+		options: {
+			type?: number[],
+			quality_id?: number[],
+			collection_id?: number[],
+			group_id?: number[],
+			offset?: number,
+			count?: number,
+		},
+	) {
+		return this.baseClient.callMethod({
+			http_method: 'GET',
+			api_method: 'data.searchItemProtos',
+			data: {
+				type: options.type?.join(','),
+				quality_id: options.quality_id?.join(','),
+				collection_id: options.collection_id?.join(','),
+				group_id: options.group_id?.join(','),
+				offset: options.offset,
+				count: options.count,
+			},
+			valiResponseSchema: valiResponseDataSearchItemProtosSchema,
 		});
 	}
 }
