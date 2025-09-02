@@ -54,6 +54,11 @@ const valiEquippedTreeSchema = object({
 	}),
 });
 
+export const valiResponseInventoryCraftSchema = object({
+	item: valiObjectItemSchema,
+});
+export type ResponseInventoryCraft = InferOutput<typeof valiResponseInventoryCraftSchema>;
+
 // Base new response schema (add_legacy=0)
 export const valiResponseInventoryGetBaseSchema = object({
 	count: number(),

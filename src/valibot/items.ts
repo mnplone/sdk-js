@@ -1,3 +1,4 @@
+/* eslint-disable @stylistic/array-element-newline */
 import {
 	array,
 	boolean,
@@ -152,7 +153,7 @@ export type Thing = InferOutput<typeof valiObjectThingSchema>;
 export const valiObjectItemProtoSchema = object({
 	item_proto_id: number(),
 	item_proto_status: optional(
-		picklist([ 0, 1 ]),
+		picklist([ 0, 1, 2 ]),
 		0,
 	),
 	type: number(),
@@ -195,9 +196,19 @@ export const valiObjectItemProtoSchema = object({
 		array(number()),
 	),
 	drop: optional(
-		record(
-			string(),
-			unknown(),
+		array(
+			object({
+				item_proto_id: number(),
+				is_primary: optional(
+					boolean(),
+				),
+				is_rare: optional(
+					number(),
+				),
+				is_secondary: optional(
+					number(),
+				),
+			}),
 		),
 	),
 	can_craft: bit(0),
@@ -205,6 +216,7 @@ export const valiObjectItemProtoSchema = object({
 export type ItemProto = InferOutput<typeof valiObjectItemProtoSchema>;
 
 const valiObjectItemShortSchema = object({
+	...valiObjectItemProtoSchema.entries,
 	item_id: number(),
 	item_ids: optional(
 		array(number()),

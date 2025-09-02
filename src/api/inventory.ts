@@ -3,6 +3,7 @@ import type { CallMethodOptionsData } from '../m1.js';
 import type { ApiResponse } from '../types.js';
 import { isRecord } from '../utils.js';
 import {
+	valiResponseInventoryCraftSchema,
 	valiResponseInventoryGetBaseSchema,
 	valiResponseInventoryGetWithUserSchema,
 	valiResponseInventoryGetLegacySchema,
@@ -16,6 +17,7 @@ import {
 	valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema,
 	valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema,
 	type ResponseInventoryGet,
+	type ResponseInventoryCraft,
 } from '../valibot/inventory.js';
 import { M1ApiBase } from './base.js';
 
@@ -34,6 +36,22 @@ type InventoryGetOptions<
 };
 
 export class M1ApiInventory extends M1ApiBase {
+	/**
+	 * Craft an item.
+	 * @param item_ids - The IDs of the items to craft.
+	 * @returns The crafted item.
+	 */
+	craft(item_ids: number[]): Promise<ApiResponse<ResponseInventoryCraft>> {
+		return this.baseClient.callMethod({
+			http_method: 'POST',
+			api_method: 'inventory.craft',
+			data: {
+				item_ids: item_ids.join(','),
+			},
+			valiResponseSchema: valiResponseInventoryCraftSchema,
+		});
+	}
+
 	/**
 	 * Returns information about user's inventory.
 	 * @param options - The options for the request.
