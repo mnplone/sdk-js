@@ -1,6 +1,6 @@
 # JavaScript SDK for mnpl.one
 
-Currently in development. Not all the methods from [documentation](https://docs.mnpl.one) are available yet.
+Currently in development. All the methods from [documentation](https://docs.mnpl.one) are already available but not stable.
 
 ### Current progress
 
@@ -50,8 +50,8 @@ Currently in development. Not all the methods from [documentation](https://docs.
 
 #### Inventory methods
 
-- [ ] inventory.get
-- [ ] inventory.craft
+- [x] inventory.get
+- [x] inventory.craft
 
 #### Data methods
 
