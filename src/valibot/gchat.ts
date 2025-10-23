@@ -49,6 +49,7 @@ export const valiObjectGchatMessageSchema = intersect([
 	valiObjectGchatMessageBaseSchema,
 	valiObjectGchatMessageAdditionalDataSchema,
 ]);
+export type GchatMessage = InferOutput<typeof valiObjectGchatMessageSchema>;
 
 export const valiResponseGchatGetSchema = object({
 	messages: array(valiObjectGchatMessageSchema),
@@ -60,11 +61,10 @@ export const valiResponseGchatGetSchema = object({
 	users: array(valiObjectUserShortSchema),
 	item_protos: array(valiObjectItemProtoSchema),
 });
+export type ResponseGchatGet = InferOutput<typeof valiResponseGchatGetSchema>;
 
 export const valiResponseGchatSendSchema = object({
 	msg_id: string(),
 });
-
-export type ResponseGchatGet = InferOutput<typeof valiResponseGchatGetSchema>;
-export type GchatMessage = InferOutput<typeof valiObjectGchatMessageSchema>;
 export type ResponseGchatSend = InferOutput<typeof valiResponseGchatSendSchema>;
+

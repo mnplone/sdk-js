@@ -11,7 +11,12 @@ import { M1ApiTrades } from './api/trades.js';
 import { M1ApiUsers } from './api/users.js';
 import { type ValiBaseSchema } from './types.js';
 import type { M1ApiResponseHooks } from './hooks.js';
-import { parseWithNotice } from './utils.js';
+import {
+	maskString,
+	parseWithNotice,
+} from './utils.js';
+
+const DEV_MODE = process.env.SDK_TEST === '1';
 
 export type CallMethodOptionsData = Record<
 	string,
@@ -29,12 +34,30 @@ export type CallMethodOptions<
 	valiErrorDataSchema?: ValiErrorDataSchema,
 };
 
+export const InvalidParametersErrorDataSchema = v.object({
+	issues: v.optional(
+		v.array(
+			v.object({
+				path: v.string(),
+				message: v.string(),
+			}),
+		),
+	),
+});
+
+export type RequestOptions = {
+	method: 'GET' | 'POST',
+	api_method: string,
+	data: CallMethodOptionsData,
+};
+
 export type CallMethodResponse<
 	ValiResponseSchema extends ValiBaseSchema,
 	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
 > = {
 	success: true,
 	data: v.InferOutput<ValiResponseSchema>,
+	request: RequestOptions,
 } | {
 	success: false,
 	code: number,
@@ -42,6 +65,7 @@ export type CallMethodResponse<
 	data: ValiErrorDataSchema extends undefined
 		? never
 		: v.InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
+	request: RequestOptions,
 };
 type M1Options = {
 	hostname?: string,
@@ -177,9 +201,30 @@ export class M1 {
 			request_init.body = body;
 		}
 
+		const request_options: RequestOptions = {
+			method: options.http_method,
+			api_method: options.api_method,
+			data: request_data,
+		};
+
+		if (
+			request_options.data.access_token
+			&& typeof request_options.data.access_token === 'string'
+		) {
+			request_options.data.access_token = maskString(request_options.data.access_token);
+		}
+
 		const response = await fetch(url, request_init);
 
 		const response_data = await response.json();
+
+		if (
+			DEV_MODE
+			&& response_data.success === false
+		) {
+			// eslint-disable-next-line no-console
+			console.dir(response_data, { depth: null });
+		}
 
 		const { code } = apiResponseParser(response_data);
 
@@ -194,6 +239,7 @@ export class M1 {
 			return {
 				success: true,
 				data,
+				request: request_options,
 			};
 		}
 
@@ -203,7 +249,7 @@ export class M1 {
 		} = v.parse(
 			v.object({
 				description: v.optional(v.string()),
-				data: options.valiErrorDataSchema ?? v.never(),
+				data: v.optional(options.valiErrorDataSchema ?? InvalidParametersErrorDataSchema),
 			}),
 			response_data,
 		);
@@ -227,6 +273,7 @@ export class M1 {
 			data: data as ValiErrorDataSchema extends undefined
 				? never
 				: v.InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
+			request: request_options,
 		};
 	}
 }

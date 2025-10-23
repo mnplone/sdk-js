@@ -46,3 +46,16 @@ export function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value
 
 	throw new TypeError('Valibot found issues.');
 }
+
+/**
+ *
+ * @param string -
+ * @returns -
+ */
+export function maskString(string: string) {
+	if (string.length < 6) {
+		return string;
+	}
+
+	return `${string.slice(0, 3)}***${string.slice(-3)}`;
+}

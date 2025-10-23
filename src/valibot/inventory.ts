@@ -35,23 +35,27 @@ const valiQualitySchema = object({
 
 // Equipped schemas
 const valiEquippedArraySchema = object({
-	item_ids_equipped: array(number()),
+	item_ids_equipped: optional(
+		array(number()),
+	),
 });
 
 const valiEquippedTreeSchema = object({
-	equipped: object({
-		game: record(
-			string(),
-			object({
-				cards: record(
-					string(),
-					array(number()),
-				),
-				generator: number(),
-				joke: number(),
-			}),
-		),
-	}),
+	equipped: optional(
+		object({
+			game: record(
+				string(),
+				object({
+					cards: record(
+						string(),
+						array(number()),
+					),
+					generator: number(),
+					joke: number(),
+				}),
+			),
+		}),
+	),
 });
 
 export const valiResponseInventoryCraftSchema = object({

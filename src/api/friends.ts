@@ -17,7 +17,7 @@ import { M1ApiBase } from './base.js';
 
 type FriendsGetOptions<OS extends boolean, OU extends boolean> = {
 	online?: boolean,
-	is_short?: OS,
+	short?: OS,
 	add_user?: OU,
 	offset?: number,
 	count?: number,
@@ -154,11 +154,11 @@ export class M1ApiFriends extends M1ApiBase {
 			: undefined;
 		const options = isRecord(arg0) ? arg0 : arg1;
 
-		const is_short = options?.is_short ?? false;
+		const is_short = options?.short ?? false;
 		const add_user = options?.add_user ?? false;
 
 		return this.baseClient.callMethod({
-			http_method: 'POST',
+			http_method: 'GET',
 			api_method: 'friends.get',
 			data: {
 				user_id,
@@ -168,7 +168,7 @@ export class M1ApiFriends extends M1ApiBase {
 				offset: options?.offset,
 				count: options?.count,
 			},
-			valiResponseSchema: options?.is_short
+			valiResponseSchema: options?.short
 				? (options?.add_user
 					? valiResponseFriendsGetShortWithUserSchema
 					: valiResponseFriendsGetShortSchema)

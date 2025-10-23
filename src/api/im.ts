@@ -117,7 +117,6 @@ export class M1ApiIm extends M1ApiBase {
 	getHistory(user_id: number): Promise<ApiResponse<ResponseImHistoryGet>>;
 	getHistory(user_id: number, options: {
 		id_last?: string,
-		offset?: number,
 		count?: number,
 	}): Promise<ApiResponse<ResponseImHistoryGet>>;
 	getHistory(arg0: number | {
