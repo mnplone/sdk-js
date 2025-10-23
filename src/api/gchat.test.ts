@@ -18,5 +18,12 @@ describe('gchat.get', () => {
 		expect(Array.isArray(response.data.users)).toBe(true);
 		expect(Array.isArray(response.data.item_protos)).toBe(true);
 	});
+
+	test('gchat.send', async () => {
+		const response = await sdk.gchat.send('!test');
+
+		expect(response.success).toBe(true);
+		// expect(response.data.msg_id).toBeTypeOf('number');
+	});
 });
 
