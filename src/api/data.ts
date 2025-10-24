@@ -1,13 +1,13 @@
 import * as v from 'valibot';
-import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
+import { valiResponseDataSearchItemProtosSchema } from '../valibot/data.js';
 import {
-	valiObjectItemProtoLegacySchema,
-	valiObjectItemProtoSchema,
 	type ItemProto,
 	type ThingPrototype,
+	valiObjectItemProtoLegacySchema,
+	valiObjectItemProtoSchema,
 } from '../valibot/items.js';
-import { valiResponseDataSearchItemProtosSchema } from '../valibot/data.js';
+import { M1ApiBase } from './base.js';
 
 export class M1ApiData extends M1ApiBase {
 	/**
@@ -15,13 +15,17 @@ export class M1ApiData extends M1ApiBase {
 	 * @param item_proto_ids - The IDs of the item prototypes.
 	 * @returns -
 	 */
-	getItemProtos(item_proto_ids: number[] | Set<number> | IterableIterator<number>): Promise<ApiResponse<{
-		item_protos: Map<number, ItemProto>,
-		collections: {
-			collection_id: number,
-			title: string,
-		}[],
-	}>>;
+	getItemProtos(
+		item_proto_ids: number[] | Set<number> | IterableIterator<number>,
+	): Promise<
+		ApiResponse<{
+			item_protos: Map<number, ItemProto>;
+			collections: {
+				collection_id: number;
+				title: string;
+			}[];
+		}>
+	>;
 	/**
 	 * Returns item prototypes by their IDs.
 	 * @param item_proto_ids - The IDs of the item prototypes.
@@ -32,13 +36,15 @@ export class M1ApiData extends M1ApiBase {
 	getItemProtos(
 		item_proto_ids: number[] | Set<number> | IterableIterator<number>,
 		options: { add_legacy: true },
-	): Promise<ApiResponse<{
-		item_protos: Map<number, ItemProto & ThingPrototype>,
-		collections: {
-			collection_id: number,
-			title: string,
-		}[],
-	}>>;
+	): Promise<
+		ApiResponse<{
+			item_protos: Map<number, ItemProto & ThingPrototype>;
+			collections: {
+				collection_id: number;
+				title: string;
+			}[];
+		}>
+	>;
 	/**
 	 * Returns item prototypes by their IDs.
 	 * @param item_proto_ids - The IDs of the item prototypes.
@@ -61,8 +67,8 @@ export class M1ApiData extends M1ApiBase {
 	getItemProtos(
 		item_proto_ids: number[] | Set<number> | IterableIterator<number>,
 		options: {
-			add_legacy: true,
-			add_metadata: false,
+			add_legacy: true;
+			add_metadata: false;
 		},
 	): Promise<ApiResponse<Map<number, ItemProto & ThingPrototype>>>;
 	// generic for typescript 5.8
@@ -81,12 +87,10 @@ export class M1ApiData extends M1ApiBase {
 	// 		: Map<number, IP>,
 	// >(
 	getItemProtos(
-		item_proto_ids: number[]
-			| Set<number>
-			| IterableIterator<number>,
+		item_proto_ids: number[] | Set<number> | IterableIterator<number>,
 		options?: {
-			add_legacy?: true,
-			add_metadata?: false,
+			add_legacy?: true;
+			add_metadata?: false;
 		},
 	) {
 		const add_legacy = options?.add_legacy === true;
@@ -98,51 +102,49 @@ export class M1ApiData extends M1ApiBase {
 					? valiObjectItemProtoLegacySchema
 					: valiObjectItemProtoSchema,
 			),
-			v.transform((value) => new Map(
-				value.map((item_proto) => [
-					item_proto.item_proto_id,
-					item_proto,
-				]),
-			)),
+			v.transform(
+				(value) =>
+					new Map(
+						value.map((item_proto) => [item_proto.item_proto_id, item_proto]),
+					),
+			),
 		);
 
 		return this.baseClient.callMethod({
 			http_method: 'GET',
 			api_method: 'data.getItemProtos',
 			data: {
-				item_proto_ids: [ ...item_proto_ids ].join(','),
+				item_proto_ids: [...item_proto_ids].join(','),
 				add_legacy: Number(add_legacy),
 				add_metadata: Number(add_metadata),
 			},
 			valiResponseSchema: add_metadata
 				? v.object({
-					item_protos: valiCurrentItemProtosSchema,
-					collections: v.array(
-						v.object({
-							collection_id: v.number(),
-							title: v.string(),
-						}),
-					),
-				})
-				: v.pipe(
-					v.object({
 						item_protos: valiCurrentItemProtosSchema,
-					}),
-					v.transform((value) => value.item_protos),
-				),
+						collections: v.array(
+							v.object({
+								collection_id: v.number(),
+								title: v.string(),
+							}),
+						),
+					})
+				: v.pipe(
+						v.object({
+							item_protos: valiCurrentItemProtosSchema,
+						}),
+						v.transform((value) => value.item_protos),
+					),
 		});
 	}
 
-	searchItemProtos(
-		options: {
-			type?: number[],
-			quality_id?: number[],
-			collection_id?: number[],
-			group_id?: number[],
-			offset?: number,
-			count?: number,
-		},
-	) {
+	searchItemProtos(options: {
+		type?: number[];
+		quality_id?: number[];
+		collection_id?: number[];
+		group_id?: number[];
+		offset?: number;
+		count?: number;
+	}) {
 		return this.baseClient.callMethod({
 			http_method: 'GET',
 			api_method: 'data.searchItemProtos',

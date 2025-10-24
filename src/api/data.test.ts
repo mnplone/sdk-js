@@ -1,14 +1,10 @@
-import {
-	test,
-	expect,
-	describe,
-} from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 
 describe('data.getItemProtos', () => {
 	describe('just item protos', () => {
 		test('as array', async () => {
-			const response = await sdk.data.getItemProtos([ 1 ]);
+			const response = await sdk.data.getItemProtos([1]);
 
 			expect(response.success).toBe(true);
 			expect(response.data.item_protos instanceof Map).toBe(true);
@@ -26,7 +22,7 @@ describe('data.getItemProtos', () => {
 		});
 
 		test('as set', async () => {
-			const response = await sdk.data.getItemProtos(new Set([ 1 ]));
+			const response = await sdk.data.getItemProtos(new Set([1]));
 
 			expect(response.success).toBe(true);
 			expect(response.data.item_protos instanceof Map).toBe(true);
@@ -45,10 +41,7 @@ describe('data.getItemProtos', () => {
 	});
 
 	test('with legacy properties', async () => {
-		const response = await sdk.data.getItemProtos(
-			[ 1 ],
-			{ add_legacy: true },
-		);
+		const response = await sdk.data.getItemProtos([1], { add_legacy: true });
 
 		expect(response.success).toBe(true);
 		expect(response.data.item_protos instanceof Map).toBe(true);
@@ -56,7 +49,9 @@ describe('data.getItemProtos', () => {
 		expect(response.data.item_protos.get(1)?.item_proto_id).toStrictEqual(1);
 		expect(response.data.item_protos.get(1)?.collection_id).toStrictEqual(3);
 		// legacy properties
-		expect(response.data.item_protos.get(1)?.thing_prototype_id).toStrictEqual(1);
+		expect(response.data.item_protos.get(1)?.thing_prototype_id).toStrictEqual(
+			1,
+		);
 		expect(response.data.item_protos.get(1)?.collection).toStrictEqual(3);
 
 		// collections
@@ -69,13 +64,10 @@ describe('data.getItemProtos', () => {
 	});
 
 	test('with no metadata', async () => {
-		const response = await sdk.data.getItemProtos(
-			[ 1 ],
-			{
-				add_legacy: true,
-				add_metadata: false,
-			},
-		);
+		const response = await sdk.data.getItemProtos([1], {
+			add_legacy: true,
+			add_metadata: false,
+		});
 
 		expect(response.success).toBe(true);
 		expect(response.data instanceof Map).toBe(true);
@@ -88,14 +80,16 @@ describe('data.getItemProtos', () => {
 describe('data.searchItemProtos', () => {
 	test('new year and spectrum red items', async () => {
 		const response = await sdk.data.searchItemProtos({
-			quality_id: [ 4 ],
-			collection_id: [ 49, 54 ],
+			quality_id: [4],
+			collection_id: [49, 54],
 		});
 
 		expect(response.success).toBe(true);
 		expect(response.data.item_protos instanceof Map).toBe(true);
 		expect(response.data.collections.size).toBe(2);
-		expect(response.data.collections.get(54)?.title).toBe('Новогодняя коллекция');
+		expect(response.data.collections.get(54)?.title).toBe(
+			'Новогодняя коллекция',
+		);
 		expect(response.data.item_protos.size).toBe(4);
 		expect(response.data.item_protos.get(1106)?.title).toBe('Ёлка');
 		expect(response.data.item_protos.has(999)).toBe(true);
@@ -103,14 +97,16 @@ describe('data.searchItemProtos', () => {
 
 	test('red drinks', async () => {
 		const response = await sdk.data.searchItemProtos({
-			quality_id: [ 4 ],
-			group_id: [ 4 ],
+			quality_id: [4],
+			group_id: [4],
 		});
 
 		expect(response.success).toBe(true);
 		expect(response.data.item_protos instanceof Map).toBe(true);
 		expect(response.data.collections.size).toBe(3);
-		expect(response.data.collections.get(34)?.title).toBe('Коллекция «Infinity»');
+		expect(response.data.collections.get(34)?.title).toBe(
+			'Коллекция «Infinity»',
+		);
 		expect(response.data.item_protos.size).toBe(4);
 		expect(response.data.item_protos.get(629)?.title).toBe('Purelosophy');
 		expect(response.data.item_protos.has(157)).toBe(true);
@@ -118,8 +114,8 @@ describe('data.searchItemProtos', () => {
 
 	test('31 red badges with offset', async () => {
 		const response = await sdk.data.searchItemProtos({
-			quality_id: [ 4 ],
-			type: [ 5 ],
+			quality_id: [4],
+			type: [5],
 			count: 31,
 			offset: 5,
 		});
@@ -134,8 +130,8 @@ describe('data.searchItemProtos', () => {
 
 	test('no items', async () => {
 		const response = await sdk.data.searchItemProtos({
-			quality_id: [ 5 ],
-			collection_id: [ 54 ],
+			quality_id: [5],
+			collection_id: [54],
 		});
 
 		expect(response.success).toBe(true);
@@ -148,8 +144,8 @@ describe('data.searchItemProtos', () => {
 	test('stickers', async () => {
 		const response = await sdk.data.searchItemProtos({
 			// collection_id: [ 1, 2, 3 ],
-			type: [ 9 ],
-			quality_id: [ 5 ],
+			type: [9],
+			quality_id: [5],
 		});
 
 		expect(response.success).toBe(true);

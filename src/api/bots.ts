@@ -1,9 +1,6 @@
 import * as v from 'valibot';
-import {
-	valiObjectSessionSchema,
-	type Session,
-} from '../valibot/auth.js';
 import { type ApiResponse } from '../types.js';
+import { type Session, valiObjectSessionSchema } from '../valibot/auth.js';
 import { M1ApiBase } from './base.js';
 
 export class M1ApiBots extends M1ApiBase {

@@ -14,9 +14,7 @@ export const valiObjectGchatMessageAdditionalDataSchema = v.variant('type', [
 		type: v.literal(1),
 		text: v.string(),
 		is_public: v.optional(bit(1)),
-		user_ids_mentioned: v.optional(
-			v.array(v.number()),
-		),
+		user_ids_mentioned: v.optional(v.array(v.number())),
 	}),
 	v.object({
 		type: v.literal(2),
@@ -55,4 +53,6 @@ export type ResponseGchatGet = v.InferOutput<typeof valiResponseGchatGetSchema>;
 export const valiResponseGchatSendSchema = v.object({
 	msg_id: v.string(),
 });
-export type ResponseGchatSend = v.InferOutput<typeof valiResponseGchatSendSchema>;
+export type ResponseGchatSend = v.InferOutput<
+	typeof valiResponseGchatSendSchema
+>;

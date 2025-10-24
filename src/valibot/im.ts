@@ -26,9 +26,7 @@ export const valiObjectMessageSchema = object({
 const valiObjectSyncSchema = object({
 	events: array(
 		object({
-			chain: array(
-				union([ number(), null_() ]),
-			),
+			chain: array(union([number(), null_()])),
 			data: object({
 				type: number(),
 				msg_id: number(),
@@ -66,7 +64,11 @@ export const valiResponseImHistoryGetSchema = object({
 });
 
 export type ResponseImSend = InferOutput<typeof valiResponseImSendSchema>;
-export type ResponseImDialogsGet = InferOutput<typeof valiResponseImDialogsGetSchema>;
-export type ResponseImHistoryGet = InferOutput<typeof valiResponseImHistoryGetSchema>;
+export type ResponseImDialogsGet = InferOutput<
+	typeof valiResponseImDialogsGetSchema
+>;
+export type ResponseImHistoryGet = InferOutput<
+	typeof valiResponseImHistoryGetSchema
+>;
 export type Dialog = InferOutput<typeof valiObjectDialogSchema>;
 export type Message = InferOutput<typeof valiObjectMessageSchema>;

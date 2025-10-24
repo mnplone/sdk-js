@@ -1,4 +1,3 @@
-import { M1ApiBase } from './base.js';
 import type { ApiResponse } from '../types.js';
 import {
 	type ResponseImDialogsGet,
@@ -8,9 +7,10 @@ import {
 	valiResponseImHistoryGetSchema,
 	valiResponseImSendSchema,
 } from '../valibot/im.js';
+import { M1ApiBase } from './base.js';
 
 type ImSendOptions = {
-	send_id?: string,
+	send_id?: string;
 };
 
 export class M1ApiIm extends M1ApiBase {
@@ -22,10 +22,12 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param options.send_id - Temporary message ID used for tracking until server responds with the actual message ID
 	 * @returns - The message ID
 	 */
-	send(options: {
-		user_id: number,
-		text: string,
-	} & ImSendOptions): Promise<ApiResponse<ResponseImSend>>;
+	send(
+		options: {
+			user_id: number;
+			text: string;
+		} & ImSendOptions,
+	): Promise<ApiResponse<ResponseImSend>>;
 	/**
 	 * Sends a text message to a group chat
 	 * @param options -
@@ -34,10 +36,12 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param options.send_id - Temporary message ID used for tracking until server responds with the actual message ID
 	 * @returns - The message ID
 	 */
-	send(options: {
-		chat_id: number,
-		text: string,
-	} & ImSendOptions): Promise<ApiResponse<ResponseImSend>>;
+	send(
+		options: {
+			chat_id: number;
+			text: string;
+		} & ImSendOptions,
+	): Promise<ApiResponse<ResponseImSend>>;
 	/**
 	 * Sends an image to a user
 	 * @param options -
@@ -46,10 +50,12 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param options.send_id - Temporary message ID used for tracking until server responds with the actual message ID
 	 * @returns - The message ID
 	 */
-	send(options: {
-		user_id: number,
-		image_token: string,
-	} & ImSendOptions): Promise<ApiResponse<ResponseImSend>>;
+	send(
+		options: {
+			user_id: number;
+			image_token: string;
+		} & ImSendOptions,
+	): Promise<ApiResponse<ResponseImSend>>;
 	/**
 	 * Sends an image to a group chat
 	 * @param options -
@@ -58,16 +64,18 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param options.send_id - Temporary message ID used for tracking until server responds with the actual message ID
 	 * @returns - The message ID
 	 */
+	send(
+		options: {
+			chat_id: number;
+			image_token: string;
+		} & ImSendOptions,
+	): Promise<ApiResponse<ResponseImSend>>;
 	send(options: {
-		chat_id: number,
-		image_token: string,
-	} & ImSendOptions): Promise<ApiResponse<ResponseImSend>>;
-	send(options: {
-		user_id?: number,
-		chat_id?: number,
-		text?: string,
-		image_token?: string,
-		send_id?: string,
+		user_id?: number;
+		chat_id?: number;
+		text?: string;
+		image_token?: string;
+		send_id?: string;
 	}): Promise<ApiResponse<ResponseImSend>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -86,15 +94,17 @@ export class M1ApiIm extends M1ApiBase {
 	 * @returns -
 	 */
 	getDialogs(options?: {
-		id_last?: string,
-		offset?: number,
-		count?: number,
+		id_last?: string;
+		offset?: number;
+		count?: number;
 	}): Promise<ApiResponse<ResponseImDialogsGet>> {
-		const data = options ?? {} as {
-			id_last?: string,
-			offset?: number,
-			count?: number,
-		};
+		const data =
+			options
+			?? ({} as {
+				id_last?: string;
+				offset?: number;
+				count?: number;
+			});
 
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -113,11 +123,14 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param options.count -
 	 * @returns -
 	 */
-	getHistory(user_id: number, options?: {
-		id_last?: string,
-		offset?: number,
-		count?: number,
-	}): Promise<ApiResponse<ResponseImHistoryGet>> {
+	getHistory(
+		user_id: number,
+		options?: {
+			id_last?: string;
+			offset?: number;
+			count?: number;
+		},
+	): Promise<ApiResponse<ResponseImHistoryGet>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'im.historyGet',
@@ -138,12 +151,6 @@ export class M1ApiIm extends M1ApiBase {
 			throw new Error('WebSocket is not connected');
 		}
 
-		this.baseClient.ws.emit(
-			'api',
-			[
-				'im.sync',
-				{ id_last },
-			],
-		);
+		this.baseClient.ws.emit('api', ['im.sync', { id_last }]);
 	}
 }

@@ -1,17 +1,12 @@
-/* eslint-disable @stylistic/array-element-newline */
-import {
-	test,
-	expect,
-	describe,
-} from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 
 describe('trades', () => {
 	test('trades.create', async () => {
 		const response = await sdk.trades.create({
 			user_id: 1,
-			item_ids_offer: [ 1, 2, 3 ],
-			item_ids_request: [ 4, 5, 6 ],
+			item_ids_offer: [1, 2, 3],
+			item_ids_request: [4, 5, 6],
 		});
 
 		expect(response.request.data.thing_ids_from).toBe('1,2,3');
@@ -21,7 +16,7 @@ describe('trades', () => {
 	test('trades.create gift', async () => {
 		const response = await sdk.trades.create({
 			user_id: 1,
-			item_ids_offer: [ 1, 2, 3 ],
+			item_ids_offer: [1, 2, 3],
 		});
 
 		expect(response.request.data.thing_ids_from).toBe('1,2,3');
@@ -31,7 +26,7 @@ describe('trades', () => {
 	test('trades.create ask gift', async () => {
 		const response = await sdk.trades.create({
 			user_id: 1,
-			item_ids_request: [ 1, 2, 3 ],
+			item_ids_request: [1, 2, 3],
 		});
 
 		expect(response.request.data.thing_ids_from).toBeUndefined();

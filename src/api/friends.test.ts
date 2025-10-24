@@ -1,8 +1,4 @@
-import {
-	test,
-	expect,
-	describe,
-} from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 
 describe('friends.getRequests', () => {
@@ -27,14 +23,11 @@ describe('friends.getRequests', () => {
 
 describe('friends.get', () => {
 	test('check options handling', async () => {
-		const response = await sdk.friends.get(
-			1,
-			{
-				short: true,
-				add_user: true,
-				online: true,
-			},
-		);
+		const response = await sdk.friends.get(1, {
+			short: true,
+			add_user: true,
+			online: true,
+		});
 
 		expect(response.request.data.type === 'short');
 		expect(response.request.data.add_user === 1);
@@ -43,10 +36,7 @@ describe('friends.get', () => {
 
 		const first_friend = response.data.friends?.[0];
 
-		if (
-			first_friend
-			&& first_friend.inactive === undefined
-		) {
+		if (first_friend && first_friend.inactive === undefined) {
 			// @ts-expect-error yep, same
 			expect(first_friend.games).toBeUndefined(); // user to be short
 			expect(first_friend.online).toBe(true);

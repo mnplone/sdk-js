@@ -9,8 +9,11 @@ import type { M1ApiResponseHook } from '../hooks.js';
  * @returns New access token and refresh token.
  */
 // eslint-disable-next-line func-style
-export const sessionRefreshHook: M1ApiResponseHook = async function (options, data) {
-	// eslint-disable-next-line no-console
+export const sessionRefreshHook: M1ApiResponseHook = async function (
+	options,
+	data,
+) {
+	// oxlint-disable-next-line no-console
 	console.log('refresh_hook', options, data);
 
 	const { refresh_token } = this.options;

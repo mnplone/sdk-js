@@ -9,12 +9,9 @@ import { M1ApiIm } from './api/im.js';
 import { M1ApiInventory } from './api/inventory.js';
 import { M1ApiTrades } from './api/trades.js';
 import { M1ApiUsers } from './api/users.js';
-import { type ValiBaseSchema } from './types.js';
 import type { M1ApiResponseHooks } from './hooks.js';
-import {
-	maskString,
-	parseWithNotice,
-} from './utils.js';
+import { type ValiBaseSchema } from './types.js';
+import { maskString, parseWithNotice } from './utils.js';
 
 const IS_TEST = process.env.NODE_ENV === 'test';
 
@@ -27,11 +24,11 @@ export type CallMethodOptions<
 	ValiResponseSchema extends ValiBaseSchema,
 	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
 > = {
-	http_method: 'GET' | 'POST',
-	api_method: string,
-	data?: CallMethodOptionsData,
-	valiResponseSchema: ValiResponseSchema,
-	valiErrorDataSchema?: ValiErrorDataSchema,
+	http_method: 'GET' | 'POST';
+	api_method: string;
+	data?: CallMethodOptionsData;
+	valiResponseSchema: ValiResponseSchema;
+	valiErrorDataSchema?: ValiErrorDataSchema;
 };
 
 // const InvalidParametersErrorDataSchema = v.object({
@@ -46,49 +43,47 @@ export type CallMethodOptions<
 // });
 
 export type RequestOptions = {
-	method: 'GET' | 'POST',
-	api_method: string,
-	data: CallMethodOptionsData,
+	method: 'GET' | 'POST';
+	api_method: string;
+	data: CallMethodOptionsData;
 };
 
 export type CallMethodResponse<
 	ValiResponseSchema extends ValiBaseSchema,
 	ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
-> = {
-	success: true,
-	data: v.InferOutput<ValiResponseSchema>,
-	request: RequestOptions,
-} | {
-	success: false,
-	code: number,
-	description?: string,
-	data: ValiErrorDataSchema extends undefined
-		? never
-		: v.InferOutput<Exclude<ValiErrorDataSchema, undefined>>,
-	request: RequestOptions,
-};
+> =
+	| {
+			success: true;
+			data: v.InferOutput<ValiResponseSchema>;
+			request: RequestOptions;
+	  }
+	| {
+			success: false;
+			code: number;
+			description?: string;
+			data: ValiErrorDataSchema extends undefined
+				? never
+				: v.InferOutput<Exclude<ValiErrorDataSchema, undefined>>;
+			request: RequestOptions;
+	  };
 type M1Options = {
-	hostname?: string,
-	access_token?: string,
-	refresh_token?: string,
+	hostname?: string;
+	access_token?: string;
+	refresh_token?: string;
 	websocket?: {
-		subs?: string,
-	},
-	headers?: Headers | Record<string, string>,
-	hooks?: M1ApiResponseHooks,
+		subs?: string;
+	};
+	headers?: Headers | Record<string, string>;
+	hooks?: M1ApiResponseHooks;
 };
 
 const apiResponseParser = v.parser(
 	v.object({
-		code: v.pipe(
-			v.number(),
-			v.minValue(0),
-		),
+		code: v.pipe(v.number(), v.minValue(0)),
 	}),
 );
 
 /**
- * @class M1
  * @classdesc A class to interact with Monopoly One API
  * @param options - The options to use
  * @param options.access_token - Access token
@@ -119,10 +114,7 @@ export class M1 {
 
 		const { websocket } = this.options;
 		if (websocket) {
-			const {
-				access_token,
-				headers,
-			} = this.options;
+			const { access_token, headers } = this.options;
 
 			const ws_url = new URL('/ws', `wss://${this.options.hostname}`);
 
@@ -134,17 +126,13 @@ export class M1 {
 				ws_url.searchParams.set('subs', websocket.subs);
 			}
 
-			this.ws = new ExtWSClient(
-				ws_url as URL,
-				{
-					connect: false,
-				},
-			);
+			this.ws = new ExtWSClient(ws_url as URL, {
+				connect: false,
+			});
 
 			if (headers) {
-				this.ws.headers = headers instanceof Headers
-					? headers
-					: new Headers(headers);
+				this.ws.headers =
+					headers instanceof Headers ? headers : new Headers(headers);
 			}
 
 			this.ws.connect();
@@ -164,7 +152,9 @@ export class M1 {
 	async callMethod<
 		ValiResponseSchema extends ValiBaseSchema,
 		ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
-	>(options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>): Promise<CallMethodResponse<ValiResponseSchema, ValiErrorDataSchema>> {
+	>(
+		options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
+	): Promise<CallMethodResponse<ValiResponseSchema, ValiErrorDataSchema>> {
 		const url = new URL(
 			`/api/${options.api_method}`,
 			`https://${this.options.hostname}`,
@@ -178,16 +168,12 @@ export class M1 {
 		};
 
 		if (options.http_method === 'GET') {
-			for (const [ key, value ] of Object.entries(request_data)) {
-				if (
-					value !== undefined
-					&& value !== null
-				) {
+			for (const [key, value] of Object.entries(request_data)) {
+				if (value !== undefined && value !== null) {
 					url.searchParams.set(key, value);
 				}
 			}
-		}
-		else {
+		} else {
 			request_headers.set('Content-Type', 'application/json');
 			body = JSON.stringify(request_data);
 		}
@@ -211,18 +197,17 @@ export class M1 {
 			request_options.data.access_token
 			&& typeof request_options.data.access_token === 'string'
 		) {
-			request_options.data.access_token = maskString(request_options.data.access_token);
+			request_options.data.access_token = maskString(
+				request_options.data.access_token,
+			);
 		}
 
 		const response = await fetch(url, request_init);
 
 		const response_data = await response.json();
 
-		if (
-			IS_TEST
-			&& response_data.success === false
-		) {
-			// eslint-disable-next-line no-console
+		if (IS_TEST && response_data.success === false) {
+			// oxlint-disable-next-line no-console
 			console.dir(response_data, { depth: null });
 		}
 
@@ -243,10 +228,7 @@ export class M1 {
 			};
 		}
 
-		const {
-			description,
-			data,
-		} = v.parse(
+		const { description, data } = v.parse(
 			v.object({
 				description: v.optional(v.string()),
 				data: v.optional(options.valiErrorDataSchema ?? v.unknown()),
@@ -258,7 +240,11 @@ export class M1 {
 			const hook = this.options.hooks[code];
 
 			if (hook) {
-				const new_request_options = await hook.call(this, options, request_data);
+				const new_request_options = await hook.call(
+					this,
+					options,
+					request_data,
+				);
 
 				if (new_request_options) {
 					return this.callMethod(new_request_options);

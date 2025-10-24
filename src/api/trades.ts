@@ -11,9 +11,9 @@ import {
 
 export class M1ApiTrades extends M1ApiBase {
 	create(options: {
-		item_ids_offer?: number[],
-		item_ids_request?: number[],
-		user_id: number,
+		item_ids_offer?: number[];
+		item_ids_request?: number[];
+		user_id: number;
 	}): Promise<ApiResponse<ObjectTradeId>> {
 		const data: CallMethodOptionsData = {
 			user_id: options.user_id,
@@ -69,8 +69,8 @@ export class M1ApiTrades extends M1ApiBase {
 	}
 
 	getIncoming(options: {
-		offset?: number,
-		count?: number,
+		offset?: number;
+		count?: number;
 	}): Promise<ApiResponse<ObjectTradeList>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -81,8 +81,8 @@ export class M1ApiTrades extends M1ApiBase {
 	}
 
 	getOutgoing(options: {
-		offset?: number,
-		count?: number,
+		offset?: number;
+		count?: number;
 	}): Promise<ApiResponse<ObjectTradeList>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -100,8 +100,8 @@ export class M1ApiTrades extends M1ApiBase {
 	 * @returns The history of trades.
 	 */
 	history(options?: {
-		offset?: number,
-		count?: number,
+		offset?: number;
+		count?: number;
 	}): Promise<ApiResponse<ObjectTradeList>>;
 	/**
 	 * Get the history of trades.
@@ -114,27 +114,30 @@ export class M1ApiTrades extends M1ApiBase {
 	history(
 		user_id: number,
 		options?: {
-			offset?: number,
-			count?: number,
+			offset?: number;
+			count?: number;
 		},
 	): Promise<ApiResponse<ObjectTradeList>>;
 	history(
-		arg0?: number | {
-			offset?: number,
-			count?: number,
-		},
+		arg0?:
+			| number
+			| {
+					offset?: number;
+					count?: number;
+			  },
 		arg1?: {
-			offset?: number,
-			count?: number,
+			offset?: number;
+			count?: number;
 		},
 	): Promise<ApiResponse<ObjectTradeList>> {
 		let api_method = 'trades.history';
-		const data = typeof arg0 === 'number'
-			? {
-				user_id: arg0,
-				...arg1,
-			}
-			: arg0;
+		const data =
+			typeof arg0 === 'number'
+				? {
+						user_id: arg0,
+						...arg1,
+					}
+				: arg0;
 
 		if (data !== undefined && 'user_id' in data) {
 			api_method = 'trades.historyWith';

@@ -1,16 +1,9 @@
 import { authenticator } from 'otplib';
 import * as v from 'valibot';
-import {
-	test,
-	expect,
-	describe,
-} from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
-import type {
-	Session,
-	TotpSessionToken,
-} from '../valibot/auth.js';
 import type { ApiResponse } from '../types.js';
+import type { Session, TotpSessionToken } from '../valibot/auth.js';
 
 describe('authorization flow', () => {
 	const env = v.parse(
