@@ -1,6 +1,6 @@
-import { ExtWSClient } from '@extws/client';
 import * as v from 'valibot';
 import { InferOutput } from 'valibot';
+import { ExtWSClient } from '@extws/client';
 import { If } from 'type-fest';
 
 declare const valiObjectSessionSchema: v.ObjectSchema<{
@@ -15,18 +15,10 @@ declare const valiResponseTotpSessionTokenSchema: v.ObjectSchema<{
 type TotpSessionToken = v.InferOutput<typeof valiResponseTotpSessionTokenSchema>;
 type Session = v.InferOutput<typeof valiObjectSessionSchema>;
 
-type ValiBaseSchema = v.BaseSchema<any, any, any>;
-type ApiResponse<DR, DE = never> = {
-    success: true;
-    data: DR;
-    request: RequestOptions;
-} | {
-    success: false;
-    code: number;
-    description?: string;
-    data: DE;
-    request: RequestOptions;
-};
+declare class M1ApiBase {
+    protected baseClient: M1;
+    constructor(baseClient: M1);
+}
 
 declare class M1ApiBots extends M1ApiBase {
     /**
@@ -10519,7 +10511,6 @@ type M1Options = {
     hooks?: M1ApiResponseHooks;
 };
 /**
- * @class M1
  * @classdesc A class to interact with Monopoly One API
  * @param options - The options to use
  * @param options.access_token - Access token
@@ -10555,10 +10546,18 @@ declare class M1 {
     callMethod<ValiResponseSchema extends ValiBaseSchema, ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined>(options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>): Promise<CallMethodResponse<ValiResponseSchema, ValiErrorDataSchema>>;
 }
 
-declare class M1ApiBase {
-    protected baseClient: M1;
-    constructor(baseClient: M1);
-}
+type ValiBaseSchema = v.BaseSchema<any, any, any>;
+type ApiResponse<DR, DE = never> = {
+    success: true;
+    data: DR;
+    request: RequestOptions;
+} | {
+    success: false;
+    code: number;
+    description?: string;
+    data: DE;
+    request: RequestOptions;
+};
 
 declare class M1ApiAuth extends M1ApiBase {
     /**

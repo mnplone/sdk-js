@@ -59,7 +59,7 @@ import {
   valiResponseInventoryGetWithUserAndEquippedTreeSchema,
   valiResponseInventoryGetWithUserSchema,
   valiResponseTotpSessionTokenSchema
-} from "./main-qtm2xe3w.js";
+} from "./main-t1s2m1sq.js";
 // src/api/oauth.ts
 class M1ApiOauth extends M1ApiBase {
   exchangeCode(options) {

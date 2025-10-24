@@ -10,8 +10,32 @@ import {
   M1ApiUsers,
   maskString,
   parseWithNotice
-} from "./main-qtm2xe3w.js";
+} from "./main-t1s2m1sq.js";
 
+// src/hooks/session-refresh.ts
+var sessionRefreshHook = async function(options, data) {
+  console.log("refresh_hook", options, data);
+  const { refresh_token } = this.options;
+  if (!refresh_token) {
+    return;
+  }
+  const refresh_response = await this.auth.refresh(refresh_token);
+  if (refresh_response.success !== true) {
+    return;
+  }
+  const new_options = {
+    ...options,
+    data: {
+      ...options.data,
+      access_token: refresh_response.data.access_token
+    }
+  };
+  this.options.access_token = refresh_response.data.access_token;
+  if (refresh_response.data.refresh_token) {
+    this.options.refresh_token = refresh_response.data.refresh_token;
+  }
+  return new_options;
+};
 // src/m1.ts
 import { ExtWSClient } from "@extws/client";
 import * as v from "valibot";
@@ -39,10 +63,7 @@ class M1 {
     };
     const { websocket } = this.options;
     if (websocket) {
-      const {
-        access_token,
-        headers
-      } = this.options;
+      const { access_token, headers } = this.options;
       const ws_url = new URL("/ws", `wss://${this.options.hostname}`);
       if (access_token) {
         ws_url.searchParams.set("access_token", access_token);
@@ -108,10 +129,7 @@ class M1 {
         request: request_options
       };
     }
-    const {
-      description,
-      data
-    } = v.parse(v.object({
+    const { description, data } = v.parse(v.object({
       description: v.optional(v.string()),
       data: v.optional(options.valiErrorDataSchema ?? v.unknown())
     }), response_data);
@@ -133,30 +151,6 @@ class M1 {
     };
   }
 }
-// src/hooks/session-refresh.ts
-var sessionRefreshHook = async function(options, data) {
-  console.log("refresh_hook", options, data);
-  const { refresh_token } = this.options;
-  if (!refresh_token) {
-    return;
-  }
-  const refresh_response = await this.auth.refresh(refresh_token);
-  if (refresh_response.success !== true) {
-    return;
-  }
-  const new_options = {
-    ...options,
-    data: {
-      ...options.data,
-      access_token: refresh_response.data.access_token
-    }
-  };
-  this.options.access_token = refresh_response.data.access_token;
-  if (refresh_response.data.refresh_token) {
-    this.options.refresh_token = refresh_response.data.refresh_token;
-  }
-  return new_options;
-};
 export {
   sessionRefreshHook,
   M1
