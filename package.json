@@ -21,7 +21,7 @@
 	},
 	"devDependencies": {
 		"@kirick/eslint-config": "^0.1.30",
-		"@types/bun": "^1.2.13",
+		"@types/bun": "1.2.23",
 		"@types/node": "^22.2",
 		"eslint": "9.8.0",
 		"publint": "^0.3.12",
@@ -38,7 +38,7 @@
 		"build": "find dist/ -mindepth 1 -delete && bun run build:js && bun run build:dts",
 		"build:js": "bun build src/main.ts src/dev.ts --outdir=dist --format=esm --splitting --packages=external",
 		"build:dts": "tsup --dts-only --format esm src/main.ts src/dev.ts",
-		"check": "bun run lint && bun run build && bun run test",
+		"check": "bun run lint && bun run test && bun run build",
 		"lint": "eslint . && tsc && (cd test && tsc)",
 		"test": "node --experimental-strip-types test/dist.ts && bun run test/dist.ts && bun test --coverage"
 	},

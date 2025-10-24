@@ -1,6 +1,5 @@
 import { M1ApiBase } from './base.js';
-import { isRecord } from '../utils.js';
-import { type ApiResponse } from '../types.js';
+import type { ApiResponse } from '../types.js';
 import {
 	type ResponseImDialogsGet,
 	type ResponseImHistoryGet,
@@ -114,65 +113,18 @@ export class M1ApiIm extends M1ApiBase {
 	 * @param options.count -
 	 * @returns -
 	 */
-	getHistory(user_id: number): Promise<ApiResponse<ResponseImHistoryGet>>;
-	getHistory(user_id: number, options: {
-		id_last?: string,
-		count?: number,
-	}): Promise<ApiResponse<ResponseImHistoryGet>>;
-	getHistory(arg0: number | {
-		user_id: number,
-		id_last?: string,
-		offset?: number,
-		count?: number,
-	}, arg1?: {
+	getHistory(user_id: number, options?: {
 		id_last?: string,
 		offset?: number,
 		count?: number,
 	}): Promise<ApiResponse<ResponseImHistoryGet>> {
-		const data = {} as {
-			user_id: number,
-			id_last?: string,
-			offset?: number,
-			count?: number,
-		};
-		if (typeof arg0 === 'number') {
-			data.user_id = arg0;
-			if (isRecord(arg1)) {
-				if (arg1.id_last) {
-					data.id_last = arg1.id_last;
-				}
-
-				if (arg1.offset) {
-					data.offset = arg1.offset;
-				}
-
-				if (arg1.count) {
-					data.count = arg1.count;
-				}
-			}
-		}
-		else if (isRecord(arg0)) {
-			data.user_id = arg0.user_id;
-			if (arg0.id_last) {
-				data.id_last = arg0.id_last;
-			}
-
-			if (arg0.offset) {
-				data.offset = arg0.offset;
-			}
-
-			if (arg0.count) {
-				data.count = arg0.count;
-			}
-		}
-		else {
-			throw new TypeError('Invalid parameters');
-		}
-
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'im.historyGet',
-			data,
+			data: {
+				user_id,
+				...options,
+			},
 			valiResponseSchema: valiResponseImHistoryGetSchema,
 		});
 	}

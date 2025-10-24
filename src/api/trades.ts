@@ -1,4 +1,4 @@
-import { void as voidSchema } from 'valibot';
+import * as v from 'valibot';
 import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
 import type { CallMethodOptionsData } from '../m1.js';
@@ -15,10 +15,6 @@ export class M1ApiTrades extends M1ApiBase {
 		item_ids_request?: number[],
 		user_id: number,
 	}): Promise<ApiResponse<ObjectTradeId>> {
-		if (options.item_ids_request === undefined && options.item_ids_offer === undefined) {
-			throw new Error('One of item_ids_to or item_ids_from is required');
-		}
-
 		const data: CallMethodOptionsData = {
 			user_id: options.user_id,
 		};
@@ -46,7 +42,7 @@ export class M1ApiTrades extends M1ApiBase {
 			data: {
 				trade_id,
 			},
-			valiResponseSchema: voidSchema(),
+			valiResponseSchema: v.void(),
 		});
 	}
 
@@ -57,7 +53,7 @@ export class M1ApiTrades extends M1ApiBase {
 			data: {
 				trade_id,
 			},
-			valiResponseSchema: voidSchema(),
+			valiResponseSchema: v.void(),
 		});
 	}
 
@@ -68,13 +64,13 @@ export class M1ApiTrades extends M1ApiBase {
 			data: {
 				trade_id,
 			},
-			valiResponseSchema: voidSchema(),
+			valiResponseSchema: v.void(),
 		});
 	}
 
 	getIncoming(options: {
-		count?: number,
 		offset?: number,
+		count?: number,
 	}): Promise<ApiResponse<ObjectTradeList>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -85,8 +81,8 @@ export class M1ApiTrades extends M1ApiBase {
 	}
 
 	getOutgoing(options: {
-		count?: number,
 		offset?: number,
+		count?: number,
 	}): Promise<ApiResponse<ObjectTradeList>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -104,8 +100,8 @@ export class M1ApiTrades extends M1ApiBase {
 	 * @returns The history of trades.
 	 */
 	history(options?: {
-		count?: number,
 		offset?: number,
+		count?: number,
 	}): Promise<ApiResponse<ObjectTradeList>>;
 	/**
 	 * Get the history of trades.
@@ -118,43 +114,29 @@ export class M1ApiTrades extends M1ApiBase {
 	history(
 		user_id: number,
 		options?: {
-			count?: number,
 			offset?: number,
+			count?: number,
 		},
 	): Promise<ApiResponse<ObjectTradeList>>;
 	history(
 		arg0?: number | {
-			user_id?: number,
-			count?: number,
 			offset?: number,
+			count?: number,
 		},
 		arg1?: {
-			count?: number,
 			offset?: number,
+			count?: number,
 		},
 	): Promise<ApiResponse<ObjectTradeList>> {
 		let api_method = 'trades.history';
-		const data = {} as {
-			count?: number,
-			offset?: number,
-			user_id?: number,
-		};
-
-		if (typeof arg0 === 'number') {
-			data.user_id = arg0;
-			data.count = arg1?.count;
-			data.offset = arg1?.offset;
-		}
-		else if (typeof arg0 === 'object') {
-			if (arg0.user_id !== undefined) {
-				data.user_id = arg0.user_id;
+		const data = typeof arg0 === 'number'
+			? {
+				user_id: arg0,
+				...arg1,
 			}
+			: arg0;
 
-			data.count = arg0.count;
-			data.offset = arg0.offset;
-		}
-
-		if (data.user_id !== undefined) {
+		if (data !== undefined && 'user_id' in data) {
 			api_method = 'trades.historyWith';
 		}
 

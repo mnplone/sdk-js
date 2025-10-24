@@ -1,23 +1,17 @@
-import {
-	type InferOutput,
-	number,
-	object,
-	optional,
-	string,
-} from 'valibot';
+import * as v from 'valibot';
 
-export const valiObjectSessionSchema = object({
-	user_id: number(),
-	access_token: string(),
-	expires_in: number(),
-	refresh_token: optional(
-		string(),
+export const valiObjectSessionSchema = v.object({
+	user_id: v.number(),
+	access_token: v.string(),
+	expires_in: v.number(),
+	refresh_token: v.optional(
+		v.string(),
 	),
 });
 
-export const valiResponseTotpSessionTokenSchema = object({
-	totp_session_token: string(),
+export const valiResponseTotpSessionTokenSchema = v.object({
+	totp_session_token: v.string(),
 });
 
-export type TotpSessionToken = InferOutput<typeof valiResponseTotpSessionTokenSchema>;
-export type Session = InferOutput<typeof valiObjectSessionSchema>;
+export type TotpSessionToken = v.InferOutput<typeof valiResponseTotpSessionTokenSchema>;
+export type Session = v.InferOutput<typeof valiObjectSessionSchema>;

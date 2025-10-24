@@ -26,4 +26,3 @@ describe('gchat.get', () => {
 		// expect(response.data.msg_id).toBeTypeOf('number');
 	});
 });
-

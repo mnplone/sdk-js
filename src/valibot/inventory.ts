@@ -1,13 +1,5 @@
 import type { If } from 'type-fest';
-import {
-	object,
-	string,
-	number,
-	array,
-	optional,
-	record,
-	type InferOutput,
-} from 'valibot';
+import * as v from 'valibot';
 import {
 	valiObjectItemSchema,
 	valiObjectThingSchema,
@@ -15,145 +7,145 @@ import {
 import { valiObjectUserSchema } from './users.js';
 
 // Base collections schema
-const valiCollectionSchema = object({
-	collection_id: number(),
-	title: string(),
+const valiCollectionSchema = v.object({
+	collection_id: v.number(),
+	title: v.string(),
 });
 
 // Thing types schema (only for legacy)
-const valiThingTypeSchema = object({
-	id: number(),
-	title: string(),
+const valiThingTypeSchema = v.object({
+	id: v.number(),
+	title: v.string(),
 });
 
 // Qualities schema (only for legacy)
-const valiQualitySchema = object({
-	id: number(),
-	title: string(),
-	coeff_rent: number(),
+const valiQualitySchema = v.object({
+	id: v.number(),
+	title: v.string(),
+	coeff_rent: v.number(),
 });
 
 // Equipped schemas
-const valiEquippedArraySchema = object({
-	item_ids_equipped: optional(
-		array(number()),
+const valiEquippedArraySchema = v.object({
+	item_ids_equipped: v.optional(
+		v.array(v.number()),
 	),
 });
 
-const valiEquippedTreeSchema = object({
-	equipped: optional(
-		object({
-			game: record(
-				string(),
-				object({
-					cards: record(
-						string(),
-						array(number()),
+const valiEquippedTreeSchema = v.object({
+	equipped: v.optional(
+		v.object({
+			game: v.record(
+				v.string(),
+				v.object({
+					cards: v.record(
+						v.string(),
+						v.array(v.number()),
 					),
-					generator: number(),
-					joke: number(),
+					generator: v.number(),
+					joke: v.number(),
 				}),
 			),
 		}),
 	),
 });
 
-export const valiResponseInventoryCraftSchema = object({
+export const valiResponseInventoryCraftSchema = v.object({
 	item: valiObjectItemSchema,
 });
-export type ResponseInventoryCraft = InferOutput<typeof valiResponseInventoryCraftSchema>;
+export type ResponseInventoryCraft = v.InferOutput<typeof valiResponseInventoryCraftSchema>;
 
 // Base new response schema (add_legacy=0)
-export const valiResponseInventoryGetBaseSchema = object({
-	count: number(),
-	collections: array(valiCollectionSchema),
-	items: array(valiObjectItemSchema),
+export const valiResponseInventoryGetBaseSchema = v.object({
+	count: v.number(),
+	collections: v.array(valiCollectionSchema),
+	items: v.array(valiObjectItemSchema),
 });
-export type ResponseInventoryGetBase = InferOutput<typeof valiResponseInventoryGetBaseSchema>;
+export type ResponseInventoryGetBase = v.InferOutput<typeof valiResponseInventoryGetBaseSchema>;
 
 // Legacy response schema (add_legacy=1)
-export const valiResponseInventoryGetLegacySchema = object({
-	count: number(),
-	collections: array(valiCollectionSchema),
-	things: array(valiObjectThingSchema),
-	thing_types: optional(array(valiThingTypeSchema)),
-	qualities: optional(array(valiQualitySchema)),
+export const valiResponseInventoryGetLegacySchema = v.object({
+	count: v.number(),
+	collections: v.array(valiCollectionSchema),
+	things: v.array(valiObjectThingSchema),
+	thing_types: v.optional(v.array(valiThingTypeSchema)),
+	qualities: v.optional(v.array(valiQualitySchema)),
 });
-export type ResponseInventoryGetLegacy = InferOutput<typeof valiResponseInventoryGetLegacySchema>;
+export type ResponseInventoryGetLegacy = v.InferOutput<typeof valiResponseInventoryGetLegacySchema>;
 
 // Base response with user
-export const valiResponseInventoryGetWithUserSchema = object({
+export const valiResponseInventoryGetWithUserSchema = v.object({
 	...valiResponseInventoryGetBaseSchema.entries,
 	user: valiObjectUserSchema,
 });
-export type ResponseInventoryGetWithUser = InferOutput<typeof valiResponseInventoryGetWithUserSchema>;
+export type ResponseInventoryGetWithUser = v.InferOutput<typeof valiResponseInventoryGetWithUserSchema>;
 
 // Legacy response with user
-export const valiResponseInventoryGetLegacyWithUserSchema = object({
+export const valiResponseInventoryGetLegacyWithUserSchema = v.object({
 	...valiResponseInventoryGetLegacySchema.entries,
 	user: valiObjectUserSchema,
 });
-export type ResponseInventoryGetLegacyWithUser = InferOutput<typeof valiResponseInventoryGetLegacyWithUserSchema>;
+export type ResponseInventoryGetLegacyWithUser = v.InferOutput<typeof valiResponseInventoryGetLegacyWithUserSchema>;
 
 // Base with equipped array
-export const valiResponseInventoryGetWithEquippedArraySchema = object({
+export const valiResponseInventoryGetWithEquippedArraySchema = v.object({
 	...valiResponseInventoryGetBaseSchema.entries,
 	...valiEquippedArraySchema.entries,
 });
-export type ResponseInventoryGetWithEquippedArray = InferOutput<typeof valiResponseInventoryGetWithEquippedArraySchema>;
+export type ResponseInventoryGetWithEquippedArray = v.InferOutput<typeof valiResponseInventoryGetWithEquippedArraySchema>;
 
 // Base with equipped tree
-export const valiResponseInventoryGetWithEquippedTreeSchema = object({
+export const valiResponseInventoryGetWithEquippedTreeSchema = v.object({
 	...valiResponseInventoryGetBaseSchema.entries,
 	...valiEquippedTreeSchema.entries,
 });
-export type ResponseInventoryGetWithEquippedTree = InferOutput<typeof valiResponseInventoryGetWithEquippedTreeSchema>;
+export type ResponseInventoryGetWithEquippedTree = v.InferOutput<typeof valiResponseInventoryGetWithEquippedTreeSchema>;
 
 // Base with user and equipped array
-export const valiResponseInventoryGetWithUserAndEquippedArraySchema = object({
+export const valiResponseInventoryGetWithUserAndEquippedArraySchema = v.object({
 	...valiResponseInventoryGetBaseSchema.entries,
 	...valiEquippedArraySchema.entries,
 	user: valiObjectUserSchema,
 });
-export type ResponseInventoryGetWithUserAndEquippedArray = InferOutput<typeof valiResponseInventoryGetWithUserAndEquippedArraySchema>;
+export type ResponseInventoryGetWithUserAndEquippedArray = v.InferOutput<typeof valiResponseInventoryGetWithUserAndEquippedArraySchema>;
 
 // Base with user and equipped tree
-export const valiResponseInventoryGetWithUserAndEquippedTreeSchema = object({
+export const valiResponseInventoryGetWithUserAndEquippedTreeSchema = v.object({
 	...valiResponseInventoryGetBaseSchema.entries,
 	...valiEquippedTreeSchema.entries,
 	user: valiObjectUserSchema,
 });
-export type ResponseInventoryGetWithUserAndEquippedTree = InferOutput<typeof valiResponseInventoryGetWithUserAndEquippedTreeSchema>;
+export type ResponseInventoryGetWithUserAndEquippedTree = v.InferOutput<typeof valiResponseInventoryGetWithUserAndEquippedTreeSchema>;
 
 // Legacy with equipped array
-export const valiResponseInventoryGetLegacyWithEquippedArraySchema = object({
+export const valiResponseInventoryGetLegacyWithEquippedArraySchema = v.object({
 	...valiResponseInventoryGetLegacySchema.entries,
 	...valiEquippedArraySchema.entries,
 });
-export type ResponseInventoryGetLegacyWithEquippedArray = InferOutput<typeof valiResponseInventoryGetLegacyWithEquippedArraySchema>;
+export type ResponseInventoryGetLegacyWithEquippedArray = v.InferOutput<typeof valiResponseInventoryGetLegacyWithEquippedArraySchema>;
 
 // Legacy with equipped tree
-export const valiResponseInventoryGetLegacyWithEquippedTreeSchema = object({
+export const valiResponseInventoryGetLegacyWithEquippedTreeSchema = v.object({
 	...valiResponseInventoryGetLegacySchema.entries,
 	...valiEquippedTreeSchema.entries,
 });
-export type ResponseInventoryGetLegacyWithEquippedTree = InferOutput<typeof valiResponseInventoryGetLegacyWithEquippedTreeSchema>;
+export type ResponseInventoryGetLegacyWithEquippedTree = v.InferOutput<typeof valiResponseInventoryGetLegacyWithEquippedTreeSchema>;
 
 // Legacy with user and equipped array
-export const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema = object({
+export const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema = v.object({
 	...valiResponseInventoryGetLegacySchema.entries,
 	...valiEquippedArraySchema.entries,
 	user: valiObjectUserSchema,
 });
-export type ResponseInventoryGetLegacyWithUserAndEquippedArray = InferOutput<typeof valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema>;
+export type ResponseInventoryGetLegacyWithUserAndEquippedArray = v.InferOutput<typeof valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema>;
 
 // Legacy with user and equipped tree
-export const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema = object({
+export const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema = v.object({
 	...valiResponseInventoryGetLegacySchema.entries,
 	...valiEquippedTreeSchema.entries,
 	user: valiObjectUserSchema,
 });
-export type ResponseInventoryGetLegacyWithUserAndEquippedTree = InferOutput<typeof valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema>;
+export type ResponseInventoryGetLegacyWithUserAndEquippedTree = v.InferOutput<typeof valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema>;
 
 // Conditional type for equipped parameter
 type EquippedResponse<

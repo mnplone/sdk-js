@@ -1,4 +1,4 @@
-import { void as voidSchema } from 'valibot';
+import * as v from 'valibot';
 import type { CallMethodOptionsData } from '../m1.js';
 import type { ApiResponse } from '../types.js';
 import { isRecord } from '../utils.js';
@@ -36,7 +36,7 @@ export class M1ApiFriends extends M1ApiBase {
 			data: {
 				user_id,
 			},
-			valiResponseSchema: voidSchema(),
+			valiResponseSchema: v.void(),
 		});
 	}
 
@@ -52,7 +52,7 @@ export class M1ApiFriends extends M1ApiBase {
 			data: {
 				user_id,
 			},
-			valiResponseSchema: voidSchema(),
+			valiResponseSchema: v.void(),
 		});
 	}
 

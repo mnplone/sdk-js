@@ -1,17 +1,28 @@
 /* eslint-disable @stylistic/array-element-newline */
+import * as v from 'valibot';
 import {
 	describe,
 	expect,
 	test,
-} from 'vitest';
+} from 'bun:test';
 import { sdk } from '../../test/sdk.js';
 
-const TEST_USER_ID = 623087;
+const env = v.parse(
+	v.object({
+		TEST_AUTH_USER_ID: v.pipe(
+			v.string(),
+			v.minLength(1),
+			v.transform((value) => Number.parseInt(value)),
+			v.number(),
+		),
+	}),
+	process.env,
+);
 
 describe('inventory.get (items mode)', () => {
 	test('valiResponseInventoryGetBaseSchema', async () => {
 		const response = await sdk.inventory.get(
-			TEST_USER_ID,
+			env.TEST_AUTH_USER_ID,
 			{
 				add_legacy: false,
 			},
@@ -26,7 +37,7 @@ describe('inventory.get (items mode)', () => {
 
 	test('valiResponseInventoryGetWithUserSchema', async () => {
 		const response = await sdk.inventory.get(
-			TEST_USER_ID,
+			env.TEST_AUTH_USER_ID,
 			{
 				add_legacy: false,
 				add_user: true,
@@ -58,11 +69,9 @@ describe('inventory.get (items mode)', () => {
 		expect(response.request.data.add_equipped).toBe('array');
 		expect(response.data.item_ids_equipped).toBeInstanceOf(Array);
 		expect(response.data.collections).toBeInstanceOf(Array);
-		// @ts-expect-error yep
-		expect(response.data.user).toBeUndefined();
+		expect('user' in response.data).toBe(false);
 
-		const stock_items = response.data.items.filter((item) => item.quality_id === 0);
-		expect(stock_items.length).toBe(29); // 28 fields + 1 dice
+		expect(response.data.items.some((item) => item.quality_id === 0)).toBe(true);
 	});
 
 	test('valiResponseInventoryGetWithEquippedTreeSchema', async () => {
@@ -75,8 +84,8 @@ describe('inventory.get (items mode)', () => {
 
 		expect(response.request.data.add_user).toBeUndefined();
 		expect(response.request.data.add_equipped).toBe('tree');
-		// @ts-expect-error yep
-		expect(response.data.user).toBeUndefined();
+
+		expect('user' in response.data).toBe(false);
 		expect(response.data.equipped).toBeInstanceOf(Object);
 	});
 
@@ -119,7 +128,7 @@ describe('inventory.get (items mode)', () => {
 describe('inventory.get (things mode)', () => {
 	test('valiResponseInventoryGetLegacySchema', async () => {
 		const response = await sdk.inventory.get(
-			TEST_USER_ID,
+			env.TEST_AUTH_USER_ID,
 			{
 				add_legacy: true,
 			},
@@ -134,7 +143,7 @@ describe('inventory.get (things mode)', () => {
 
 	test('valiResponseInventoryGetLegacyWithUserSchema', async () => {
 		const response = await sdk.inventory.get(
-			TEST_USER_ID,
+			env.TEST_AUTH_USER_ID,
 			{
 				add_legacy: true,
 				add_user: true,

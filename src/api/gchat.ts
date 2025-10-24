@@ -1,5 +1,5 @@
 import { M1ApiBase } from './base.js';
-import { type ApiResponse } from '../types.js';
+import type { ApiResponse } from '../types.js';
 import {
 	type ResponseGchatGet,
 	type ResponseGchatSend,
@@ -17,7 +17,6 @@ export class M1ApiGchat extends M1ApiBase {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'gchat.get',
-			data: {},
 			valiResponseSchema: valiResponseGchatGetSchema,
 		});
 	}

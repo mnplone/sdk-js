@@ -1,6 +1,6 @@
-import { M as M1ApiBase, A as ApiResponse, S as Session } from './auth-DO_v0hSB.js';
-export { C as CallMethodOptions, i as CallMethodResponse, Q as Dialog, G as GchatMessage, a3 as Item, a0 as ItemProto, a1 as ItemShort, W as ItemVariant, a as M1ApiAuth, b as M1ApiBots, c as M1ApiData, d as M1ApiFriends, e as M1ApiGchat, f as M1ApiIm, g as M1ApiTrades, h as M1ApiUsers, U as Message, aa as ObjectNewTrade, a8 as ObjectTrade, a6 as ObjectTradeId, ac as ObjectTradeList, r as ResponseFriendsGet, R as ResponseFriendsGetBase, t as ResponseFriendsGetRequests, w as ResponseFriendsGetRequestsShort, o as ResponseFriendsGetShort, q as ResponseFriendsGetShortWithUser, m as ResponseFriendsGetWithUser, E as ResponseGchatGet, F as ResponseGchatSend, O as ResponseImDialogsGet, P as ResponseImHistoryGet, N as ResponseImSend, _ as Thing, Y as ThingPrototype, T as TotpSessionToken, af as User, ag as UserShort, J as valiObjectDialogSchema, y as valiObjectGchatMessageAdditionalDataSchema, x as valiObjectGchatMessageBaseSchema, z as valiObjectGchatMessageSchema, a4 as valiObjectItemProtoLegacySchema, $ as valiObjectItemProtoSchema, a2 as valiObjectItemSchema, V as valiObjectItemVariantSchema, I as valiObjectMessageSchema, a9 as valiObjectNewTradeSchema, v as valiObjectSessionSchema, X as valiObjectThingPrototypeSchema, Z as valiObjectThingSchema, a5 as valiObjectTradeIdSchema, ab as valiObjectTradeListSchema, a7 as valiObjectTradeSchema, ae as valiObjectUserSchema, ad as valiObjectUserShortSchema, k as valiResponseFriendsGetBaseSchema, s as valiResponseFriendsGetRequestsSchema, u as valiResponseFriendsGetRequestsShortSchema, n as valiResponseFriendsGetShortSchema, p as valiResponseFriendsGetShortWithUserSchema, l as valiResponseFriendsGetWithUserSchema, B as valiResponseGchatGetSchema, D as valiResponseGchatSendSchema, K as valiResponseImDialogsGetSchema, L as valiResponseImHistoryGetSchema, H as valiResponseImSendSchema, j as valiResponseTotpSessionTokenSchema } from './auth-DO_v0hSB.js';
-import * as valibot from 'valibot';
+import { M as M1ApiBase, A as ApiResponse, S as Session } from './auth-DOjWb5RU.js';
+export { C as CallMethodOptions, j as CallMethodResponse, V as Dialog, G as GchatMessage, aw as Item, at as ItemProto, au as ItemShort, an as ItemVariant, a as M1ApiAuth, b as M1ApiBots, c as M1ApiData, d as M1ApiFriends, e as M1ApiGchat, f as M1ApiIm, g as M1ApiInventory, h as M1ApiTrades, i as M1ApiUsers, W as Message, aD as ObjectNewTrade, aB as ObjectTrade, az as ObjectTradeId, aF as ObjectTradeList, R as RequestOptions, t as ResponseFriendsGet, m as ResponseFriendsGetBase, w as ResponseFriendsGetRequests, y as ResponseFriendsGetRequestsShort, q as ResponseFriendsGetShort, s as ResponseFriendsGetShortWithUser, o as ResponseFriendsGetWithUser, F as ResponseGchatGet, I as ResponseGchatSend, Q as ResponseImDialogsGet, U as ResponseImHistoryGet, P as ResponseImSend, Y as ResponseInventoryCraft, al as ResponseInventoryGet, _ as ResponseInventoryGetBase, a0 as ResponseInventoryGetLegacy, ae as ResponseInventoryGetLegacyWithEquippedArray, ag as ResponseInventoryGetLegacyWithEquippedTree, a4 as ResponseInventoryGetLegacyWithUser, ai as ResponseInventoryGetLegacyWithUserAndEquippedArray, ak as ResponseInventoryGetLegacyWithUserAndEquippedTree, a6 as ResponseInventoryGetWithEquippedArray, a8 as ResponseInventoryGetWithEquippedTree, a2 as ResponseInventoryGetWithUser, aa as ResponseInventoryGetWithUserAndEquippedArray, ac as ResponseInventoryGetWithUserAndEquippedTree, ar as Thing, ap as ThingPrototype, T as TotpSessionToken, aL as User, aM as UserShort, aI as valiObjectActiveUserSchema, aG as valiObjectActiveUserShortSchema, L as valiObjectDialogSchema, B as valiObjectGchatMessageAdditionalDataSchema, z as valiObjectGchatMessageBaseSchema, D as valiObjectGchatMessageSchema, aH as valiObjectInactiveUserSchema, ax as valiObjectItemProtoLegacySchema, as as valiObjectItemProtoSchema, av as valiObjectItemSchema, am as valiObjectItemVariantSchema, K as valiObjectMessageSchema, aC as valiObjectNewTradeSchema, v as valiObjectSessionSchema, ao as valiObjectThingPrototypeSchema, aq as valiObjectThingSchema, ay as valiObjectTradeIdSchema, aE as valiObjectTradeListSchema, aA as valiObjectTradeSchema, aK as valiObjectUserSchema, aJ as valiObjectUserShortSchema, l as valiResponseFriendsGetBaseSchema, u as valiResponseFriendsGetRequestsSchema, x as valiResponseFriendsGetRequestsShortSchema, p as valiResponseFriendsGetShortSchema, r as valiResponseFriendsGetShortWithUserSchema, n as valiResponseFriendsGetWithUserSchema, E as valiResponseGchatGetSchema, H as valiResponseGchatSendSchema, N as valiResponseImDialogsGetSchema, O as valiResponseImHistoryGetSchema, J as valiResponseImSendSchema, X as valiResponseInventoryCraftSchema, Z as valiResponseInventoryGetBaseSchema, $ as valiResponseInventoryGetLegacySchema, ad as valiResponseInventoryGetLegacyWithEquippedArraySchema, af as valiResponseInventoryGetLegacyWithEquippedTreeSchema, ah as valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema, aj as valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema, a3 as valiResponseInventoryGetLegacyWithUserSchema, a5 as valiResponseInventoryGetWithEquippedArraySchema, a7 as valiResponseInventoryGetWithEquippedTreeSchema, a9 as valiResponseInventoryGetWithUserAndEquippedArraySchema, ab as valiResponseInventoryGetWithUserAndEquippedTreeSchema, a1 as valiResponseInventoryGetWithUserSchema, k as valiResponseTotpSessionTokenSchema } from './auth-DOjWb5RU.js';
+import * as v from 'valibot';
 import { InferOutput } from 'valibot';
 import '@extws/client';
 import 'type-fest';
@@ -23,23 +23,182 @@ declare class M1ApiOauth extends M1ApiBase {
     }): Promise<ApiResponse<Session>>;
 }
 
-declare const valiObjectPropertyTitleSchema: valibot.ObjectSchema<{
-    readonly id: valibot.NumberSchema<undefined>;
-    readonly title: valibot.StringSchema<undefined>;
+declare const valiObjectPropertyTitleSchema: v.ObjectSchema<{
+    readonly id: v.NumberSchema<undefined>;
+    readonly title: v.StringSchema<undefined>;
 }, undefined>;
 type ObjectPropertyTitle = InferOutput<typeof valiObjectPropertyTitleSchema>;
-declare const valiObjectCollectionSchema: valibot.ObjectSchema<{
-    readonly collection_id: valibot.NumberSchema<undefined>;
-    readonly id: valibot.OptionalSchema<valibot.NumberSchema<undefined>, undefined>;
-    readonly title: valibot.StringSchema<undefined>;
+declare const valiObjectCollectionSchema: v.ObjectSchema<{
+    readonly collection_id: v.NumberSchema<undefined>;
+    readonly id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+    readonly title: v.StringSchema<undefined>;
 }, undefined>;
 type ObjectCollection = InferOutput<typeof valiObjectCollectionSchema>;
-declare const valiObjectQualitySchema: valibot.ObjectSchema<{
-    readonly id: valibot.NumberSchema<undefined>;
-    readonly title: valibot.StringSchema<undefined>;
-    readonly coeff_rent: valibot.NumberSchema<undefined>;
-    readonly color: valibot.StringSchema<undefined>;
+declare const valiObjectQualitySchema: v.ObjectSchema<{
+    readonly id: v.NumberSchema<undefined>;
+    readonly title: v.StringSchema<undefined>;
+    readonly coeff_rent: v.NumberSchema<undefined>;
+    readonly color: v.StringSchema<undefined>;
 }, undefined>;
 type ObjectQuality = InferOutput<typeof valiObjectQualitySchema>;
+declare const valiResponseDataSearchItemProtosSchema: v.SchemaWithPipe<readonly [v.ObjectSchema<{
+    readonly item_protos: v.ArraySchema<v.ObjectSchema<{
+        readonly item_proto_id: v.NumberSchema<undefined>;
+        readonly item_proto_status: v.OptionalSchema<v.PicklistSchema<[0, 1, 2], undefined>, 0>;
+        readonly type: v.NumberSchema<undefined>;
+        readonly image: v.StringSchema<undefined>;
+        readonly title: v.StringSchema<undefined>;
+        readonly description: v.StringSchema<undefined>;
+        readonly quality_id: v.NumberSchema<undefined>;
+        readonly moneybox: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+        readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
+            readonly id: v.NumberSchema<undefined>;
+            readonly is_default: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+            readonly is_selected: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+            readonly is_unlocked: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+            readonly image: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            readonly description: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            readonly unlock: v.OptionalSchema<v.ObjectSchema<{
+                readonly moneybox: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+                readonly buy_tokens_sp: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+                readonly buy_tokens_cmpt: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+        }, undefined>, undefined>, undefined>;
+        readonly monopoly_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly sticker_group_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly collection_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly twin_item_proto_ids: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
+        readonly prices: v.OptionalSchema<v.ObjectSchema<{
+            readonly buy: v.OptionalSchema<v.UnionSchema<[v.NumberSchema<undefined>, v.ArraySchema<v.ObjectSchema<{
+                readonly use_count: v.NumberSchema<undefined>;
+                readonly price: v.NumberSchema<undefined>;
+            }, undefined>, undefined>], undefined>, undefined>;
+            readonly quick_sell: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly key_item_proto_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly case_item_proto_ids: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
+        readonly drop: v.OptionalSchema<v.SchemaWithPipe<readonly [v.ArraySchema<v.ObjectSchema<{
+            readonly item_proto_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly is_primary: v.OptionalSchema<v.BooleanSchema<undefined>, undefined>;
+            readonly is_rare: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly is_secondary: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        }, undefined>, undefined>, v.TransformAction<{
+            item_proto_id?: number | undefined;
+            is_primary?: boolean | undefined;
+            is_rare?: number | undefined;
+            is_secondary?: number | undefined;
+        }[], {
+            item_proto_id?: number | undefined;
+            is_primary?: boolean | undefined;
+            is_rare?: number | undefined;
+            is_secondary?: number | undefined;
+        }[]>]>, undefined>;
+        readonly can_craft: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+    }, undefined>, undefined>;
+    readonly collections: v.ArraySchema<v.ObjectSchema<{
+        readonly collection_id: v.NumberSchema<undefined>;
+        readonly id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly title: v.StringSchema<undefined>;
+    }, undefined>, undefined>;
+}, undefined>, v.TransformAction<{
+    item_protos: {
+        item_proto_id: number;
+        item_proto_status: 0 | 1 | 2;
+        type: number;
+        image: string;
+        title: string;
+        description: string;
+        quality_id: number;
+        moneybox: boolean;
+        variants?: {
+            id: number;
+            is_default: boolean;
+            is_selected: boolean;
+            is_unlocked: boolean;
+            image?: string | undefined;
+            description?: string | undefined;
+            unlock?: {
+                moneybox?: number | undefined;
+                buy_tokens_sp?: number | undefined;
+                buy_tokens_cmpt?: number | undefined;
+            } | undefined;
+        }[] | undefined;
+        monopoly_id?: number | undefined;
+        sticker_group_id?: number | undefined;
+        collection_id?: number | undefined;
+        twin_item_proto_ids?: number[] | undefined;
+        prices?: {
+            buy?: number | {
+                use_count: number;
+                price: number;
+            }[] | undefined;
+            quick_sell?: number | undefined;
+        } | undefined;
+        key_item_proto_id?: number | undefined;
+        case_item_proto_ids?: number[] | undefined;
+        drop?: {
+            item_proto_id?: number | undefined;
+            is_primary?: boolean | undefined;
+            is_rare?: number | undefined;
+            is_secondary?: number | undefined;
+        }[] | undefined;
+        can_craft: boolean;
+    }[];
+    collections: {
+        collection_id: number;
+        id?: number | undefined;
+        title: string;
+    }[];
+}, {
+    item_protos: Map<number, {
+        item_proto_id: number;
+        item_proto_status: 0 | 1 | 2;
+        type: number;
+        image: string;
+        title: string;
+        description: string;
+        quality_id: number;
+        moneybox: boolean;
+        variants?: {
+            id: number;
+            is_default: boolean;
+            is_selected: boolean;
+            is_unlocked: boolean;
+            image?: string | undefined;
+            description?: string | undefined;
+            unlock?: {
+                moneybox?: number | undefined;
+                buy_tokens_sp?: number | undefined;
+                buy_tokens_cmpt?: number | undefined;
+            } | undefined;
+        }[] | undefined;
+        monopoly_id?: number | undefined;
+        sticker_group_id?: number | undefined;
+        collection_id?: number | undefined;
+        twin_item_proto_ids?: number[] | undefined;
+        prices?: {
+            buy?: number | {
+                use_count: number;
+                price: number;
+            }[] | undefined;
+            quick_sell?: number | undefined;
+        } | undefined;
+        key_item_proto_id?: number | undefined;
+        case_item_proto_ids?: number[] | undefined;
+        drop?: {
+            item_proto_id?: number | undefined;
+            is_primary?: boolean | undefined;
+            is_rare?: number | undefined;
+            is_secondary?: number | undefined;
+        }[] | undefined;
+        can_craft: boolean;
+    }>;
+    collections: Map<number, {
+        collection_id: number;
+        id?: number | undefined;
+        title: string;
+    }>;
+}>]>;
+type ResponseDataSearchItemProtos = InferOutput<typeof valiResponseDataSearchItemProtosSchema>;
 
-export { M1ApiBase, M1ApiOauth, type ObjectCollection, type ObjectPropertyTitle, type ObjectQuality, Session, valiObjectCollectionSchema, valiObjectPropertyTitleSchema, valiObjectQualitySchema };
+export { M1ApiBase, M1ApiOauth, type ObjectCollection, type ObjectPropertyTitle, type ObjectQuality, type ResponseDataSearchItemProtos, Session, valiObjectCollectionSchema, valiObjectPropertyTitleSchema, valiObjectQualitySchema, valiResponseDataSearchItemProtosSchema };

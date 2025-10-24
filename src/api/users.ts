@@ -1,8 +1,4 @@
-import {
-	array,
-	pipe,
-	transform,
-} from 'valibot';
+import * as v from 'valibot';
 import { M1ApiBase } from './base.js';
 import {
 	type User,
@@ -18,11 +14,11 @@ import { type ApiResponse } from '../types.js';
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 function transformer<T extends User | UserShort>(value: T[]) {
-	const result = new Map<number, T>();
+	const result = new Map<number | string, T>();
 
 	for (const user of value) {
 		result.set(
-			user.user_id,
+			user.user_id ?? user.domain!,
 			user,
 		);
 	}
@@ -30,24 +26,24 @@ function transformer<T extends User | UserShort>(value: T[]) {
 	return result;
 }
 
-const valiApiResponseUsersGetSchema = pipe(
-	array(valiObjectUserSchema),
-	transform(transformer),
+const valiApiResponseUsersGetSchema = v.pipe(
+	v.array(valiObjectUserSchema),
+	v.transform(transformer),
 );
 
-const valiApiResponseUsersGetShortSchema = pipe(
-	array(valiObjectUserShortSchema),
-	transform(transformer),
+const valiApiResponseUsersGetShortSchema = v.pipe(
+	v.array(valiObjectUserShortSchema),
+	v.transform(transformer),
 );
 
-const valiApiResponseUsersGetOneSchema = pipe(
-	array(valiObjectUserSchema),
-	transform((value) => value[0]),
+const valiApiResponseUsersGetOneSchema = v.pipe(
+	v.array(valiObjectUserSchema),
+	v.transform((value) => value[0]),
 );
 
-const valiApiResponseUsersGetShortOneSchema = pipe(
-	array(valiObjectUserShortSchema),
-	transform((value) => value[0]),
+const valiApiResponseUsersGetShortOneSchema = v.pipe(
+	v.array(valiObjectUserShortSchema),
+	v.transform((value) => value[0]),
 );
 
 export class M1ApiUsers extends M1ApiBase {
@@ -100,7 +96,7 @@ export class M1ApiUsers extends M1ApiBase {
 			| { short: true },
 		arg1?: { short: true },
 	) {
-		let user_ids: (number | string)[] | null = null;
+		let user_ids: (number | string)[] = [];
 		let is_multiple_users = false;
 		const data: {
 			type?: string,
@@ -129,9 +125,7 @@ export class M1ApiUsers extends M1ApiBase {
 			data.type = 'short';
 		}
 
-		if (user_ids) {
-			data.user_ids = user_ids.join(',');
-		}
+		data.user_ids = user_ids.join(',');
 
 		return this.baseClient.callMethod({
 			http_method: 'GET',

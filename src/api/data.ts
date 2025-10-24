@@ -1,11 +1,4 @@
-import {
-	array,
-	number,
-	object,
-	pipe,
-	string,
-	transform,
-} from 'valibot';
+import * as v from 'valibot';
 import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
 import {
@@ -99,13 +92,13 @@ export class M1ApiData extends M1ApiBase {
 		const add_legacy = options?.add_legacy === true;
 		const add_metadata = options?.add_metadata !== false;
 
-		const valiCurrentItemProtosSchema = pipe(
-			array(
+		const valiCurrentItemProtosSchema = v.pipe(
+			v.array(
 				add_legacy
 					? valiObjectItemProtoLegacySchema
 					: valiObjectItemProtoSchema,
 			),
-			transform((value) => new Map(
+			v.transform((value) => new Map(
 				value.map((item_proto) => [
 					item_proto.item_proto_id,
 					item_proto,
@@ -122,20 +115,20 @@ export class M1ApiData extends M1ApiBase {
 				add_metadata: Number(add_metadata),
 			},
 			valiResponseSchema: add_metadata
-				? object({
+				? v.object({
 					item_protos: valiCurrentItemProtosSchema,
-					collections: array(
-						object({
-							collection_id: number(),
-							title: string(),
+					collections: v.array(
+						v.object({
+							collection_id: v.number(),
+							title: v.string(),
 						}),
 					),
 				})
-				: pipe(
-					object({
+				: v.pipe(
+					v.object({
 						item_protos: valiCurrentItemProtosSchema,
 					}),
-					transform((value) => value.item_protos),
+					v.transform((value) => value.item_protos),
 				),
 		});
 	}

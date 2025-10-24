@@ -1,4 +1,4 @@
-import { union } from 'valibot';
+import * as v from 'valibot';
 import { M1ApiBase } from './base.js';
 import {
 	valiObjectSessionSchema,
@@ -6,10 +6,10 @@ import {
 	type Session,
 	type TotpSessionToken,
 } from '../valibot/auth.js';
-import { type ApiResponse } from '../types.js';
+import type { ApiResponse } from '../types.js';
 // import { isRecord } from '../utils.js';
 
-const valiResponseAuthSigninSchema = union([
+const valiResponseAuthSigninSchema = v.union([
 	valiObjectSessionSchema,
 	valiResponseTotpSessionTokenSchema,
 ]);

@@ -16,7 +16,7 @@ import {
 	parseWithNotice,
 } from './utils.js';
 
-const DEV_MODE = process.env.SDK_TEST === '1';
+const IS_TEST = process.env.NODE_ENV === 'test';
 
 export type CallMethodOptionsData = Record<
 	string,
@@ -34,16 +34,16 @@ export type CallMethodOptions<
 	valiErrorDataSchema?: ValiErrorDataSchema,
 };
 
-export const InvalidParametersErrorDataSchema = v.object({
-	issues: v.optional(
-		v.array(
-			v.object({
-				path: v.string(),
-				message: v.string(),
-			}),
-		),
-	),
-});
+// const InvalidParametersErrorDataSchema = v.object({
+// 	issues: v.optional(
+// 		v.array(
+// 			v.object({
+// 				path: v.string(),
+// 				message: v.string(),
+// 			}),
+// 		),
+// 	),
+// });
 
 export type RequestOptions = {
 	method: 'GET' | 'POST',
@@ -219,7 +219,7 @@ export class M1 {
 		const response_data = await response.json();
 
 		if (
-			DEV_MODE
+			IS_TEST
 			&& response_data.success === false
 		) {
 			// eslint-disable-next-line no-console
@@ -249,7 +249,7 @@ export class M1 {
 		} = v.parse(
 			v.object({
 				description: v.optional(v.string()),
-				data: v.optional(options.valiErrorDataSchema ?? InvalidParametersErrorDataSchema),
+				data: v.optional(options.valiErrorDataSchema ?? v.unknown()),
 			}),
 			response_data,
 		);

@@ -1,278 +1,273 @@
 /* eslint-disable @stylistic/array-element-newline */
-import {
-	array,
-	boolean,
-	nullable,
-	number,
-	object,
-	optional,
-	picklist,
-	pipe,
-	record,
-	string,
-	transform,
-	union,
-	unknown,
-	type InferOutput,
-} from 'valibot';
+import * as v from 'valibot';
 import { bit } from './common.js';
 
-export const valiObjectItemVariantSchema = object({
-	id: number(),
+export const valiObjectItemVariantSchema = v.object({
+	id: v.number(),
 	is_default: bit(0),
 	is_selected: bit(0),
 	is_unlocked: bit(0),
-	image: optional(
-		string(),
+	image: v.optional(
+		v.string(),
 	),
-	description: optional(
-		string(),
+	description: v.optional(
+		v.string(),
 	),
-	unlock: optional(
-		object({
-			moneybox: optional(
-				number(),
+	unlock: v.optional(
+		v.object({
+			moneybox: v.optional(
+				v.number(),
 			),
-			buy_tokens_sp: optional(
-				number(),
+			buy_tokens_sp: v.optional(
+				v.number(),
 			),
-			buy_tokens_cmpt: optional(
-				number(),
+			buy_tokens_cmpt: v.optional(
+				v.number(),
 			),
 		}),
 	),
 });
-export type ItemVariant = InferOutput<typeof valiObjectItemVariantSchema>;
+export type ItemVariant = v.InferOutput<typeof valiObjectItemVariantSchema>;
 
-export const valiObjectThingPrototypeSchema = object({
-	thing_prototype_id: number(),
-	thing_prototype_status: number(),
-	thing_type: number(),
-	image: string(),
-	title: string(),
-	description: string(),
-	group: optional(
-		pipe(
-			nullable(number()),
-			transform((value) => (typeof value === 'number' ? value : undefined)),
+export const valiObjectThingPrototypeSchema = v.object({
+	thing_prototype_id: v.number(),
+	thing_prototype_status: v.number(),
+	thing_type: v.number(),
+	image: v.string(),
+	title: v.string(),
+	description: v.string(),
+	group: v.optional(
+		v.pipe(
+			v.nullable(v.number()),
+			v.transform((value) => (typeof value === 'number' ? value : undefined)),
 		),
 	),
-	quality: number(),
-	collection: optional(
-		number(),
+	quality: v.number(),
+	collection: v.optional(
+		v.number(),
 	),
-	twin_thing_prototype_id: optional(
-		array(number()),
+	twin_thing_prototype_id: v.optional(
+		v.array(v.number()),
 	),
-	delete_price: optional(
-		nullable(
-			number(),
+	delete_price: v.optional(
+		v.nullable(
+			v.number(),
 		),
 	),
 	can_be_upgraded: bit(0),
-	buy_cost: optional(
-		number(),
+	buy_cost: v.optional(
+		v.number(),
 	),
-	key: optional(
-		number(),
+	key: v.optional(
+		v.number(),
 	),
-	cases: optional(
-		array(number()),
+	cases: v.optional(
+		v.array(v.number()),
 	),
-	drop: optional(
-		array(
-			object({
-				thing_prototype_id: optional(
-					number(),
+	drop: v.optional(
+		v.array(
+			v.object({
+				thing_prototype_id: v.optional(
+					v.number(),
 				),
-				hidden: optional(
-					boolean(),
+				hidden: v.optional(
+					v.boolean(),
 				),
-				is_primary: optional(
-					boolean(),
+				is_primary: v.optional(
+					v.boolean(),
 				),
-				is_rare: optional(
-					number(),
+				is_rare: v.optional(
+					v.number(),
 				),
-				is_secondary: optional(
-					number(),
+				is_secondary: v.optional(
+					v.number(),
 				),
 			}),
 		),
 	),
-	variants: optional(
-		array(valiObjectItemVariantSchema),
+	variants: v.optional(
+		v.array(valiObjectItemVariantSchema),
 	),
 });
-export type ThingPrototype = InferOutput<typeof valiObjectThingPrototypeSchema>;
+export type ThingPrototype = v.InferOutput<typeof valiObjectThingPrototypeSchema>;
 
-export const valiObjectThingSchema = object({
+export const valiObjectThingSchema = v.object({
 	...valiObjectThingPrototypeSchema.entries,
-	thing_id: number(),
-	user_id: number(),
-	owned_time: number(),
-	can_give: optional(
-		number(),
+	thing_id: v.number(),
+	user_id: v.number(),
+	owned_time: v.number(),
+	can_give: v.optional(
+		v.number(),
 	),
-	can_sell: optional(
-		number(),
+	can_sell: v.optional(
+		v.number(),
 	),
-	souvenir: optional(
-		string(),
+	souvenir: v.optional(
+		v.string(),
 	),
-	autograph: optional(
-		object({
-			user_id: number(),
-			text: optional(
-				string(),
+	autograph: v.optional(
+		v.object({
+			user_id: v.number(),
+			text: v.optional(
+				v.string(),
 			),
 		}),
 	),
-	moneybox: optional(
-		union([
-			object({
-				transactions: number(),
-				money_inside: number(),
+	moneybox: v.optional(
+		v.union([
+			v.object({
+				transactions: v.number(),
+				money_inside: v.number(),
 			}),
-			object({
-				numbers: array(number()),
+			v.object({
+				numbers: v.array(v.number()),
 			}),
-			object({
-				count: number(),
+			v.object({
+				count: v.number(),
 			}),
 		]),
 	),
-	uses_left: optional(number()),
-	uses_origin: optional(number()),
-	variants: optional(
-		array(valiObjectItemVariantSchema),
+	uses_left: v.optional(
+		v.number(),
+	),
+	uses_origin: v.optional(
+		v.number(),
+	),
+	variants: v.optional(
+		v.array(valiObjectItemVariantSchema),
 	),
 });
-export type Thing = InferOutput<typeof valiObjectThingSchema>;
+export type Thing = v.InferOutput<typeof valiObjectThingSchema>;
 
-export const valiObjectItemProtoSchema = object({
-	item_proto_id: number(),
-	item_proto_status: optional(
-		picklist([ 0, 1, 2 ]),
+export const valiObjectItemProtoSchema = v.object({
+	item_proto_id: v.number(),
+	item_proto_status: v.optional(
+		v.picklist([ 0, 1, 2 ]),
 		0,
 	),
-	type: number(),
-	image: string(),
-	title: string(),
-	description: string(),
-	quality_id: number(),
+	type: v.number(),
+	image: v.string(),
+	title: v.string(),
+	description: v.string(),
+	quality_id: v.number(),
 	moneybox: bit(0),
-	variants: optional(
-		array(valiObjectItemVariantSchema),
+	variants: v.optional(
+		v.array(valiObjectItemVariantSchema),
 	),
-	monopoly_id: optional(
-		number(),
+	monopoly_id: v.optional(
+		v.number(),
 	),
-	sticker_group_id: optional(
-		number(),
+	sticker_group_id: v.optional(
+		v.number(),
 	),
-	collection_id: optional(
-		number(),
+	collection_id: v.optional(
+		v.number(),
 	),
-	twin_item_proto_ids: optional(
-		array(number()),
+	twin_item_proto_ids: v.optional(
+		v.array(v.number()),
 	),
-	prices: optional(
-		object({
-			buy: optional(
-				union([
-					number(),
-					record(
-						string(),
-						number(),
-					),
+	prices: v.optional(
+		v.object({
+			buy: v.optional(
+				v.union([
+					v.number(),
+					v.array(v.object({
+						use_count: v.number(),
+						price: v.number(),
+					})),
 				]),
 			),
-			quick_sell: optional(number()),
+			quick_sell: v.optional(v.number()),
 		}),
 	),
-	key_item_proto_id: optional(number()),
-	case_item_proto_ids: optional(
-		array(number()),
+	key_item_proto_id: v.optional(v.number()),
+	case_item_proto_ids: v.optional(
+		v.array(v.number()),
 	),
-	drop: optional(
-		array(
-			object({
-				item_proto_id: number(),
-				is_primary: optional(
-					boolean(),
-				),
-				is_rare: optional(
-					number(),
-				),
-				is_secondary: optional(
-					number(),
-				),
-			}),
+	drop: v.optional(
+		v.pipe(
+			v.array(
+				v.object({
+					item_proto_id: v.optional(v.number()),
+					is_primary: v.optional(
+						v.boolean(),
+					),
+					is_rare: v.optional(
+						v.number(),
+					),
+					is_secondary: v.optional(
+						v.number(),
+					),
+				}),
+			),
+			v.transform((value) => value.filter((el) => el.item_proto_id !== undefined)),
 		),
 	),
 	can_craft: bit(0),
 });
-export type ItemProto = InferOutput<typeof valiObjectItemProtoSchema>;
+export type ItemProto = v.InferOutput<typeof valiObjectItemProtoSchema>;
 
-const valiObjectItemShortSchema = object({
+const valiObjectItemShortSchema = v.object({
 	...valiObjectItemProtoSchema.entries,
-	item_id: number(),
-	item_ids: optional(
-		array(number()),
+	item_id: v.number(),
+	item_ids: v.optional(
+		v.array(v.number()),
 	),
-	ts_owned: number(),
-	ts_can_trade: optional(
-		number(),
+	ts_owned: v.number(),
+	ts_can_trade: v.optional(
+		v.number(),
 	),
-	ts_can_sell: optional(
-		number(),
+	ts_can_sell: v.optional(
+		v.number(),
 	),
-	souvenir: optional(
-		string(),
+	souvenir: v.optional(
+		v.string(),
 	),
-	autograph: optional(
-		object({
-			user_id: number(),
-			text: optional(
-				string(),
+	autograph: v.optional(
+		v.object({
+			user_id: v.number(),
+			text: v.optional(
+				v.string(),
 			),
 		}),
 	),
-	moneybox: optional(
-		record(
-			string(),
-			unknown(),
+	moneybox: v.optional(
+		v.record(
+			v.string(),
+			v.unknown(),
 		),
 	),
-	seed: optional(
-		string(),
+	seed: v.optional(
+		v.union([
+			v.string(),
+			v.number(),
+		]),
 	),
-	variants: optional(
-		array(valiObjectItemVariantSchema),
+	variants: v.optional(
+		v.array(valiObjectItemVariantSchema),
 	),
-	xp_boost: optional(
-		number(),
+	xp_boost: v.optional(
+		v.number(),
 	),
 });
-export type ItemShort = InferOutput<typeof valiObjectItemShortSchema>;
+export type ItemShort = v.InferOutput<typeof valiObjectItemShortSchema>;
 
-export const valiObjectItemSchema = object({
+export const valiObjectItemSchema = v.object({
 	...valiObjectItemShortSchema.entries,
 	can_delete: bit(0),
-	previous_owners_user_ids: optional(
-		array(number()),
+	previous_owners_user_ids: v.optional(
+		v.array(v.number()),
 	),
-	uses: optional(
-		object({
-			left: number(),
-			origin: optional(number()),
+	uses: v.optional(
+		v.object({
+			left: v.number(),
+			origin: v.optional(v.number()),
 		}),
 	),
 });
-export type Item = InferOutput<typeof valiObjectItemSchema>;
+export type Item = v.InferOutput<typeof valiObjectItemSchema>;
 
-export const valiObjectItemProtoLegacySchema = object({
+export const valiObjectItemProtoLegacySchema = v.object({
 	...valiObjectThingPrototypeSchema.entries,
 	...valiObjectItemProtoSchema.entries,
 });

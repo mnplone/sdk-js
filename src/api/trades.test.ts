@@ -17,6 +17,7 @@ describe('trades', () => {
 		expect(response.request.data.thing_ids_from).toBe('1,2,3');
 		expect(response.request.data.thing_ids_to).toBe('4,5,6');
 	});
+
 	test('trades.create gift', async () => {
 		const response = await sdk.trades.create({
 			user_id: 1,
