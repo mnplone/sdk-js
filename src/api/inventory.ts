@@ -3,6 +3,7 @@ import type { CallMethodOptionsData } from '../m1.js';
 import type { ApiResponse } from '../types.js';
 import { isRecord } from '../utils.js';
 import {
+	valiResponseInventoryCraftSchema,
 	valiResponseInventoryGetBaseSchema,
 	valiResponseInventoryGetWithUserSchema,
 	valiResponseInventoryGetLegacySchema,
@@ -16,6 +17,7 @@ import {
 	valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema,
 	valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema,
 	type ResponseInventoryGet,
+	type ResponseInventoryCraft,
 } from '../valibot/inventory.js';
 import { M1ApiBase } from './base.js';
 
@@ -35,6 +37,22 @@ type InventoryGetOptions<
 
 export class M1ApiInventory extends M1ApiBase {
 	/**
+	 * Craft an item.
+	 * @param item_ids - The IDs of the items to craft.
+	 * @returns The crafted item.
+	 */
+	craft(item_ids: number[]): Promise<ApiResponse<ResponseInventoryCraft>> {
+		return this.baseClient.callMethod({
+			http_method: 'POST',
+			api_method: 'inventory.craft',
+			data: {
+				item_ids: item_ids.join(','),
+			},
+			valiResponseSchema: valiResponseInventoryCraftSchema,
+		});
+	}
+
+	/**
 	 * Returns information about user's inventory.
 	 * @param options - The options for the request.
 	 * @param options.include_stock - Whether to return stock quality items.
@@ -47,8 +65,8 @@ export class M1ApiInventory extends M1ApiBase {
 	 * @returns Inventory information.
 	 */
 	get<
-		const OL extends boolean,
-		const OU extends boolean,
+		const OL extends boolean = true,
+		const OU extends boolean = false,
 		const OE extends 'array' | 'tree' | undefined = undefined,
 	>(options?: InventoryGetOptions<OL, OU, OE>): Promise<ApiResponse<ResponseInventoryGet<OL, OU, OE>>>;
 	/**
@@ -65,16 +83,16 @@ export class M1ApiInventory extends M1ApiBase {
 	 * @returns Inventory information.
 	 */
 	get<
-		const OL extends boolean,
-		const OU extends boolean,
+		const OL extends boolean = true,
+		const OU extends boolean = false,
 		const OE extends 'array' | 'tree' | undefined = undefined,
 	>(
 		user_id: number | string,
 		options?: InventoryGetOptions<OL, OU, OE>,
 	): Promise<ApiResponse<ResponseInventoryGet<OL, OU, OE>>>;
 	get<
-		const OL extends boolean,
-		const OU extends boolean,
+		const OL extends boolean = true,
+		const OU extends boolean = false,
 		const OE extends 'array' | 'tree' | undefined = undefined,
 	>(
 		arg0?: number | string | InventoryGetOptions<OL, OU, OE>,
@@ -95,7 +113,7 @@ export class M1ApiInventory extends M1ApiBase {
 			order: options?.order,
 			count: options?.count,
 			add_user: add_user ? 1 : undefined,
-			add_legacy: add_legacy ? 1 : undefined,
+			add_legacy: Number(add_legacy),
 			add_equipped,
 			shrink: options?.shrink ? 1 : undefined,
 		};
@@ -103,49 +121,49 @@ export class M1ApiInventory extends M1ApiBase {
 		// Determine the correct schema based on options
 		let valiResponseSchema;
 
-		if (add_legacy) {
+		if (add_legacy === false) {
 			// Legacy mode
 			if (add_user) {
 				if (add_equipped === 'array') {
-					valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema;
+					valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedArraySchema;
 				}
 				else if (add_equipped === 'tree') {
-					valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema;
+					valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedTreeSchema;
 				}
 				else {
-					valiResponseSchema = valiResponseInventoryGetLegacyWithUserSchema;
+					valiResponseSchema = valiResponseInventoryGetWithUserSchema;
 				}
 			}
 			else if (add_equipped === 'array') {
-				valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedArraySchema;
+				valiResponseSchema = valiResponseInventoryGetWithEquippedArraySchema;
 			}
 			else if (add_equipped === 'tree') {
-				valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedTreeSchema;
+				valiResponseSchema = valiResponseInventoryGetWithEquippedTreeSchema;
 			}
 			else {
-				valiResponseSchema = valiResponseInventoryGetLegacySchema;
+				valiResponseSchema = valiResponseInventoryGetBaseSchema;
 			}
 		}
 		else if (add_user) {
 			// New mode with user
 			if (add_equipped === 'array') {
-				valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedArraySchema;
+				valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema;
 			}
 			else if (add_equipped === 'tree') {
-				valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedTreeSchema;
+				valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema;
 			}
 			else {
-				valiResponseSchema = valiResponseInventoryGetWithUserSchema;
+				valiResponseSchema = valiResponseInventoryGetLegacyWithUserSchema;
 			}
 		}
 		else if (add_equipped === 'array') {
-			valiResponseSchema = valiResponseInventoryGetWithEquippedArraySchema;
+			valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedArraySchema;
 		}
 		else if (add_equipped === 'tree') {
-			valiResponseSchema = valiResponseInventoryGetWithEquippedTreeSchema;
+			valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedTreeSchema;
 		}
 		else {
-			valiResponseSchema = valiResponseInventoryGetBaseSchema;
+			valiResponseSchema = valiResponseInventoryGetLegacySchema;
 		}
 
 		return this.baseClient.callMethod({

@@ -35,24 +35,33 @@ const valiQualitySchema = object({
 
 // Equipped schemas
 const valiEquippedArraySchema = object({
-	item_ids_equipped: array(number()),
+	item_ids_equipped: optional(
+		array(number()),
+	),
 });
 
 const valiEquippedTreeSchema = object({
-	equipped: object({
-		game: record(
-			string(),
-			object({
-				cards: record(
-					string(),
-					array(number()),
-				),
-				generator: number(),
-				joke: number(),
-			}),
-		),
-	}),
+	equipped: optional(
+		object({
+			game: record(
+				string(),
+				object({
+					cards: record(
+						string(),
+						array(number()),
+					),
+					generator: number(),
+					joke: number(),
+				}),
+			),
+		}),
+	),
 });
+
+export const valiResponseInventoryCraftSchema = object({
+	item: valiObjectItemSchema,
+});
+export type ResponseInventoryCraft = InferOutput<typeof valiResponseInventoryCraftSchema>;
 
 // Base new response schema (add_legacy=0)
 export const valiResponseInventoryGetBaseSchema = object({
@@ -160,8 +169,8 @@ type EquippedResponse<
 
 // Main conditional type similar to friends.ts
 export type ResponseInventoryGet<
-	OL extends boolean,
-	OU extends boolean,
+	OL extends boolean = true,
+	OU extends boolean = false,
 	OE extends 'array' | 'tree' | undefined = undefined,
 > = If<
 	OL,

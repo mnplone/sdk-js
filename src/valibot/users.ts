@@ -1,20 +1,9 @@
-import {
-	array,
-	type InferOutput,
-	object,
-	pipe,
-	number,
-	optional,
-	union,
-	literal,
-	string,
-	transform,
-} from 'valibot';
+import * as v from 'valibot';
 import { bit } from './common.js';
 import { valiObjectThingSchema } from './items.js';
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-function transformerBot<const T extends InferOutput<typeof valiInputUserShortSchema>>(value: T) {
+function transformerBot<const T extends v.InferOutput<typeof valiInputActiveUserShortSchema>>(value: T) {
 	const {
 		bot,
 		bot_owner,
@@ -31,107 +20,131 @@ function transformerBot<const T extends InferOutput<typeof valiInputUserShortSch
 	};
 }
 
-const valiInputUserShortSchema = object({
-	user_id: number(),
-	domain: optional(
-		string(),
+const valiInputActiveUserShortSchema = v.object({
+	user_id: v.number(),
+	domain: v.optional(
+		v.string(),
+	),
+	inactive: v.optional(
+		v.undefined(),
 	),
 	approved: bit(0),
-	nick: string(),
-	gender: union([
-		literal(0),
-		literal(1),
+	nick: v.string(),
+	gender: v.union([
+		v.literal(0),
+		v.literal(1),
 	]),
-	avatar: string(),
+	avatar: v.string(),
 	online: bit(0),
-	current_game: optional(
-		object({
-			gs_id: string(),
-			gs_game_id: string(),
+	current_game: v.optional(
+		v.object({
+			gs_id: v.string(),
+			gs_game_id: v.string(),
 		}),
 	),
-	rank: optional(
-		union([
-			object({
-				hidden: literal(1),
+	rank: v.optional(
+		v.union([
+			v.object({
+				hidden: v.literal(1),
 			}),
-			object({
-				qual: number(),
+			v.object({
+				qual: v.number(),
 			}),
-			object({
-				expired: literal(1),
+			v.object({
+				expired: v.literal(1),
 			}),
-			object({
-				id: number(),
-				pts: number(),
+			v.object({
+				id: v.number(),
+				pts: v.number(),
 			}),
 		]),
 	),
 	vip: bit(0),
 	bot: bit(0),
-	bot_owner: optional(
-		number(),
+	bot_owner: v.optional(
+		v.number(),
 	),
 	moderator: bit(0),
 });
 
-export const valiObjectUserShortSchema = pipe(
-	valiInputUserShortSchema,
-	transform(transformerBot),
+export const valiObjectActiveUserShortSchema = v.pipe(
+	valiInputActiveUserShortSchema,
+	v.transform(transformerBot),
 );
 
-export const valiObjectUserSchema = pipe(
-	object({
-		...valiInputUserShortSchema.entries,
-		nicks_old: array(string()),
-		profile_cover: optional(
-			string(),
+export const valiObjectInactiveUserSchema = v.object({
+	nick: v.string(),
+	avatar: v.string(),
+	avatar_key: v.string(),
+	user_id: v.optional(
+		v.number(),
+	),
+	domain: v.optional(
+		v.union([
+			v.string(),
+			v.null(),
+		]),
+	),
+	inactive: v.picklist([
+		'not_exists',
+		'global_ban',
+	]),
+});
+
+export const valiObjectActiveUserSchema = v.pipe(
+	v.object({
+		...valiInputActiveUserShortSchema.entries,
+		nicks_old: v.array(
+			v.string(),
 		),
-		social_vk: optional(
-			number(),
+		profile_cover: v.optional(
+			v.string(),
 		),
-		social_discord: optional(
-			string(),
+		social_vk: v.optional(
+			v.number(),
 		),
-		social_twitch: optional(
-			string(),
+		social_discord: v.optional(
+			v.string(),
 		),
-		games: optional(
-			number(),
+		social_twitch: v.optional(
+			v.string(),
 		),
-		games_wins: optional(
-			number(),
+		games: v.optional(
+			v.number(),
 		),
-		xp: optional(
-			number(),
+		games_wins: v.optional(
+			v.number(),
 		),
-		xp_level: optional(
-			number(),
+		xp: v.optional(
+			v.number(),
 		),
-		badge: optional(valiObjectThingSchema),
-		friendship: optional(
-			number(),
+		xp_level: v.optional(
+			v.number(),
+		),
+		badge: v.optional(valiObjectThingSchema),
+		friendship: v.optional(
+			v.number(),
 		),
 		muted: bit(0),
-		mfp_ban_history: optional(
-			union([
-				object({
-					type: literal(0),
-					count: number(),
-					ts_last_ban: number(),
-					ts_end: optional(
-						number(),
+		mfp_ban_history: v.optional(
+			v.union([
+				v.object({
+					type: v.literal(0),
+					count: v.number(),
+					ts_last_ban: v.number(),
+					ts_end: v.optional(
+						v.number(),
 					),
 				}),
-				object({
-					type: literal(1),
-					ts_end: number(),
+				v.object({
+					type: v.literal(1),
+					ts_end: v.number(),
 				}),
 			]),
 		),
 	}),
-	transform(transformerBot),
-	transform((value) => {
+	v.transform(transformerBot),
+	v.transform((value) => {
 		const {
 			games,
 			games_wins,
@@ -148,5 +161,21 @@ export const valiObjectUserSchema = pipe(
 	}),
 );
 
-export type User = InferOutput<typeof valiObjectUserSchema>;
-export type UserShort = InferOutput<typeof valiObjectUserShortSchema>;
+export const valiObjectUserShortSchema = v.variant(
+	'inactive',
+	[
+		valiObjectActiveUserShortSchema,
+		valiObjectInactiveUserSchema,
+	],
+);
+
+export const valiObjectUserSchema = v.variant(
+	'inactive',
+	[
+		valiObjectActiveUserSchema,
+		valiObjectInactiveUserSchema,
+	],
+);
+
+export type User = v.InferOutput<typeof valiObjectUserSchema>;
+export type UserShort = v.InferOutput<typeof valiObjectUserShortSchema>;
