@@ -7,11 +7,13 @@ import type { ValiBaseSchema } from './types.js';
  * @returns -
  */
 export function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object'
+	return (
+		typeof value === 'object'
 		&& value !== null
 		&& !Array.isArray(value)
 		&& value.constructor === Object
-		&& Object.prototype.toString.call(value) === '[object Object]';
+		&& Object.prototype.toString.call(value) === '[object Object]'
+	);
 }
 
 /**
@@ -19,13 +21,18 @@ export function isRecord(value: unknown): value is Record<string, unknown> {
  * @param value -
  * @returns -
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function isIterableIterator(value: any): value is IterableIterator<unknown> {
-	return value !== null
+export function isIterableIterator(
+	value: unknown,
+): value is IterableIterator<unknown> {
+	return (
+		value !== null
 		&& typeof value === 'object'
-		&& typeof Symbol.iterator in value
+		&& (typeof Symbol.iterator) in value
+		&& Symbol.iterator in value
 		&& typeof value[Symbol.iterator] === 'function'
-		&& typeof value.next === 'function';
+		&& 'next' in value
+		&& typeof value.next === 'function'
+	);
 }
 
 /**
@@ -34,14 +41,17 @@ export function isIterableIterator(value: any): value is IterableIterator<unknow
  * @param value Value to parse.
  * @returns Parsed value.
  */
-export function parseWithNotice<const V extends ValiBaseSchema>(schema: V, value: unknown): v.InferOutput<V> {
+export function parseWithNotice<const V extends ValiBaseSchema>(
+	schema: V,
+	value: unknown,
+): v.InferOutput<V> {
 	const result = v.safeParse(schema, value);
 
 	if (result.success) {
 		return result.output;
 	}
 
-	// eslint-disable-next-line no-console
+	// oxlint-disable-next-line no-console
 	console.error(v.summarize(result.issues));
 
 	throw new TypeError('Valibot found issues.');

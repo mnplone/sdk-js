@@ -5,5 +5,5 @@ const sdk = new M1({
 	access_token: process.env.TEST_ACCESS_TOKEN,
 });
 
-// eslint-disable-next-line no-console
+// oxlint-disable-next-line no-console
 console.log(sdk);

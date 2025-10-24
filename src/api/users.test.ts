@@ -1,8 +1,4 @@
-import {
-	test,
-	expect,
-	describe,
-} from 'vitest';
+import { test, expect, describe } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 
 const BOT_USER_ID = Number.parseInt(process.env.TEST_BOT_USER_ID ?? '112426');
@@ -20,17 +16,14 @@ describe('users.get', () => {
 		});
 
 		test('multiple users', async () => {
-			const response = await sdk.users.get([ 1, 2 ]);
+			const response = await sdk.users.get([1, 2]);
 
 			expect(response.request.data.user_ids).toBe('1,2');
 			expect(response.data.size).toBe(2);
 		});
 
 		test('short user', async () => {
-			const response = await sdk.users.get(
-				1,
-				{ short: true },
-			);
+			const response = await sdk.users.get(1, { short: true });
 			expect(response.request.data.type).toBe('short');
 			expect(response.data.user_id).toBe(1);
 

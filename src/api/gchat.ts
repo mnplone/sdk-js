@@ -1,12 +1,12 @@
-import { M1ApiBase } from './base.js';
-import { type ApiResponse } from '../types.js';
+import type { CallMethodOptionsData } from '../m1.js';
+import type { ApiResponse } from '../types.js';
 import {
 	type ResponseGchatGet,
 	type ResponseGchatSend,
 	valiResponseGchatGetSchema,
 	valiResponseGchatSendSchema,
 } from '../valibot/gchat.js';
-import type { CallMethodOptionsData } from '../m1.js';
+import { M1ApiBase } from './base.js';
 
 export class M1ApiGchat extends M1ApiBase {
 	/**
@@ -17,7 +17,6 @@ export class M1ApiGchat extends M1ApiBase {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'gchat.get',
-			data: {},
 			valiResponseSchema: valiResponseGchatGetSchema,
 		});
 	}
@@ -38,13 +37,13 @@ export class M1ApiGchat extends M1ApiBase {
 	send(
 		message: string,
 		options: {
-			is_public: boolean,
+			is_public: boolean;
 		},
 	): Promise<ApiResponse<ResponseGchatSend>>;
 	send(
 		message: string,
 		options?: {
-			is_public: boolean,
+			is_public: boolean;
 		},
 	): Promise<ApiResponse<ResponseGchatSend>> {
 		const data: CallMethodOptionsData = { message };

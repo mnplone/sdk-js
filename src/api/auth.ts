@@ -1,15 +1,16 @@
-import { union } from 'valibot';
-import { M1ApiBase } from './base.js';
+import * as v from 'valibot';
+import type { ApiResponse } from '../types.js';
 import {
-	valiObjectSessionSchema,
-	valiResponseTotpSessionTokenSchema,
 	type Session,
 	type TotpSessionToken,
+	valiObjectSessionSchema,
+	valiResponseTotpSessionTokenSchema,
 } from '../valibot/auth.js';
-import { type ApiResponse } from '../types.js';
+import { M1ApiBase } from './base.js';
+
 // import { isRecord } from '../utils.js';
 
-const valiResponseAuthSigninSchema = union([
+const valiResponseAuthSigninSchema = v.union([
 	valiObjectSessionSchema,
 	valiResponseTotpSessionTokenSchema,
 ]);
@@ -21,7 +22,10 @@ export class M1ApiAuth extends M1ApiBase {
 	 * @param password The password of the user.
 	 * @returns Session or TOTP session token.
 	 */
-	signin(email: string, password: string): Promise<ApiResponse<Session | TotpSessionToken>> {
+	signin(
+		email: string,
+		password: string,
+	): Promise<ApiResponse<Session | TotpSessionToken>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'auth.signin',
@@ -39,7 +43,10 @@ export class M1ApiAuth extends M1ApiBase {
 	 * @param code The TOTP code.
 	 * @returns Session.
 	 */
-	totpVerify(totp_session_token: string, code: string): Promise<ApiResponse<Session>> {
+	totpVerify(
+		totp_session_token: string,
+		code: string,
+	): Promise<ApiResponse<Session>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'auth.totpVerify',

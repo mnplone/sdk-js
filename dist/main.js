@@ -1,175 +1,45 @@
 import {
   M1ApiAuth,
-  M1ApiBase,
   M1ApiBots,
   M1ApiData,
   M1ApiFriends,
   M1ApiGchat,
   M1ApiIm,
+  M1ApiInventory,
   M1ApiTrades,
   M1ApiUsers,
-  isRecord,
-  parseWithNotice,
-  valiObjectItemSchema,
-  valiObjectThingSchema,
-  valiObjectUserSchema
-} from "./main-9e024n9a.js";
+  maskString,
+  parseWithNotice
+} from "./main-t1s2m1sq.js";
 
+// src/hooks/session-refresh.ts
+var sessionRefreshHook = async function(options, data) {
+  console.log("refresh_hook", options, data);
+  const { refresh_token } = this.options;
+  if (!refresh_token) {
+    return;
+  }
+  const refresh_response = await this.auth.refresh(refresh_token);
+  if (refresh_response.success !== true) {
+    return;
+  }
+  const new_options = {
+    ...options,
+    data: {
+      ...options.data,
+      access_token: refresh_response.data.access_token
+    }
+  };
+  this.options.access_token = refresh_response.data.access_token;
+  if (refresh_response.data.refresh_token) {
+    this.options.refresh_token = refresh_response.data.refresh_token;
+  }
+  return new_options;
+};
 // src/m1.ts
 import { ExtWSClient } from "@extws/client";
 import * as v from "valibot";
-
-// src/valibot/inventory.ts
-import {
-  object,
-  string,
-  number,
-  array,
-  optional,
-  record
-} from "valibot";
-var valiCollectionSchema = object({
-  collection_id: number(),
-  title: string()
-});
-var valiThingTypeSchema = object({
-  id: number(),
-  title: string()
-});
-var valiQualitySchema = object({
-  id: number(),
-  title: string(),
-  coeff_rent: number()
-});
-var valiEquippedArraySchema = object({
-  item_ids_equipped: array(number())
-});
-var valiEquippedTreeSchema = object({
-  equipped: object({
-    game: record(string(), object({
-      cards: record(string(), array(number())),
-      generator: number(),
-      joke: number()
-    }))
-  })
-});
-var valiResponseInventoryGetBaseSchema = object({
-  count: number(),
-  collections: array(valiCollectionSchema),
-  items: array(valiObjectItemSchema)
-});
-var valiResponseInventoryGetLegacySchema = object({
-  count: number(),
-  collections: array(valiCollectionSchema),
-  things: array(valiObjectThingSchema),
-  thing_types: optional(array(valiThingTypeSchema)),
-  qualities: optional(array(valiQualitySchema))
-});
-var valiResponseInventoryGetWithUserSchema = object({
-  ...valiResponseInventoryGetBaseSchema.entries,
-  user: valiObjectUserSchema
-});
-var valiResponseInventoryGetLegacyWithUserSchema = object({
-  ...valiResponseInventoryGetLegacySchema.entries,
-  user: valiObjectUserSchema
-});
-var valiResponseInventoryGetWithEquippedArraySchema = object({
-  ...valiResponseInventoryGetBaseSchema.entries,
-  ...valiEquippedArraySchema.entries
-});
-var valiResponseInventoryGetWithEquippedTreeSchema = object({
-  ...valiResponseInventoryGetBaseSchema.entries,
-  ...valiEquippedTreeSchema.entries
-});
-var valiResponseInventoryGetWithUserAndEquippedArraySchema = object({
-  ...valiResponseInventoryGetBaseSchema.entries,
-  ...valiEquippedArraySchema.entries,
-  user: valiObjectUserSchema
-});
-var valiResponseInventoryGetWithUserAndEquippedTreeSchema = object({
-  ...valiResponseInventoryGetBaseSchema.entries,
-  ...valiEquippedTreeSchema.entries,
-  user: valiObjectUserSchema
-});
-var valiResponseInventoryGetLegacyWithEquippedArraySchema = object({
-  ...valiResponseInventoryGetLegacySchema.entries,
-  ...valiEquippedArraySchema.entries
-});
-var valiResponseInventoryGetLegacyWithEquippedTreeSchema = object({
-  ...valiResponseInventoryGetLegacySchema.entries,
-  ...valiEquippedTreeSchema.entries
-});
-var valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema = object({
-  ...valiResponseInventoryGetLegacySchema.entries,
-  ...valiEquippedArraySchema.entries,
-  user: valiObjectUserSchema
-});
-var valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema = object({
-  ...valiResponseInventoryGetLegacySchema.entries,
-  ...valiEquippedTreeSchema.entries,
-  user: valiObjectUserSchema
-});
-
-// src/api/inventory.ts
-class M1ApiInventory extends M1ApiBase {
-  get(arg0, arg1) {
-    const user_id = typeof arg0 === "number" || typeof arg0 === "string" ? arg0 : undefined;
-    const options = isRecord(arg0) ? arg0 : arg1;
-    const add_legacy = options?.add_legacy ?? true;
-    const add_user = options?.add_user ?? false;
-    const add_equipped = options?.add_equipped;
-    const data = {
-      user_id,
-      include_stock: options?.include_stock ? 1 : undefined,
-      order: options?.order,
-      count: options?.count,
-      add_user: add_user ? 1 : undefined,
-      add_legacy: add_legacy ? 1 : undefined,
-      add_equipped,
-      shrink: options?.shrink ? 1 : undefined
-    };
-    let valiResponseSchema;
-    if (add_legacy) {
-      if (add_user) {
-        if (add_equipped === "array") {
-          valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema;
-        } else if (add_equipped === "tree") {
-          valiResponseSchema = valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema;
-        } else {
-          valiResponseSchema = valiResponseInventoryGetLegacyWithUserSchema;
-        }
-      } else if (add_equipped === "array") {
-        valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedArraySchema;
-      } else if (add_equipped === "tree") {
-        valiResponseSchema = valiResponseInventoryGetLegacyWithEquippedTreeSchema;
-      } else {
-        valiResponseSchema = valiResponseInventoryGetLegacySchema;
-      }
-    } else if (add_user) {
-      if (add_equipped === "array") {
-        valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedArraySchema;
-      } else if (add_equipped === "tree") {
-        valiResponseSchema = valiResponseInventoryGetWithUserAndEquippedTreeSchema;
-      } else {
-        valiResponseSchema = valiResponseInventoryGetWithUserSchema;
-      }
-    } else if (add_equipped === "array") {
-      valiResponseSchema = valiResponseInventoryGetWithEquippedArraySchema;
-    } else if (add_equipped === "tree") {
-      valiResponseSchema = valiResponseInventoryGetWithEquippedTreeSchema;
-    } else {
-      valiResponseSchema = valiResponseInventoryGetBaseSchema;
-    }
-    return this.baseClient.callMethod({
-      http_method: "GET",
-      api_method: "inventory.get",
-      data,
-      valiResponseSchema
-    });
-  }
-}
-
-// src/m1.ts
+var IS_TEST = false;
 var apiResponseParser = v.parser(v.object({
   code: v.pipe(v.number(), v.minValue(0))
 }));
@@ -193,10 +63,7 @@ class M1 {
     };
     const { websocket } = this.options;
     if (websocket) {
-      const {
-        access_token,
-        headers
-      } = this.options;
+      const { access_token, headers } = this.options;
       const ws_url = new URL("/ws", `wss://${this.options.hostname}`);
       if (access_token) {
         ws_url.searchParams.set("access_token", access_token);
@@ -238,8 +105,19 @@ class M1 {
     if (options.http_method !== "GET") {
       request_init.body = body;
     }
+    const request_options = {
+      method: options.http_method,
+      api_method: options.api_method,
+      data: request_data
+    };
+    if (request_options.data.access_token && typeof request_options.data.access_token === "string") {
+      request_options.data.access_token = maskString(request_options.data.access_token);
+    }
     const response = await fetch(url, request_init);
     const response_data = await response.json();
+    if (IS_TEST && response_data.success === false) {
+      console.dir(response_data, { depth: null });
+    }
     const { code } = apiResponseParser(response_data);
     if (code === 0) {
       const { data: data2 } = parseWithNotice(v.object({
@@ -247,15 +125,13 @@ class M1 {
       }), response_data);
       return {
         success: true,
-        data: data2
+        data: data2,
+        request: request_options
       };
     }
-    const {
-      description,
-      data
-    } = v.parse(v.object({
+    const { description, data } = v.parse(v.object({
       description: v.optional(v.string()),
-      data: options.valiErrorDataSchema ?? v.never()
+      data: v.optional(options.valiErrorDataSchema ?? v.unknown())
     }), response_data);
     if (this.options.hooks) {
       const hook = this.options.hooks[code];
@@ -270,34 +146,11 @@ class M1 {
       success: false,
       code,
       description,
-      data
+      data,
+      request: request_options
     };
   }
 }
-// src/hooks/session-refresh.ts
-var sessionRefreshHook = async function(options, data) {
-  console.log("refresh_hook", options, data);
-  const { refresh_token } = this.options;
-  if (!refresh_token) {
-    return;
-  }
-  const refresh_response = await this.auth.refresh(refresh_token);
-  if (refresh_response.success !== true) {
-    return;
-  }
-  const new_options = {
-    ...options,
-    data: {
-      ...options.data,
-      access_token: refresh_response.data.access_token
-    }
-  };
-  this.options.access_token = refresh_response.data.access_token;
-  if (refresh_response.data.refresh_token) {
-    this.options.refresh_token = refresh_response.data.refresh_token;
-  }
-  return new_options;
-};
 export {
   sessionRefreshHook,
   M1

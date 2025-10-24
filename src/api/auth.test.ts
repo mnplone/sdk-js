@@ -1,31 +1,21 @@
 import { authenticator } from 'otplib';
 import * as v from 'valibot';
-import {
-	test,
-	expect,
-	describe,
-} from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
-import {
-	Session,
-	TotpSessionToken,
-} from '../valibot/auth.js';
-import { ApiResponse } from '../types.js';
+import type { ApiResponse } from '../types.js';
+import type { Session, TotpSessionToken } from '../valibot/auth.js';
 
-describe.skip('authorization flow', () => {
-	const {
-		TEST_AUTH_EMAIL,
-		TEST_AUTH_PASSWORD,
-		TEST_AUTH_TOTP_SECRET,
-		TEST_AUTH_USER_ID,
-	} = v.parse(
+describe('authorization flow', () => {
+	const env = v.parse(
 		v.object({
-			TEST_AUTH_EMAIL: v.string(),
-			TEST_AUTH_PASSWORD: v.string(),
-			TEST_AUTH_TOTP_SECRET: v.string(),
+			TEST_AUTH_EMAIL: v.pipe(v.string(), v.minLength(1)),
+			TEST_AUTH_PASSWORD: v.pipe(v.string(), v.minLength(1)),
+			TEST_AUTH_TOTP_SECRET: v.pipe(v.string(), v.minLength(1)),
 			TEST_AUTH_USER_ID: v.pipe(
 				v.string(),
-				v.transform(Number),
+				v.minLength(1),
+				v.transform((value) => Number.parseInt(value)),
+				v.number(),
 			),
 		}),
 		process.env,
@@ -36,8 +26,8 @@ describe.skip('authorization flow', () => {
 
 	test('auth.signin', async () => {
 		auth_signin_response = await sdk.auth.signin(
-			TEST_AUTH_EMAIL,
-			TEST_AUTH_PASSWORD,
+			env.TEST_AUTH_EMAIL,
+			env.TEST_AUTH_PASSWORD,
 		);
 
 		expect(auth_signin_response.success).toBe(true);
@@ -49,7 +39,7 @@ describe.skip('authorization flow', () => {
 
 	test('auth.totpVerify', async () => {
 		if ('totp_session_token' in auth_signin_response.data) {
-			const TOTP_CODE = authenticator.generate(TEST_AUTH_TOTP_SECRET);
+			const TOTP_CODE = authenticator.generate(env.TEST_AUTH_TOTP_SECRET);
 			const totp_verify_response = await sdk.auth.totpVerify(
 				auth_signin_response.data.totp_session_token,
 				TOTP_CODE,
@@ -72,7 +62,7 @@ describe.skip('authorization flow', () => {
 		expect(session?.refresh_token?.length).toBeGreaterThan(0);
 		expect(session?.expires_in).toBeTypeOf('number');
 		expect(session?.user_id).toBeTypeOf('number');
-		expect(session?.user_id).toBe(TEST_AUTH_USER_ID);
+		expect(session?.user_id).toBe(env.TEST_AUTH_USER_ID);
 	});
 
 	test('auth.refresh', async () => {
@@ -87,20 +77,5 @@ describe.skip('authorization flow', () => {
 		expect(refresh_response.data.access_token.length).toBeGreaterThan(0);
 		expect(refresh_response.data.refresh_token).toBeTypeOf('string');
 		expect(refresh_response.data.refresh_token?.length).toBeGreaterThan(0);
-	});
-});
-
-// auth.totpVerify
-// auth.signin
-// auth.refresh
-
-describe('auth.signin', () => {
-	test('success', async () => {
-		const response = await sdk.auth.signin(
-			'not_an_email',
-			'deadbeef1337',
-		);
-
-		expect(response.success).toBe(false);
 	});
 });

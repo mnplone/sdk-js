@@ -14,13 +14,13 @@ export const valiObjectPropertyTitleSchema = object({
 	id: number(),
 	title: string(),
 });
-export type ObjectPropertyTitle = InferOutput<typeof valiObjectPropertyTitleSchema>;
+export type ObjectPropertyTitle = InferOutput<
+	typeof valiObjectPropertyTitleSchema
+>;
 
 export const valiObjectCollectionSchema = object({
 	collection_id: number(),
-	id: optional(
-		number(),
-	),
+	id: optional(number()),
 	title: string(),
 });
 export type ObjectCollection = InferOutput<typeof valiObjectCollectionSchema>;
@@ -55,4 +55,6 @@ export const valiResponseDataSearchItemProtosSchema = pipe(
 	}),
 );
 
-export type ResponseDataSearchItemProtos = InferOutput<typeof valiResponseDataSearchItemProtosSchema>;
+export type ResponseDataSearchItemProtos = InferOutput<
+	typeof valiResponseDataSearchItemProtosSchema
+>;

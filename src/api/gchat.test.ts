@@ -1,8 +1,4 @@
-import {
-	test,
-	expect,
-	describe,
-} from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 import { isRecord } from '../utils.js';
 
@@ -26,4 +22,3 @@ describe('gchat.get', () => {
 		// expect(response.data.msg_id).toBeTypeOf('number');
 	});
 });
-

@@ -6,18 +6,25 @@ import {
   M1ApiFriends,
   M1ApiGchat,
   M1ApiIm,
+  M1ApiInventory,
   M1ApiTrades,
   M1ApiUsers,
+  valiObjectActiveUserSchema,
+  valiObjectActiveUserShortSchema,
+  valiObjectCollectionSchema,
   valiObjectDialogSchema,
   valiObjectGchatMessageAdditionalDataSchema,
   valiObjectGchatMessageBaseSchema,
   valiObjectGchatMessageSchema,
+  valiObjectInactiveUserSchema,
   valiObjectItemProtoLegacySchema,
   valiObjectItemProtoSchema,
   valiObjectItemSchema,
   valiObjectItemVariantSchema,
   valiObjectMessageSchema,
   valiObjectNewTradeSchema,
+  valiObjectPropertyTitleSchema,
+  valiObjectQualitySchema,
   valiObjectSessionSchema,
   valiObjectThingPrototypeSchema,
   valiObjectThingSchema,
@@ -26,6 +33,7 @@ import {
   valiObjectTradeSchema,
   valiObjectUserSchema,
   valiObjectUserShortSchema,
+  valiResponseDataSearchItemProtosSchema,
   valiResponseFriendsGetBaseSchema,
   valiResponseFriendsGetRequestsSchema,
   valiResponseFriendsGetRequestsShortSchema,
@@ -37,8 +45,21 @@ import {
   valiResponseImDialogsGetSchema,
   valiResponseImHistoryGetSchema,
   valiResponseImSendSchema,
+  valiResponseInventoryCraftSchema,
+  valiResponseInventoryGetBaseSchema,
+  valiResponseInventoryGetLegacySchema,
+  valiResponseInventoryGetLegacyWithEquippedArraySchema,
+  valiResponseInventoryGetLegacyWithEquippedTreeSchema,
+  valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema,
+  valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema,
+  valiResponseInventoryGetLegacyWithUserSchema,
+  valiResponseInventoryGetWithEquippedArraySchema,
+  valiResponseInventoryGetWithEquippedTreeSchema,
+  valiResponseInventoryGetWithUserAndEquippedArraySchema,
+  valiResponseInventoryGetWithUserAndEquippedTreeSchema,
+  valiResponseInventoryGetWithUserSchema,
   valiResponseTotpSessionTokenSchema
-} from "./main-9e024n9a.js";
+} from "./main-t1s2m1sq.js";
 // src/api/oauth.ts
 class M1ApiOauth extends M1ApiBase {
   exchangeCode(options) {
@@ -50,29 +71,21 @@ class M1ApiOauth extends M1ApiBase {
     });
   }
 }
-// src/valibot/data.ts
-import {
-  number,
-  object,
-  optional,
-  string
-} from "valibot";
-var valiObjectPropertyTitleSchema = object({
-  id: number(),
-  title: string()
-});
-var valiObjectCollectionSchema = object({
-  collection_id: number(),
-  id: optional(number()),
-  title: string()
-});
-var valiObjectQualitySchema = object({
-  coeff_rent: number(),
-  color: string(),
-  ...valiObjectPropertyTitleSchema.entries
-});
 export {
   valiResponseTotpSessionTokenSchema,
+  valiResponseInventoryGetWithUserSchema,
+  valiResponseInventoryGetWithUserAndEquippedTreeSchema,
+  valiResponseInventoryGetWithUserAndEquippedArraySchema,
+  valiResponseInventoryGetWithEquippedTreeSchema,
+  valiResponseInventoryGetWithEquippedArraySchema,
+  valiResponseInventoryGetLegacyWithUserSchema,
+  valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema,
+  valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema,
+  valiResponseInventoryGetLegacyWithEquippedTreeSchema,
+  valiResponseInventoryGetLegacyWithEquippedArraySchema,
+  valiResponseInventoryGetLegacySchema,
+  valiResponseInventoryGetBaseSchema,
+  valiResponseInventoryCraftSchema,
   valiResponseImSendSchema,
   valiResponseImHistoryGetSchema,
   valiResponseImDialogsGetSchema,
@@ -84,6 +97,7 @@ export {
   valiResponseFriendsGetRequestsShortSchema,
   valiResponseFriendsGetRequestsSchema,
   valiResponseFriendsGetBaseSchema,
+  valiResponseDataSearchItemProtosSchema,
   valiObjectUserShortSchema,
   valiObjectUserSchema,
   valiObjectTradeSchema,
@@ -100,14 +114,18 @@ export {
   valiObjectItemSchema,
   valiObjectItemProtoSchema,
   valiObjectItemProtoLegacySchema,
+  valiObjectInactiveUserSchema,
   valiObjectGchatMessageSchema,
   valiObjectGchatMessageBaseSchema,
   valiObjectGchatMessageAdditionalDataSchema,
   valiObjectDialogSchema,
   valiObjectCollectionSchema,
+  valiObjectActiveUserShortSchema,
+  valiObjectActiveUserSchema,
   M1ApiUsers,
   M1ApiTrades,
   M1ApiOauth,
+  M1ApiInventory,
   M1ApiIm,
   M1ApiGchat,
   M1ApiFriends,

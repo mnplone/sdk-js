@@ -6,10 +6,7 @@ import {
 	object,
 	optional,
 } from 'valibot';
-import {
-	valiObjectItemSchema,
-	valiObjectThingSchema,
-} from './items.js';
+import { valiObjectItemSchema, valiObjectThingSchema } from './items.js';
 import { valiObjectUserSchema } from './users.js';
 
 export const valiObjectTradeIdSchema = object({
@@ -47,9 +44,7 @@ export type ObjectNewTrade = InferOutput<typeof valiObjectNewTradeSchema>;
 export const valiObjectTradeListSchema = object({
 	collections: array(number()),
 	qualities: array(number()),
-	item_ids_equipped: optional(
-		array(number()),
-	),
+	item_ids_equipped: optional(array(number())),
 	thing_types: array(number()),
 	trades: array(valiObjectTradeSchema),
 	user_data: array(valiObjectUserSchema),

@@ -1,9 +1,6 @@
 import { M1ApiBase } from './base.js';
 import { type ApiResponse } from '../types.js';
-import {
-	type Session,
-	valiObjectSessionSchema,
-} from '../valibot/auth.js';
+import { type Session, valiObjectSessionSchema } from '../valibot/auth.js';
 
 export class M1ApiOauth extends M1ApiBase {
 	/**
@@ -16,10 +13,10 @@ export class M1ApiOauth extends M1ApiBase {
 	 * @returns Session object
 	 */
 	exchangeCode(options: {
-		app_id: number,
-		app_secret: string,
-		code: string,
-		redirect_uri: string,
+		app_id: number;
+		app_secret: string;
+		code: string;
+		redirect_uri: string;
 	}): Promise<ApiResponse<Session>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',

@@ -1,7 +1,4 @@
-import type {
-	M1,
-	CallMethodOptions,
-} from './m1.js';
+import type { M1, CallMethodOptions } from './m1.js';
 import type { ValiBaseSchema } from './types.js';
 
 export type M1ApiResponseHook = <
@@ -10,7 +7,9 @@ export type M1ApiResponseHook = <
 >(
 	this: M1,
 	options: CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema>,
-	data: Record<string, unknown>
-) => Promise<CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined>;
+	data: Record<string, unknown>,
+) => Promise<
+	CallMethodOptions<ValiResponseSchema, ValiErrorDataSchema> | undefined
+>;
 
 export type M1ApiResponseHooks = Record<number, M1ApiResponseHook>;

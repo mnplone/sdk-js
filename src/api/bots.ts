@@ -1,12 +1,6 @@
-import {
-	object,
-	number,
-} from 'valibot';
-import {
-	valiObjectSessionSchema,
-	type Session,
-} from '../valibot/auth.js';
+import * as v from 'valibot';
 import { type ApiResponse } from '../types.js';
+import { type Session, valiObjectSessionSchema } from '../valibot/auth.js';
 import { M1ApiBase } from './base.js';
 
 export class M1ApiBots extends M1ApiBase {
@@ -22,8 +16,8 @@ export class M1ApiBots extends M1ApiBase {
 			data: {
 				nick,
 			},
-			valiResponseSchema: object({
-				user_id: number(),
+			valiResponseSchema: v.object({
+				user_id: v.number(),
 			}),
 		});
 	}
@@ -35,20 +29,13 @@ export class M1ApiBots extends M1ApiBase {
 	 * @returns -
 	 */
 	getToken(user_id: number, ip?: string): Promise<ApiResponse<Session>> {
-		const data: {
-			user_id: number,
-			ip?: string,
-		} = {
-			user_id,
-		};
-		if (ip !== undefined) {
-			data.ip = ip;
-		}
-
 		return this.baseClient.callMethod({
 			http_method: 'POST',
 			api_method: 'bots.getToken',
-			data,
+			data: {
+				user_id,
+				ip,
+			},
 			valiResponseSchema: valiObjectSessionSchema,
 		});
 	}
