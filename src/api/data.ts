@@ -136,7 +136,11 @@ export class M1ApiData extends M1ApiBase {
 					),
 		});
 	}
-
+	/**
+	 * Return item prototypes by their properties.
+	 * @param options
+	 * @returns -
+	 */
 	searchItemProtos(options: {
 		type?: number[];
 		quality_id?: number[];
