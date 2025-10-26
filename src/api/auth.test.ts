@@ -1,6 +1,6 @@
+import { describe, expect, test } from 'bun:test';
 import { authenticator } from 'otplib';
 import * as v from 'valibot';
-import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 import type { ApiResponse } from '../types.js';
 import type { Session, TotpSessionToken } from '../valibot/auth.js';

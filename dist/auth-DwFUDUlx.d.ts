@@ -1,5 +1,4 @@
 import * as v from 'valibot';
-import { InferOutput } from 'valibot';
 import { ExtWSClient } from '@extws/client';
 import { If } from 'type-fest';
 
@@ -457,6 +456,17 @@ declare class M1ApiData extends M1ApiBase {
         add_legacy: true;
         add_metadata: false;
     }): Promise<ApiResponse<Map<number, ItemProto & ThingPrototype>>>;
+    /**
+     * Return item prototypes by their properties.
+     * @param options =
+     * @param options.type -
+     * @param options.quality_id -
+     * @param options.collection_id -
+     * @param options.group_id -
+     * @param options.offset -
+     * @param options.count -
+     * @returns -
+     */
     searchItemProtos(options: {
         type?: number[];
         quality_id?: number[];
@@ -1166,7 +1176,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ResponseFriendsGetBase = InferOutput<typeof valiResponseFriendsGetBaseSchema>;
+type ResponseFriendsGetBase = v.InferOutput<typeof valiResponseFriendsGetBaseSchema>;
 declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
     readonly user: v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
@@ -2248,7 +2258,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ResponseFriendsGetWithUser = InferOutput<typeof valiResponseFriendsGetWithUserSchema>;
+type ResponseFriendsGetWithUser = v.InferOutput<typeof valiResponseFriendsGetWithUserSchema>;
 declare const valiResponseFriendsGetShortSchema: v.ObjectSchema<{
     readonly count: v.NumberSchema<undefined>;
     readonly friends: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
@@ -2345,7 +2355,7 @@ declare const valiResponseFriendsGetShortSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ResponseFriendsGetShort = InferOutput<typeof valiResponseFriendsGetShortSchema>;
+type ResponseFriendsGetShort = v.InferOutput<typeof valiResponseFriendsGetShortSchema>;
 declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
     readonly user: v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly user_id: v.NumberSchema<undefined>;
@@ -2535,7 +2545,7 @@ declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ResponseFriendsGetShortWithUser = InferOutput<typeof valiResponseFriendsGetShortWithUserSchema>;
+type ResponseFriendsGetShortWithUser = v.InferOutput<typeof valiResponseFriendsGetShortWithUserSchema>;
 type ResponseFriendsGet<S extends boolean, U extends boolean> = If<S, If<U, ResponseFriendsGetShortWithUser, ResponseFriendsGetShort>, If<U, ResponseFriendsGetWithUser, ResponseFriendsGetBase>>;
 declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
     readonly count: v.NumberSchema<undefined>;
@@ -3079,7 +3089,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ResponseFriendsGetRequests = InferOutput<typeof valiResponseFriendsGetRequestsSchema>;
+type ResponseFriendsGetRequests = v.InferOutput<typeof valiResponseFriendsGetRequestsSchema>;
 declare const valiResponseFriendsGetRequestsShortSchema: v.ObjectSchema<{
     readonly count: v.NumberSchema<undefined>;
     readonly requests: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
@@ -3176,7 +3186,7 @@ declare const valiResponseFriendsGetRequestsShortSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ResponseFriendsGetRequestsShort = InferOutput<typeof valiResponseFriendsGetRequestsShortSchema>;
+type ResponseFriendsGetRequestsShort = v.InferOutput<typeof valiResponseFriendsGetRequestsShortSchema>;
 
 type FriendsGetOptions<OS extends boolean, OU extends boolean> = {
     online?: boolean;
@@ -3499,6 +3509,7 @@ declare class M1ApiGchat extends M1ApiBase {
 declare const valiResponseImSendSchema: v.ObjectSchema<{
     readonly msg_id: v.NumberSchema<undefined>;
 }, undefined>;
+type ResponseImSend = v.InferOutput<typeof valiResponseImSendSchema>;
 declare const valiObjectMessageSchema: v.ObjectSchema<{
     readonly msg_id: v.NumberSchema<undefined>;
     readonly is_read: v.NumberSchema<undefined>;
@@ -3507,6 +3518,7 @@ declare const valiObjectMessageSchema: v.ObjectSchema<{
     readonly type: v.NumberSchema<undefined>;
     readonly user_id: v.NumberSchema<undefined>;
 }, undefined>;
+type Message = v.InferOutput<typeof valiObjectMessageSchema>;
 declare const valiObjectDialogSchema: v.ObjectSchema<{
     readonly message: v.ObjectSchema<{
         readonly msg_id: v.NumberSchema<undefined>;
@@ -3519,6 +3531,7 @@ declare const valiObjectDialogSchema: v.ObjectSchema<{
     readonly new_counter: v.NumberSchema<undefined>;
     readonly user_id: v.NumberSchema<undefined>;
 }, undefined>;
+type Dialog = v.InferOutput<typeof valiObjectDialogSchema>;
 declare const valiResponseImDialogsGetSchema: v.ObjectSchema<{
     readonly dialogs: v.ArraySchema<v.ObjectSchema<{
         readonly message: v.ObjectSchema<{
@@ -3650,6 +3663,7 @@ declare const valiResponseImDialogsGetSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
+type ResponseImDialogsGet = v.InferOutput<typeof valiResponseImDialogsGetSchema>;
 declare const valiResponseImHistoryGetSchema: v.ObjectSchema<{
     readonly messages: v.ArraySchema<v.ObjectSchema<{
         readonly msg_id: v.NumberSchema<undefined>;
@@ -3777,11 +3791,7 @@ declare const valiResponseImHistoryGetSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ResponseImSend = InferOutput<typeof valiResponseImSendSchema>;
-type ResponseImDialogsGet = InferOutput<typeof valiResponseImDialogsGetSchema>;
-type ResponseImHistoryGet = InferOutput<typeof valiResponseImHistoryGetSchema>;
-type Dialog = InferOutput<typeof valiObjectDialogSchema>;
-type Message = InferOutput<typeof valiObjectMessageSchema>;
+type ResponseImHistoryGet = v.InferOutput<typeof valiResponseImHistoryGetSchema>;
 
 type ImSendOptions = {
     send_id?: string;
@@ -8178,7 +8188,7 @@ declare class M1ApiInventory extends M1ApiBase {
 declare const valiObjectTradeIdSchema: v.ObjectSchema<{
     readonly trade_id: v.NumberSchema<undefined>;
 }, undefined>;
-type ObjectTradeId = InferOutput<typeof valiObjectTradeIdSchema>;
+type ObjectTradeId = v.InferOutput<typeof valiObjectTradeIdSchema>;
 declare const valiObjectTradeSchema: v.ObjectSchema<{
     readonly create_time: v.NumberSchema<undefined>;
     readonly reaction_time: v.NullableSchema<v.NumberSchema<undefined>, undefined>;
@@ -8301,7 +8311,7 @@ declare const valiObjectTradeSchema: v.ObjectSchema<{
     readonly user_id_from: v.NumberSchema<undefined>;
     readonly user_id_to: v.NumberSchema<undefined>;
 }, undefined>;
-type ObjectTrade = InferOutput<typeof valiObjectTradeSchema>;
+type ObjectTrade = v.InferOutput<typeof valiObjectTradeSchema>;
 declare const valiObjectNewTradeSchema: v.ObjectSchema<{
     readonly trade_id: v.NumberSchema<undefined>;
     readonly status: v.NumberSchema<undefined>;
@@ -8456,7 +8466,7 @@ declare const valiObjectNewTradeSchema: v.ObjectSchema<{
         }, undefined>, undefined>;
     }, undefined>;
 }, undefined>;
-type ObjectNewTrade = InferOutput<typeof valiObjectNewTradeSchema>;
+type ObjectNewTrade = v.InferOutput<typeof valiObjectNewTradeSchema>;
 declare const valiObjectTradeListSchema: v.ObjectSchema<{
     readonly collections: v.ArraySchema<v.NumberSchema<undefined>, undefined>;
     readonly qualities: v.ArraySchema<v.NumberSchema<undefined>, undefined>;
@@ -9124,21 +9134,58 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
-type ObjectTradeList = InferOutput<typeof valiObjectTradeListSchema>;
+type ObjectTradeList = v.InferOutput<typeof valiObjectTradeListSchema>;
 
 declare class M1ApiTrades extends M1ApiBase {
+    /**
+     * Create trade.
+     * @param options -
+     * @param options.item_ids_offer -
+     * @param options.item_ids_request -
+     * @param options.user_id -
+     * @returns =
+     */
     create(options: {
         item_ids_offer?: number[];
         item_ids_request?: number[];
         user_id: number;
     }): Promise<ApiResponse<ObjectTradeId>>;
+    /**
+     * Accept incoming trade.
+     * @param trade_id -
+     * @returns =
+     */
     accept(trade_id: number): Promise<ApiResponse<void>>;
+    /**
+     * Decline incoming trade.
+     * @param trade_id -
+     * @returns =
+     */
     decline(trade_id: number): Promise<ApiResponse<void>>;
+    /**
+     * Revoke outgoing trade.
+     * @param trade_id -
+     * @returns =
+     */
     revoke(trade_id: number): Promise<ApiResponse<void>>;
+    /**
+     * Returns list of incoming trades.
+     * @param options -
+     * @param options.offset -
+     * @param options.count -
+     * @returns =
+     */
     getIncoming(options: {
         offset?: number;
         count?: number;
     }): Promise<ApiResponse<ObjectTradeList>>;
+    /**
+     * Returns list of outgoing trades.
+     * @param options -
+     * @param options.offset -
+     * @param options.count -
+     * @returns =
+     */
     getOutgoing(options: {
         offset?: number;
         count?: number;
@@ -9155,7 +9202,7 @@ declare class M1ApiTrades extends M1ApiBase {
         count?: number;
     }): Promise<ApiResponse<ObjectTradeList>>;
     /**
-     * Get the history of trades.
+     * Get the history of trades specified user.
      * @param user_id - The user ID.
      * @param options -
      * @param options.count - The count of trades to return.
@@ -10582,4 +10629,4 @@ declare class M1ApiAuth extends M1ApiBase {
     refresh(refresh_token: string): Promise<ApiResponse<Session>>;
 }
 
-export { valiResponseInventoryGetLegacySchema as $, type ApiResponse as A, valiObjectGchatMessageAdditionalDataSchema as B, type CallMethodOptions as C, valiObjectGchatMessageSchema as D, valiResponseGchatGetSchema as E, type ResponseGchatGet as F, type GchatMessage as G, valiResponseGchatSendSchema as H, type ResponseGchatSend as I, valiResponseImSendSchema as J, valiObjectMessageSchema as K, valiObjectDialogSchema as L, M1ApiBase as M, valiResponseImDialogsGetSchema as N, valiResponseImHistoryGetSchema as O, type ResponseImSend as P, type ResponseImDialogsGet as Q, type RequestOptions as R, type Session as S, type TotpSessionToken as T, type ResponseImHistoryGet as U, type Dialog as V, type Message as W, valiResponseInventoryCraftSchema as X, type ResponseInventoryCraft as Y, valiResponseInventoryGetBaseSchema as Z, type ResponseInventoryGetBase as _, M1ApiAuth as a, type ResponseInventoryGetLegacy as a0, valiResponseInventoryGetWithUserSchema as a1, type ResponseInventoryGetWithUser as a2, valiResponseInventoryGetLegacyWithUserSchema as a3, type ResponseInventoryGetLegacyWithUser as a4, valiResponseInventoryGetWithEquippedArraySchema as a5, type ResponseInventoryGetWithEquippedArray as a6, valiResponseInventoryGetWithEquippedTreeSchema as a7, type ResponseInventoryGetWithEquippedTree as a8, valiResponseInventoryGetWithUserAndEquippedArraySchema as a9, valiObjectTradeSchema as aA, type ObjectTrade as aB, valiObjectNewTradeSchema as aC, type ObjectNewTrade as aD, valiObjectTradeListSchema as aE, type ObjectTradeList as aF, valiObjectActiveUserShortSchema as aG, valiObjectInactiveUserSchema as aH, valiObjectActiveUserSchema as aI, valiObjectUserShortSchema as aJ, valiObjectUserSchema as aK, type User as aL, type UserShort as aM, type M1ApiResponseHook as aN, M1 as aO, type ResponseInventoryGetWithUserAndEquippedArray as aa, valiResponseInventoryGetWithUserAndEquippedTreeSchema as ab, type ResponseInventoryGetWithUserAndEquippedTree as ac, valiResponseInventoryGetLegacyWithEquippedArraySchema as ad, type ResponseInventoryGetLegacyWithEquippedArray as ae, valiResponseInventoryGetLegacyWithEquippedTreeSchema as af, type ResponseInventoryGetLegacyWithEquippedTree as ag, valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema as ah, type ResponseInventoryGetLegacyWithUserAndEquippedArray as ai, valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema as aj, type ResponseInventoryGetLegacyWithUserAndEquippedTree as ak, type ResponseInventoryGet as al, valiObjectItemVariantSchema as am, type ItemVariant as an, valiObjectThingPrototypeSchema as ao, type ThingPrototype as ap, valiObjectThingSchema as aq, type Thing as ar, valiObjectItemProtoSchema as as, type ItemProto as at, type ItemShort as au, valiObjectItemSchema as av, type Item as aw, valiObjectItemProtoLegacySchema as ax, valiObjectTradeIdSchema as ay, type ObjectTradeId as az, M1ApiBots as b, M1ApiData as c, M1ApiFriends as d, M1ApiGchat as e, M1ApiIm as f, M1ApiInventory as g, M1ApiTrades as h, M1ApiUsers as i, type CallMethodResponse as j, valiResponseTotpSessionTokenSchema as k, valiResponseFriendsGetBaseSchema as l, type ResponseFriendsGetBase as m, valiResponseFriendsGetWithUserSchema as n, type ResponseFriendsGetWithUser as o, valiResponseFriendsGetShortSchema as p, type ResponseFriendsGetShort as q, valiResponseFriendsGetShortWithUserSchema as r, type ResponseFriendsGetShortWithUser as s, type ResponseFriendsGet as t, valiResponseFriendsGetRequestsSchema as u, valiObjectSessionSchema as v, type ResponseFriendsGetRequests as w, valiResponseFriendsGetRequestsShortSchema as x, type ResponseFriendsGetRequestsShort as y, valiObjectGchatMessageBaseSchema as z };
+export { valiResponseInventoryGetLegacySchema as $, type ApiResponse as A, valiObjectGchatMessageAdditionalDataSchema as B, type CallMethodOptions as C, valiObjectGchatMessageSchema as D, valiResponseGchatGetSchema as E, type ResponseGchatGet as F, type GchatMessage as G, valiResponseGchatSendSchema as H, type ResponseGchatSend as I, valiResponseImSendSchema as J, type ResponseImSend as K, valiObjectMessageSchema as L, M1ApiBase as M, type Message as N, valiObjectDialogSchema as O, type Dialog as P, valiResponseImDialogsGetSchema as Q, type RequestOptions as R, type Session as S, type TotpSessionToken as T, type ResponseImDialogsGet as U, valiResponseImHistoryGetSchema as V, type ResponseImHistoryGet as W, valiResponseInventoryCraftSchema as X, type ResponseInventoryCraft as Y, valiResponseInventoryGetBaseSchema as Z, type ResponseInventoryGetBase as _, M1ApiAuth as a, type ResponseInventoryGetLegacy as a0, valiResponseInventoryGetWithUserSchema as a1, type ResponseInventoryGetWithUser as a2, valiResponseInventoryGetLegacyWithUserSchema as a3, type ResponseInventoryGetLegacyWithUser as a4, valiResponseInventoryGetWithEquippedArraySchema as a5, type ResponseInventoryGetWithEquippedArray as a6, valiResponseInventoryGetWithEquippedTreeSchema as a7, type ResponseInventoryGetWithEquippedTree as a8, valiResponseInventoryGetWithUserAndEquippedArraySchema as a9, valiObjectTradeSchema as aA, type ObjectTrade as aB, valiObjectNewTradeSchema as aC, type ObjectNewTrade as aD, valiObjectTradeListSchema as aE, type ObjectTradeList as aF, valiObjectActiveUserShortSchema as aG, valiObjectInactiveUserSchema as aH, valiObjectActiveUserSchema as aI, valiObjectUserShortSchema as aJ, valiObjectUserSchema as aK, type User as aL, type UserShort as aM, type M1ApiResponseHook as aN, M1 as aO, type ResponseInventoryGetWithUserAndEquippedArray as aa, valiResponseInventoryGetWithUserAndEquippedTreeSchema as ab, type ResponseInventoryGetWithUserAndEquippedTree as ac, valiResponseInventoryGetLegacyWithEquippedArraySchema as ad, type ResponseInventoryGetLegacyWithEquippedArray as ae, valiResponseInventoryGetLegacyWithEquippedTreeSchema as af, type ResponseInventoryGetLegacyWithEquippedTree as ag, valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema as ah, type ResponseInventoryGetLegacyWithUserAndEquippedArray as ai, valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema as aj, type ResponseInventoryGetLegacyWithUserAndEquippedTree as ak, type ResponseInventoryGet as al, valiObjectItemVariantSchema as am, type ItemVariant as an, valiObjectThingPrototypeSchema as ao, type ThingPrototype as ap, valiObjectThingSchema as aq, type Thing as ar, valiObjectItemProtoSchema as as, type ItemProto as at, type ItemShort as au, valiObjectItemSchema as av, type Item as aw, valiObjectItemProtoLegacySchema as ax, valiObjectTradeIdSchema as ay, type ObjectTradeId as az, M1ApiBots as b, M1ApiData as c, M1ApiFriends as d, M1ApiGchat as e, M1ApiIm as f, M1ApiInventory as g, M1ApiTrades as h, M1ApiUsers as i, type CallMethodResponse as j, valiResponseTotpSessionTokenSchema as k, valiResponseFriendsGetBaseSchema as l, type ResponseFriendsGetBase as m, valiResponseFriendsGetWithUserSchema as n, type ResponseFriendsGetWithUser as o, valiResponseFriendsGetShortSchema as p, type ResponseFriendsGetShort as q, valiResponseFriendsGetShortWithUserSchema as r, type ResponseFriendsGetShortWithUser as s, type ResponseFriendsGet as t, valiResponseFriendsGetRequestsSchema as u, valiObjectSessionSchema as v, type ResponseFriendsGetRequests as w, valiResponseFriendsGetRequestsShortSchema as x, type ResponseFriendsGetRequestsShort as y, valiObjectGchatMessageBaseSchema as z };

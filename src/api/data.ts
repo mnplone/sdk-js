@@ -136,9 +136,16 @@ export class M1ApiData extends M1ApiBase {
 					),
 		});
 	}
+
 	/**
 	 * Return item prototypes by their properties.
-	 * @param options
+	 * @param options =
+	 * @param options.type -
+	 * @param options.quality_id -
+	 * @param options.collection_id -
+	 * @param options.group_id -
+	 * @param options.offset -
+	 * @param options.count -
 	 * @returns -
 	 */
 	searchItemProtos(options: {

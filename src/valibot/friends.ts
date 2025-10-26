@@ -1,36 +1,36 @@
 import type { If } from 'type-fest';
-import { type InferOutput, number, object, array } from 'valibot';
+import * as v from 'valibot';
 import { valiObjectUserSchema, valiObjectUserShortSchema } from './users.js';
 
-export const valiResponseFriendsGetBaseSchema = object({
-	count: number(),
-	friends: array(valiObjectUserSchema),
+export const valiResponseFriendsGetBaseSchema = v.object({
+	count: v.number(),
+	friends: v.array(valiObjectUserSchema),
 });
-export type ResponseFriendsGetBase = InferOutput<
+export type ResponseFriendsGetBase = v.InferOutput<
 	typeof valiResponseFriendsGetBaseSchema
 >;
 
-export const valiResponseFriendsGetWithUserSchema = object({
+export const valiResponseFriendsGetWithUserSchema = v.object({
 	...valiResponseFriendsGetBaseSchema.entries,
 	user: valiObjectUserSchema,
 });
-export type ResponseFriendsGetWithUser = InferOutput<
+export type ResponseFriendsGetWithUser = v.InferOutput<
 	typeof valiResponseFriendsGetWithUserSchema
 >;
 
-export const valiResponseFriendsGetShortSchema = object({
-	count: number(),
-	friends: array(valiObjectUserShortSchema),
+export const valiResponseFriendsGetShortSchema = v.object({
+	count: v.number(),
+	friends: v.array(valiObjectUserShortSchema),
 });
-export type ResponseFriendsGetShort = InferOutput<
+export type ResponseFriendsGetShort = v.InferOutput<
 	typeof valiResponseFriendsGetShortSchema
 >;
 
-export const valiResponseFriendsGetShortWithUserSchema = object({
+export const valiResponseFriendsGetShortWithUserSchema = v.object({
 	...valiResponseFriendsGetShortSchema.entries,
 	user: valiObjectUserShortSchema,
 });
-export type ResponseFriendsGetShortWithUser = InferOutput<
+export type ResponseFriendsGetShortWithUser = v.InferOutput<
 	typeof valiResponseFriendsGetShortWithUserSchema
 >;
 
@@ -40,18 +40,18 @@ export type ResponseFriendsGet<S extends boolean, U extends boolean> = If<
 	If<U, ResponseFriendsGetWithUser, ResponseFriendsGetBase>
 >;
 
-export const valiResponseFriendsGetRequestsSchema = object({
-	count: number(),
-	requests: array(valiObjectUserSchema),
+export const valiResponseFriendsGetRequestsSchema = v.object({
+	count: v.number(),
+	requests: v.array(valiObjectUserSchema),
 });
-export type ResponseFriendsGetRequests = InferOutput<
+export type ResponseFriendsGetRequests = v.InferOutput<
 	typeof valiResponseFriendsGetRequestsSchema
 >;
 
-export const valiResponseFriendsGetRequestsShortSchema = object({
-	count: number(),
-	requests: array(valiObjectUserShortSchema),
+export const valiResponseFriendsGetRequestsShortSchema = v.object({
+	count: v.number(),
+	requests: v.array(valiObjectUserShortSchema),
 });
-export type ResponseFriendsGetRequestsShort = InferOutput<
+export type ResponseFriendsGetRequestsShort = v.InferOutput<
 	typeof valiResponseFriendsGetRequestsShortSchema
 >;

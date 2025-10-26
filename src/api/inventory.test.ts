@@ -23,7 +23,7 @@ describe('inventory.get (items mode)', () => {
 		expect(response.request.data.add_legacy).toBe(0);
 		expect(response.data.count).toBeTypeOf('number');
 		expect(response.data.items).toBeInstanceOf(Array);
-		expect('user' in response.data).toBeUndefined();
+		expect('user' in response.data).toBe(false);
 	});
 
 	test('valiResponseInventoryGetWithUserSchema', async () => {
@@ -36,7 +36,7 @@ describe('inventory.get (items mode)', () => {
 		expect(response.request.data.add_user).toBe(1);
 		expect(response.request.data.add_legacy).toBe(0);
 		expect(response.data.user).toBeInstanceOf(Object);
-		expect('things' in response.data).toBeUndefined();
+		expect('things' in response.data).toBe(false);
 	});
 
 	test('valiResponseInventoryGetWithEquippedArraySchema + stock items', async () => {
@@ -87,7 +87,7 @@ describe('inventory.get (items mode)', () => {
 		expect(response.request.data.add_equipped).toBe('tree');
 		expect(response.data.user).toBeInstanceOf(Object);
 		expect(response.data.equipped).toBeInstanceOf(Object);
-		expect('things' in response.data).toBeUndefined();
+		expect('things' in response.data).toBe(false);
 	});
 
 	test('valiResponseInventoryGetWithUserAndEquippedArraySchema', async () => {
@@ -102,7 +102,7 @@ describe('inventory.get (items mode)', () => {
 		expect(response.data.item_ids_equipped).toBeInstanceOf(Array);
 		expect(response.data.collections).toBeInstanceOf(Array);
 		expect(response.data.user).toBeInstanceOf(Object);
-		expect('equipped' in response.data).toBeUndefined();
+		expect('equipped' in response.data).toBe(false);
 	});
 });
 
@@ -115,7 +115,7 @@ describe('inventory.get (things mode)', () => {
 		expect(response.request.data.add_legacy).toBe(1);
 		expect(response.data.count).toBeTypeOf('number');
 		expect(response.data.things).toBeInstanceOf(Array);
-		expect('user' in response.data).toBeUndefined();
+		expect('user' in response.data).toBe(false);
 	});
 
 	test('valiResponseInventoryGetLegacyWithUserSchema', async () => {
@@ -128,7 +128,7 @@ describe('inventory.get (things mode)', () => {
 		expect(response.request.data.add_user).toBe(1);
 		expect(response.request.data.add_legacy).toBe(1);
 		expect(response.data.user).toBeInstanceOf(Object);
-		expect('items' in response.data).toBeUndefined();
+		expect('items' in response.data).toBe(false);
 	});
 
 	test('valiResponseInventoryGetLegacyWithEquippedArraySchema + stock items', async () => {
@@ -150,7 +150,7 @@ describe('inventory.get (things mode)', () => {
 		expect(response.data.collections).toBeInstanceOf(Array);
 		expect(response.data.thing_types).toBeInstanceOf(Array);
 		expect(response.data.qualities).toBeInstanceOf(Array);
-		expect('user' in response.data).toBeUndefined();
+		expect('user' in response.data).toBe(false);
 
 		const stock_things = response.data.things.filter(
 			(thing) => thing.quality === 0,
@@ -166,7 +166,7 @@ describe('inventory.get (things mode)', () => {
 
 		expect(response.request.data.add_user).toBeUndefined();
 		expect(response.request.data.add_equipped).toBe('tree');
-		expect('user' in response.data).toBeUndefined();
+		expect('user' in response.data).toBe(false);
 		expect(response.data.equipped).toBeInstanceOf(Object);
 	});
 
@@ -181,7 +181,7 @@ describe('inventory.get (things mode)', () => {
 		expect(response.request.data.add_equipped).toBe('tree');
 		expect(response.data.user).toBeInstanceOf(Object);
 		expect(response.data.equipped).toBeInstanceOf(Object);
-		expect('items' in response.data).toBeUndefined();
+		expect('items' in response.data).toBe(false);
 	});
 
 	test('valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema', async () => {
@@ -196,7 +196,7 @@ describe('inventory.get (things mode)', () => {
 		expect(response.data.item_ids_equipped).toBeInstanceOf(Array);
 		expect(response.data.collections).toBeInstanceOf(Array);
 		expect(response.data.user).toBeInstanceOf(Object);
-		expect('equipped' in response.data).toBeUndefined();
+		expect('equipped' in response.data).toBe(false);
 	});
 });
 

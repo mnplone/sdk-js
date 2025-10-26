@@ -1,13 +1,13 @@
 import * as v from 'valibot';
-import { M1ApiBase } from './base.js';
-import { type ApiResponse } from '../types.js';
 import type { CallMethodOptionsData } from '../m1.js';
+import { type ApiResponse } from '../types.js';
 import {
-	valiObjectTradeIdSchema,
-	valiObjectTradeListSchema,
 	type ObjectTradeId,
 	type ObjectTradeList,
+	valiObjectTradeIdSchema,
+	valiObjectTradeListSchema,
 } from '../valibot/trades.js';
+import { M1ApiBase } from './base.js';
 
 export class M1ApiTrades extends M1ApiBase {
 	/**
@@ -15,7 +15,7 @@ export class M1ApiTrades extends M1ApiBase {
 	 * @param options -
 	 * @param options.item_ids_offer -
 	 * @param options.item_ids_request -
-	 * @param user_id -
+	 * @param options.user_id -
 	 * @returns =
 	 */
 	create(options: {
