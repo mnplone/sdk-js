@@ -6,11 +6,12 @@ import {
   M1ApiGchat,
   M1ApiIm,
   M1ApiInventory,
+  M1ApiOauth,
   M1ApiTrades,
   M1ApiUsers,
   maskString,
   parseWithNotice
-} from "./main-0r0vjxsj.js";
+} from "./main-n9qg1nyf.js";
 
 // src/hooks/session-refresh.ts
 var sessionRefreshHook = async function(options, data) {
@@ -54,6 +55,7 @@ class M1 {
   gchat = new M1ApiGchat(this);
   im = new M1ApiIm(this);
   inventory = new M1ApiInventory(this);
+  oauth = new M1ApiOauth(this);
   trades = new M1ApiTrades(this);
   users = new M1ApiUsers(this);
   constructor(options) {

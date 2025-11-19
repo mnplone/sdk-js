@@ -828,6 +828,18 @@ class M1ApiInventory extends M1ApiBase {
   }
 }
 
+// src/api/oauth.ts
+class M1ApiOauth extends M1ApiBase {
+  exchangeCode(options) {
+    return this.baseClient.callMethod({
+      http_method: "POST",
+      api_method: "oauth.exchangeCode",
+      data: options,
+      valiResponseSchema: valiObjectSessionSchema
+    });
+  }
+}
+
 // src/valibot/trades.ts
 import * as v15 from "valibot";
 var valiObjectTradeIdSchema = v15.object({
@@ -991,4 +1003,4 @@ class M1ApiUsers extends M1ApiBase {
   }
 }
 
-export { valiObjectSessionSchema, valiResponseTotpSessionTokenSchema, M1ApiBase, M1ApiAuth, M1ApiBots, valiObjectItemVariantSchema, valiObjectThingPrototypeSchema, valiObjectThingSchema, valiObjectItemProtoSchema, valiObjectItemSchema, valiObjectItemProtoLegacySchema, valiObjectPropertyTitleSchema, valiObjectCollectionSchema, valiObjectQualitySchema, valiResponseDataSearchItemProtosSchema, M1ApiData, parseWithNotice, maskString, valiObjectActiveUserShortSchema, valiObjectInactiveUserSchema, valiObjectActiveUserSchema, valiObjectUserShortSchema, valiObjectUserSchema, valiResponseFriendsGetBaseSchema, valiResponseFriendsGetWithUserSchema, valiResponseFriendsGetShortSchema, valiResponseFriendsGetShortWithUserSchema, valiResponseFriendsGetRequestsSchema, valiResponseFriendsGetRequestsShortSchema, M1ApiFriends, valiObjectGchatMessageBaseSchema, valiObjectGchatMessageAdditionalDataSchema, valiObjectGchatMessageSchema, valiResponseGchatGetSchema, valiResponseGchatSendSchema, M1ApiGchat, valiResponseImSendSchema, valiObjectMessageSchema, valiObjectDialogSchema, valiResponseImDialogsGetSchema, valiResponseImHistoryGetSchema, M1ApiIm, valiResponseInventoryCraftSchema, valiResponseInventoryGetBaseSchema, valiResponseInventoryGetLegacySchema, valiResponseInventoryGetWithUserSchema, valiResponseInventoryGetLegacyWithUserSchema, valiResponseInventoryGetWithEquippedArraySchema, valiResponseInventoryGetWithEquippedTreeSchema, valiResponseInventoryGetWithUserAndEquippedArraySchema, valiResponseInventoryGetWithUserAndEquippedTreeSchema, valiResponseInventoryGetLegacyWithEquippedArraySchema, valiResponseInventoryGetLegacyWithEquippedTreeSchema, valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema, valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema, M1ApiInventory, valiObjectTradeIdSchema, valiObjectTradeSchema, valiObjectNewTradeSchema, valiObjectTradeListSchema, M1ApiTrades, M1ApiUsers };
+export { valiObjectSessionSchema, valiResponseTotpSessionTokenSchema, M1ApiBase, M1ApiAuth, M1ApiBots, valiObjectItemVariantSchema, valiObjectThingPrototypeSchema, valiObjectThingSchema, valiObjectItemProtoSchema, valiObjectItemSchema, valiObjectItemProtoLegacySchema, valiObjectPropertyTitleSchema, valiObjectCollectionSchema, valiObjectQualitySchema, valiResponseDataSearchItemProtosSchema, M1ApiData, parseWithNotice, maskString, valiObjectActiveUserShortSchema, valiObjectInactiveUserSchema, valiObjectActiveUserSchema, valiObjectUserShortSchema, valiObjectUserSchema, valiResponseFriendsGetBaseSchema, valiResponseFriendsGetWithUserSchema, valiResponseFriendsGetShortSchema, valiResponseFriendsGetShortWithUserSchema, valiResponseFriendsGetRequestsSchema, valiResponseFriendsGetRequestsShortSchema, M1ApiFriends, valiObjectGchatMessageBaseSchema, valiObjectGchatMessageAdditionalDataSchema, valiObjectGchatMessageSchema, valiResponseGchatGetSchema, valiResponseGchatSendSchema, M1ApiGchat, valiResponseImSendSchema, valiObjectMessageSchema, valiObjectDialogSchema, valiResponseImDialogsGetSchema, valiResponseImHistoryGetSchema, M1ApiIm, valiResponseInventoryCraftSchema, valiResponseInventoryGetBaseSchema, valiResponseInventoryGetLegacySchema, valiResponseInventoryGetWithUserSchema, valiResponseInventoryGetLegacyWithUserSchema, valiResponseInventoryGetWithEquippedArraySchema, valiResponseInventoryGetWithEquippedTreeSchema, valiResponseInventoryGetWithUserAndEquippedArraySchema, valiResponseInventoryGetWithUserAndEquippedTreeSchema, valiResponseInventoryGetLegacyWithEquippedArraySchema, valiResponseInventoryGetLegacyWithEquippedTreeSchema, valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema, valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema, M1ApiInventory, M1ApiOauth, valiObjectTradeIdSchema, valiObjectTradeSchema, valiObjectNewTradeSchema, valiObjectTradeListSchema, M1ApiTrades, M1ApiUsers };
