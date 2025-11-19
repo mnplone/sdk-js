@@ -7,6 +7,7 @@ import { M1ApiFriends } from './api/friends.js';
 import { M1ApiGchat } from './api/gchat.js';
 import { M1ApiIm } from './api/im.js';
 import { M1ApiInventory } from './api/inventory.js';
+import { M1ApiOauth } from './api/oauth.js';
 import { M1ApiTrades } from './api/trades.js';
 import { M1ApiUsers } from './api/users.js';
 import type { M1ApiResponseHooks } from './hooks.js';
@@ -103,6 +104,7 @@ export class M1 {
 	gchat = new M1ApiGchat(this);
 	im = new M1ApiIm(this);
 	inventory = new M1ApiInventory(this);
+	oauth = new M1ApiOauth(this);
 	trades = new M1ApiTrades(this);
 	users = new M1ApiUsers(this);
 
