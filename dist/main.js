@@ -42,7 +42,7 @@ import { ExtWSClient } from "@extws/client";
 import * as v from "valibot";
 var IS_TEST = false;
 var apiResponseParser = v.parser(v.object({
-  code: v.pipe(v.number(), v.minValue(0))
+  code: v.optional(v.pipe(v.number(), v.minValue(0)), 0)
 }));
 
 class M1 {

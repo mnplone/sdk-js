@@ -80,7 +80,7 @@ type M1Options = {
 
 const apiResponseParser = v.parser(
 	v.object({
-		code: v.pipe(v.number(), v.minValue(0)),
+		code: v.optional(v.pipe(v.number(), v.minValue(0)), 0),
 	}),
 );
 
