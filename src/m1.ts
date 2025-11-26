@@ -151,6 +151,7 @@ export class M1 {
 	 * @param options.valiErrorDataSchema - Error data validator.
 	 * @returns - API response.
 	 */
+	// eslint-disable-next-line max-lines-per-function
 	async callMethod<
 		ValiResponseSchema extends ValiBaseSchema,
 		ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
@@ -217,9 +218,22 @@ export class M1 {
 
 		if (code === 0) {
 			const { data } = parseWithNotice(
-				v.object({
-					data: options.valiResponseSchema as ValiBaseSchema,
-				}),
+				v.pipe(
+					v.object({
+						data: v.optional(options.valiResponseSchema as ValiBaseSchema),
+						result: v.optional(options.valiResponseSchema as ValiBaseSchema),
+					}),
+					v.check(
+						(input) =>
+							!(input.data && input.result)
+							|| (input.data === undefined && input.result === undefined),
+					),
+					v.transform((input) => {
+						return {
+							data: input.data ?? input.result,
+						};
+					}),
+				),
 				response_data,
 			);
 

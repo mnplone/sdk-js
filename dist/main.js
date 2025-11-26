@@ -122,9 +122,14 @@ class M1 {
     }
     const { code } = apiResponseParser(response_data);
     if (code === 0) {
-      const { data: data2 } = parseWithNotice(v.object({
-        data: options.valiResponseSchema
-      }), response_data);
+      const { data: data2 } = parseWithNotice(v.pipe(v.object({
+        data: v.optional(options.valiResponseSchema),
+        result: v.optional(options.valiResponseSchema)
+      }), v.check((input) => !(input.data && input.result) || input.data === undefined && input.result === undefined), v.transform((input) => {
+        return {
+          data: input.data ?? input.result
+        };
+      })), response_data);
       return {
         success: true,
         data: data2,
