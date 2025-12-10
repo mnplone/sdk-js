@@ -719,7 +719,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -1089,6 +1089,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -1163,17 +1164,22 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetBase = v.InferOutput<typeof valiResponseFriendsGetBaseSchema>;
@@ -1261,7 +1267,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -1631,6 +1637,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -1705,17 +1712,22 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly friends: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
@@ -1801,7 +1813,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -2171,6 +2183,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -2245,17 +2258,22 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetWithUser = v.InferOutput<typeof valiResponseFriendsGetWithUserSchema>;
@@ -2267,7 +2285,7 @@ declare const valiResponseFriendsGetShortSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -2347,12 +2365,18 @@ declare const valiResponseFriendsGetShortSchema: v.ObjectSchema<{
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetShort = v.InferOutput<typeof valiResponseFriendsGetShortSchema>;
@@ -2363,7 +2387,7 @@ declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -2443,12 +2467,18 @@ declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly friends: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
@@ -2457,7 +2487,7 @@ declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -2537,12 +2567,18 @@ declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetShortWithUser = v.InferOutput<typeof valiResponseFriendsGetShortWithUserSchema>;
@@ -2632,7 +2668,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -3002,6 +3038,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -3076,17 +3113,22 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetRequests = v.InferOutput<typeof valiResponseFriendsGetRequestsSchema>;
@@ -3098,7 +3140,7 @@ declare const valiResponseFriendsGetRequestsShortSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -3178,12 +3220,18 @@ declare const valiResponseFriendsGetRequestsShortSchema: v.ObjectSchema<{
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetRequestsShort = v.InferOutput<typeof valiResponseFriendsGetRequestsShortSchema>;
@@ -3335,7 +3383,7 @@ declare const valiResponseGchatGetSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -3415,12 +3463,18 @@ declare const valiResponseGchatGetSchema: v.ObjectSchema<{
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
     readonly item_protos: v.ArraySchema<v.ObjectSchema<{
         readonly item_proto_id: v.NumberSchema<undefined>;
@@ -3575,7 +3629,7 @@ declare const valiResponseImDialogsGetSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -3655,12 +3709,18 @@ declare const valiResponseImDialogsGetSchema: v.ObjectSchema<{
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseImDialogsGet = v.InferOutput<typeof valiResponseImDialogsGetSchema>;
@@ -3703,7 +3763,7 @@ declare const valiResponseImHistoryGetSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -3783,12 +3843,18 @@ declare const valiResponseImHistoryGetSchema: v.ObjectSchema<{
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ResponseImHistoryGet = v.InferOutput<typeof valiResponseImHistoryGetSchema>;
@@ -4190,7 +4256,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -4560,6 +4626,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -4634,17 +4701,22 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly collections: v.ArraySchema<v.ObjectSchema<{
@@ -4808,7 +4880,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -5178,6 +5250,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -5252,17 +5325,22 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly collections: v.ArraySchema<v.ObjectSchema<{
@@ -5587,7 +5665,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -5957,6 +6035,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -6031,17 +6110,22 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly item_ids_equipped: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
     readonly count: v.NumberSchema<undefined>;
@@ -6206,7 +6290,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -6576,6 +6660,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -6650,17 +6735,22 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly equipped: v.OptionalSchema<v.ObjectSchema<{
         readonly game: v.RecordSchema<v.StringSchema<undefined>, v.ObjectSchema<{
@@ -6987,7 +7077,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -7357,6 +7447,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -7431,17 +7522,22 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly item_ids_equipped: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
     readonly count: v.NumberSchema<undefined>;
@@ -7601,7 +7697,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -7971,6 +8067,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -8045,17 +8142,22 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>;
     readonly equipped: v.OptionalSchema<v.ObjectSchema<{
         readonly game: v.RecordSchema<v.StringSchema<undefined>, v.ObjectSchema<{
@@ -8695,7 +8797,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
         readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
         readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly gender: v.PicklistSchema<[0, 1], undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
         readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -9065,6 +9167,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
         online: boolean;
         vip: boolean;
         moderator: boolean;
+        muted: boolean;
         nicks_old: string[];
         profile_cover?: string | undefined;
         social_vk?: number | undefined;
@@ -9139,17 +9242,22 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
             type: 1;
             ts_end: number;
         } | undefined;
-        muted: boolean;
         bot: {
             owner_user_id: number;
         } | null;
     }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+        readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
     }, undefined>], undefined>, undefined>;
 }, undefined>;
 type ObjectTradeList = v.InferOutput<typeof valiObjectTradeListSchema>;
@@ -9239,7 +9347,7 @@ declare const valiObjectActiveUserShortSchema: v.SchemaWithPipe<readonly [v.Obje
     readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
     readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly nick: v.StringSchema<undefined>;
-    readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+    readonly gender: v.PicklistSchema<[0, 1], undefined>;
     readonly avatar: v.StringSchema<undefined>;
     readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -9320,12 +9428,18 @@ declare const valiObjectActiveUserShortSchema: v.SchemaWithPipe<readonly [v.Obje
     } | null;
 }>]>;
 declare const valiObjectInactiveUserSchema: v.ObjectSchema<{
-    readonly nick: v.StringSchema<undefined>;
-    readonly avatar: v.StringSchema<undefined>;
-    readonly avatar_key: v.StringSchema<undefined>;
     readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
     readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+    readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly nick: v.StringSchema<undefined>;
+    readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+    readonly avatar: v.StringSchema<undefined>;
+    readonly avatar_key: v.StringSchema<undefined>;
+    readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
 }, undefined>;
 declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSchema<{
     readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
@@ -9410,7 +9524,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
     readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
     readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly nick: v.StringSchema<undefined>;
-    readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+    readonly gender: v.PicklistSchema<[0, 1], undefined>;
     readonly avatar: v.StringSchema<undefined>;
     readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -9780,6 +9894,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
     online: boolean;
     vip: boolean;
     moderator: boolean;
+    muted: boolean;
     nicks_old: string[];
     profile_cover?: string | undefined;
     social_vk?: number | undefined;
@@ -9854,7 +9969,6 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
         type: 1;
         ts_end: number;
     } | undefined;
-    muted: boolean;
     bot: {
         owner_user_id: number;
     } | null;
@@ -9865,7 +9979,7 @@ declare const valiObjectUserShortSchema: v.VariantSchema<"inactive", [v.SchemaWi
     readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
     readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly nick: v.StringSchema<undefined>;
-    readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+    readonly gender: v.PicklistSchema<[0, 1], undefined>;
     readonly avatar: v.StringSchema<undefined>;
     readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -9945,12 +10059,18 @@ declare const valiObjectUserShortSchema: v.VariantSchema<"inactive", [v.SchemaWi
         owner_user_id: number;
     } | null;
 }>]>, v.ObjectSchema<{
-    readonly nick: v.StringSchema<undefined>;
-    readonly avatar: v.StringSchema<undefined>;
-    readonly avatar_key: v.StringSchema<undefined>;
     readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
     readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+    readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly nick: v.StringSchema<undefined>;
+    readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+    readonly avatar: v.StringSchema<undefined>;
+    readonly avatar_key: v.StringSchema<undefined>;
+    readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
 }, undefined>], undefined>;
 declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
     readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
@@ -10035,7 +10155,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
     readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
     readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly nick: v.StringSchema<undefined>;
-    readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+    readonly gender: v.PicklistSchema<[0, 1], undefined>;
     readonly avatar: v.StringSchema<undefined>;
     readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
     readonly current_game: v.OptionalSchema<v.ObjectSchema<{
@@ -10405,6 +10525,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
     online: boolean;
     vip: boolean;
     moderator: boolean;
+    muted: boolean;
     nicks_old: string[];
     profile_cover?: string | undefined;
     social_vk?: number | undefined;
@@ -10479,17 +10600,22 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
         type: 1;
         ts_end: number;
     } | undefined;
-    muted: boolean;
     bot: {
         owner_user_id: number;
     } | null;
 }>]>, v.ObjectSchema<{
-    readonly nick: v.StringSchema<undefined>;
-    readonly avatar: v.StringSchema<undefined>;
-    readonly avatar_key: v.StringSchema<undefined>;
     readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
     readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+    readonly approved: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly nick: v.StringSchema<undefined>;
+    readonly gender: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, number>]>;
+    readonly avatar: v.StringSchema<undefined>;
+    readonly avatar_key: v.StringSchema<undefined>;
+    readonly online: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly vip: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly moderator: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
+    readonly muted: v.SchemaWithPipe<readonly [v.ExactOptionalSchema<v.UnknownSchema, any>, v.CheckAction<unknown, undefined>, v.TransformAction<unknown, boolean>]>;
 }, undefined>], undefined>;
 type User = v.InferOutput<typeof valiObjectUserSchema>;
 type UserShort = v.InferOutput<typeof valiObjectUserShortSchema>;

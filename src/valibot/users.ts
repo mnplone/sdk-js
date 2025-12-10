@@ -1,4 +1,5 @@
 import * as v from 'valibot';
+import * as vex from '../valibot.js';
 import { bit } from './common.js';
 import { valiObjectThingSchema } from './items.js';
 
@@ -24,7 +25,7 @@ const valiInputActiveUserShortSchema = v.object({
 	inactive: v.optional(v.undefined()),
 	approved: bit(0),
 	nick: v.string(),
-	gender: v.union([v.literal(0), v.literal(1)]),
+	gender: v.picklist([0, 1]),
 	avatar: v.string(),
 	online: bit(0),
 	current_game: v.optional(
@@ -62,12 +63,18 @@ export const valiObjectActiveUserShortSchema = v.pipe(
 );
 
 export const valiObjectInactiveUserSchema = v.object({
-	nick: v.string(),
-	avatar: v.string(),
-	avatar_key: v.string(),
 	user_id: v.optional(v.number()),
 	domain: v.optional(v.union([v.string(), v.null()])),
 	inactive: v.picklist(['not_exists', 'global_ban']),
+	approved: vex.absent(false),
+	nick: v.string(),
+	gender: vex.absent(0),
+	avatar: v.string(),
+	avatar_key: v.string(),
+	online: vex.absent(false),
+	vip: vex.absent(false),
+	moderator: vex.absent(false),
+	muted: vex.absent(false),
 });
 
 export const valiObjectActiveUserSchema = v.pipe(

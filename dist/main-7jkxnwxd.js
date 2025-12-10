@@ -305,7 +305,16 @@ class M1ApiData extends M1ApiBase {
 }
 
 // src/valibot/users.ts
+import * as v9 from "valibot";
+
+// src/valibot.ts
 import * as v8 from "valibot";
+var symbol = Object.create(null);
+function absent(default_value) {
+  return v8.pipe(v8.exactOptional(v8.unknown(), symbol), v8.check((value) => value === symbol), v8.transform(() => default_value));
+}
+
+// src/valibot/users.ts
 function transformerBot(value) {
   const { bot, bot_owner, ...value_rest } = value;
   return {
@@ -315,75 +324,81 @@ function transformerBot(value) {
     } : null
   };
 }
-var valiInputActiveUserShortSchema = v8.object({
-  user_id: v8.number(),
-  domain: v8.optional(v8.string()),
-  inactive: v8.optional(v8.undefined()),
+var valiInputActiveUserShortSchema = v9.object({
+  user_id: v9.number(),
+  domain: v9.optional(v9.string()),
+  inactive: v9.optional(v9.undefined()),
   approved: bit(0),
-  nick: v8.string(),
-  gender: v8.union([v8.literal(0), v8.literal(1)]),
-  avatar: v8.string(),
+  nick: v9.string(),
+  gender: v9.picklist([0, 1]),
+  avatar: v9.string(),
   online: bit(0),
-  current_game: v8.optional(v8.object({
-    gs_id: v8.string(),
-    gs_game_id: v8.string()
+  current_game: v9.optional(v9.object({
+    gs_id: v9.string(),
+    gs_game_id: v9.string()
   })),
-  rank: v8.optional(v8.union([
-    v8.object({
-      hidden: v8.literal(1)
+  rank: v9.optional(v9.union([
+    v9.object({
+      hidden: v9.literal(1)
     }),
-    v8.object({
-      qual: v8.number()
+    v9.object({
+      qual: v9.number()
     }),
-    v8.object({
-      expired: v8.literal(1)
+    v9.object({
+      expired: v9.literal(1)
     }),
-    v8.object({
-      id: v8.number(),
-      pts: v8.number()
+    v9.object({
+      id: v9.number(),
+      pts: v9.number()
     })
   ])),
   vip: bit(0),
   bot: bit(0),
-  bot_owner: v8.optional(v8.number()),
+  bot_owner: v9.optional(v9.number()),
   moderator: bit(0)
 });
-var valiObjectActiveUserShortSchema = v8.pipe(valiInputActiveUserShortSchema, v8.transform(transformerBot));
-var valiObjectInactiveUserSchema = v8.object({
-  nick: v8.string(),
-  avatar: v8.string(),
-  avatar_key: v8.string(),
-  user_id: v8.optional(v8.number()),
-  domain: v8.optional(v8.union([v8.string(), v8.null()])),
-  inactive: v8.picklist(["not_exists", "global_ban"])
+var valiObjectActiveUserShortSchema = v9.pipe(valiInputActiveUserShortSchema, v9.transform(transformerBot));
+var valiObjectInactiveUserSchema = v9.object({
+  user_id: v9.optional(v9.number()),
+  domain: v9.optional(v9.union([v9.string(), v9.null()])),
+  inactive: v9.picklist(["not_exists", "global_ban"]),
+  approved: absent(false),
+  nick: v9.string(),
+  gender: absent(0),
+  avatar: v9.string(),
+  avatar_key: v9.string(),
+  online: absent(false),
+  vip: absent(false),
+  moderator: absent(false),
+  muted: absent(false)
 });
-var valiObjectActiveUserSchema = v8.pipe(v8.object({
+var valiObjectActiveUserSchema = v9.pipe(v9.object({
   ...valiInputActiveUserShortSchema.entries,
-  nicks_old: v8.array(v8.string()),
-  profile_cover: v8.optional(v8.string()),
-  social_vk: v8.optional(v8.number()),
-  social_discord: v8.optional(v8.string()),
-  social_twitch: v8.optional(v8.string()),
-  games: v8.optional(v8.number()),
-  games_wins: v8.optional(v8.number()),
-  xp: v8.optional(v8.number()),
-  xp_level: v8.optional(v8.number()),
-  badge: v8.optional(valiObjectThingSchema),
-  friendship: v8.optional(v8.number()),
+  nicks_old: v9.array(v9.string()),
+  profile_cover: v9.optional(v9.string()),
+  social_vk: v9.optional(v9.number()),
+  social_discord: v9.optional(v9.string()),
+  social_twitch: v9.optional(v9.string()),
+  games: v9.optional(v9.number()),
+  games_wins: v9.optional(v9.number()),
+  xp: v9.optional(v9.number()),
+  xp_level: v9.optional(v9.number()),
+  badge: v9.optional(valiObjectThingSchema),
+  friendship: v9.optional(v9.number()),
   muted: bit(0),
-  mfp_ban_history: v8.optional(v8.union([
-    v8.object({
-      type: v8.literal(0),
-      count: v8.number(),
-      ts_last_ban: v8.number(),
-      ts_end: v8.optional(v8.number())
+  mfp_ban_history: v9.optional(v9.union([
+    v9.object({
+      type: v9.literal(0),
+      count: v9.number(),
+      ts_last_ban: v9.number(),
+      ts_end: v9.optional(v9.number())
     }),
-    v8.object({
-      type: v8.literal(1),
-      ts_end: v8.number()
+    v9.object({
+      type: v9.literal(1),
+      ts_end: v9.number()
     })
   ]))
-}), v8.transform(transformerBot), v8.transform((value) => {
+}), v9.transform(transformerBot), v9.transform((value) => {
   const { games, games_wins, ...value_rest } = value;
   return {
     ...value_rest,
@@ -393,47 +408,47 @@ var valiObjectActiveUserSchema = v8.pipe(v8.object({
     }
   };
 }));
-var valiObjectUserShortSchema = v8.variant("inactive", [
+var valiObjectUserShortSchema = v9.variant("inactive", [
   valiObjectActiveUserShortSchema,
   valiObjectInactiveUserSchema
 ]);
-var valiObjectUserSchema = v8.variant("inactive", [
+var valiObjectUserSchema = v9.variant("inactive", [
   valiObjectActiveUserSchema,
   valiObjectInactiveUserSchema
 ]);
 
 // src/valibot/friends.ts
-import * as v9 from "valibot";
-var valiResponseFriendsGetBaseSchema = v9.object({
-  count: v9.number(),
-  friends: v9.array(valiObjectUserSchema)
+import * as v10 from "valibot";
+var valiResponseFriendsGetBaseSchema = v10.object({
+  count: v10.number(),
+  friends: v10.array(valiObjectUserSchema)
 });
-var valiResponseFriendsGetWithUserSchema = v9.object({
+var valiResponseFriendsGetWithUserSchema = v10.object({
   ...valiResponseFriendsGetBaseSchema.entries,
   user: valiObjectUserSchema
 });
-var valiResponseFriendsGetShortSchema = v9.object({
-  count: v9.number(),
-  friends: v9.array(valiObjectUserShortSchema)
+var valiResponseFriendsGetShortSchema = v10.object({
+  count: v10.number(),
+  friends: v10.array(valiObjectUserShortSchema)
 });
-var valiResponseFriendsGetShortWithUserSchema = v9.object({
+var valiResponseFriendsGetShortWithUserSchema = v10.object({
   ...valiResponseFriendsGetShortSchema.entries,
   user: valiObjectUserShortSchema
 });
-var valiResponseFriendsGetRequestsSchema = v9.object({
-  count: v9.number(),
-  requests: v9.array(valiObjectUserSchema)
+var valiResponseFriendsGetRequestsSchema = v10.object({
+  count: v10.number(),
+  requests: v10.array(valiObjectUserSchema)
 });
-var valiResponseFriendsGetRequestsShortSchema = v9.object({
-  count: v9.number(),
-  requests: v9.array(valiObjectUserShortSchema)
+var valiResponseFriendsGetRequestsShortSchema = v10.object({
+  count: v10.number(),
+  requests: v10.array(valiObjectUserShortSchema)
 });
 
 // src/api/friends.ts
-import * as v11 from "valibot";
+import * as v12 from "valibot";
 
 // src/utils.ts
-import * as v10 from "valibot";
+import * as v11 from "valibot";
 function isRecord(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value) && value.constructor === Object && Object.prototype.toString.call(value) === "[object Object]";
 }
@@ -441,11 +456,11 @@ function isIterableIterator(value) {
   return value !== null && typeof value === "object" && typeof Symbol.iterator in value && Symbol.iterator in value && typeof value[Symbol.iterator] === "function" && "next" in value && typeof value.next === "function";
 }
 function parseWithNotice(schema, value) {
-  const result = v10.safeParse(schema, value);
+  const result = v11.safeParse(schema, value);
   if (result.success) {
     return result.output;
   }
-  console.error(v10.summarize(result.issues));
+  console.error(v11.summarize(result.issues));
   throw new TypeError("Valibot found issues.");
 }
 function maskString(string6) {
@@ -464,7 +479,7 @@ class M1ApiFriends extends M1ApiBase {
       data: {
         user_id
       },
-      valiResponseSchema: v11.void()
+      valiResponseSchema: v12.void()
     });
   }
   delete(user_id) {
@@ -474,7 +489,7 @@ class M1ApiFriends extends M1ApiBase {
       data: {
         user_id
       },
-      valiResponseSchema: v11.void()
+      valiResponseSchema: v12.void()
     });
   }
   getRequests({
@@ -519,50 +534,50 @@ class M1ApiFriends extends M1ApiBase {
 }
 
 // src/valibot/gchat.ts
-import * as v12 from "valibot";
-var valiObjectGchatMessageBaseSchema = v12.object({
-  msg_id: v12.string(),
-  ts: v12.number(),
-  user_id: v12.number()
+import * as v13 from "valibot";
+var valiObjectGchatMessageBaseSchema = v13.object({
+  msg_id: v13.string(),
+  ts: v13.number(),
+  user_id: v13.number()
 });
-var valiObjectGchatMessageAdditionalDataSchema = v12.variant("type", [
-  v12.object({
-    type: v12.literal(1),
-    text: v12.string(),
-    is_public: v12.optional(bit(1)),
-    user_ids_mentioned: v12.optional(v12.array(v12.number()))
+var valiObjectGchatMessageAdditionalDataSchema = v13.variant("type", [
+  v13.object({
+    type: v13.literal(1),
+    text: v13.string(),
+    is_public: v13.optional(bit(1)),
+    user_ids_mentioned: v13.optional(v13.array(v13.number()))
   }),
-  v12.object({
-    type: v12.literal(2),
-    case_item_proto_id: v12.number(),
-    drop_item_proto_id: v12.number()
+  v13.object({
+    type: v13.literal(2),
+    case_item_proto_id: v13.number(),
+    drop_item_proto_id: v13.number()
   }),
-  v12.object({
-    type: v12.literal(3),
-    user_id_receiver: v12.number(),
-    item_proto_id: v12.number()
+  v13.object({
+    type: v13.literal(3),
+    user_id_receiver: v13.number(),
+    item_proto_id: v13.number()
   }),
-  v12.object({
-    type: v12.literal(4),
-    item_proto_ids: v12.array(v12.number())
+  v13.object({
+    type: v13.literal(4),
+    item_proto_ids: v13.array(v13.number())
   })
 ]);
-var valiObjectGchatMessageSchema = v12.intersect([
+var valiObjectGchatMessageSchema = v13.intersect([
   valiObjectGchatMessageBaseSchema,
   valiObjectGchatMessageAdditionalDataSchema
 ]);
-var valiResponseGchatGetSchema = v12.object({
-  messages: v12.array(valiObjectGchatMessageSchema),
-  status: v12.object({
-    closed: v12.boolean(),
-    slowmode: v12.boolean(),
-    emoteonly: v12.boolean()
+var valiResponseGchatGetSchema = v13.object({
+  messages: v13.array(valiObjectGchatMessageSchema),
+  status: v13.object({
+    closed: v13.boolean(),
+    slowmode: v13.boolean(),
+    emoteonly: v13.boolean()
   }),
-  users: v12.array(valiObjectUserShortSchema),
-  item_protos: v12.array(valiObjectItemProtoSchema)
+  users: v13.array(valiObjectUserShortSchema),
+  item_protos: v13.array(valiObjectItemProtoSchema)
 });
-var valiResponseGchatSendSchema = v12.object({
-  msg_id: v12.string()
+var valiResponseGchatSendSchema = v13.object({
+  msg_id: v13.string()
 });
 
 // src/api/gchat.ts
@@ -589,49 +604,49 @@ class M1ApiGchat extends M1ApiBase {
 }
 
 // src/valibot/im.ts
-import * as v13 from "valibot";
-var valiResponseImSendSchema = v13.object({
-  msg_id: v13.number()
+import * as v14 from "valibot";
+var valiResponseImSendSchema = v14.object({
+  msg_id: v14.number()
 });
-var valiObjectMessageSchema = v13.object({
-  msg_id: v13.number(),
-  is_read: v13.number(),
-  text: v13.string(),
-  ts_created: v13.number(),
-  type: v13.number(),
-  user_id: v13.number()
+var valiObjectMessageSchema = v14.object({
+  msg_id: v14.number(),
+  is_read: v14.number(),
+  text: v14.string(),
+  ts_created: v14.number(),
+  type: v14.number(),
+  user_id: v14.number()
 });
-var valiObjectSyncSchema = v13.object({
-  events: v13.array(v13.object({
-    chain: v13.array(v13.union([v13.number(), v13.null()])),
-    data: v13.object({
-      type: v13.number(),
-      msg_id: v13.number(),
-      dialog: v13.object({
-        user_id: v13.number()
+var valiObjectSyncSchema = v14.object({
+  events: v14.array(v14.object({
+    chain: v14.array(v14.union([v14.number(), v14.null()])),
+    data: v14.object({
+      type: v14.number(),
+      msg_id: v14.number(),
+      dialog: v14.object({
+        user_id: v14.number()
       })
     })
   })),
-  dialogs: v13.array(v13.object({
-    user_id: v13.number(),
-    new_counter: v13.number()
+  dialogs: v14.array(v14.object({
+    user_id: v14.number(),
+    new_counter: v14.number()
   })),
-  messages: v13.array(valiObjectMessageSchema)
+  messages: v14.array(valiObjectMessageSchema)
 });
-var valiObjectDialogSchema = v13.object({
+var valiObjectDialogSchema = v14.object({
   message: valiObjectMessageSchema,
-  new_counter: v13.number(),
-  user_id: v13.number()
+  new_counter: v14.number(),
+  user_id: v14.number()
 });
-var valiResponseImDialogsGetSchema = v13.object({
-  dialogs: v13.array(valiObjectDialogSchema),
+var valiResponseImDialogsGetSchema = v14.object({
+  dialogs: v14.array(valiObjectDialogSchema),
   sync: valiObjectSyncSchema,
-  users_data: v13.array(valiObjectUserShortSchema)
+  users_data: v14.array(valiObjectUserShortSchema)
 });
-var valiResponseImHistoryGetSchema = v13.object({
-  messages: v13.array(valiObjectMessageSchema),
+var valiResponseImHistoryGetSchema = v14.object({
+  messages: v14.array(valiObjectMessageSchema),
   sync: valiObjectSyncSchema,
-  users_data: v13.array(valiObjectUserShortSchema)
+  users_data: v14.array(valiObjectUserShortSchema)
 });
 
 // src/api/im.ts
@@ -673,87 +688,87 @@ class M1ApiIm extends M1ApiBase {
 }
 
 // src/valibot/inventory.ts
-import * as v14 from "valibot";
-var valiCollectionSchema = v14.object({
-  collection_id: v14.number(),
-  title: v14.string()
+import * as v15 from "valibot";
+var valiCollectionSchema = v15.object({
+  collection_id: v15.number(),
+  title: v15.string()
 });
-var valiThingTypeSchema = v14.object({
-  id: v14.number(),
-  title: v14.string()
+var valiThingTypeSchema = v15.object({
+  id: v15.number(),
+  title: v15.string()
 });
-var valiQualitySchema = v14.object({
-  id: v14.number(),
-  title: v14.string(),
-  coeff_rent: v14.number()
+var valiQualitySchema = v15.object({
+  id: v15.number(),
+  title: v15.string(),
+  coeff_rent: v15.number()
 });
-var valiEquippedArraySchema = v14.object({
-  item_ids_equipped: v14.optional(v14.array(v14.number()))
+var valiEquippedArraySchema = v15.object({
+  item_ids_equipped: v15.optional(v15.array(v15.number()))
 });
-var valiEquippedTreeSchema = v14.object({
-  equipped: v14.optional(v14.object({
-    game: v14.record(v14.string(), v14.object({
-      cards: v14.record(v14.string(), v14.array(v14.number())),
-      generator: v14.number(),
-      joke: v14.number()
+var valiEquippedTreeSchema = v15.object({
+  equipped: v15.optional(v15.object({
+    game: v15.record(v15.string(), v15.object({
+      cards: v15.record(v15.string(), v15.array(v15.number())),
+      generator: v15.number(),
+      joke: v15.number()
     }))
   }))
 });
-var valiResponseInventoryCraftSchema = v14.object({
+var valiResponseInventoryCraftSchema = v15.object({
   item: valiObjectItemSchema
 });
-var valiResponseInventoryGetBaseSchema = v14.object({
-  count: v14.number(),
-  collections: v14.array(valiCollectionSchema),
-  items: v14.array(valiObjectItemSchema)
+var valiResponseInventoryGetBaseSchema = v15.object({
+  count: v15.number(),
+  collections: v15.array(valiCollectionSchema),
+  items: v15.array(valiObjectItemSchema)
 });
-var valiResponseInventoryGetLegacySchema = v14.object({
-  count: v14.number(),
-  collections: v14.array(valiCollectionSchema),
-  things: v14.array(valiObjectThingSchema),
-  thing_types: v14.optional(v14.array(valiThingTypeSchema)),
-  qualities: v14.optional(v14.array(valiQualitySchema))
+var valiResponseInventoryGetLegacySchema = v15.object({
+  count: v15.number(),
+  collections: v15.array(valiCollectionSchema),
+  things: v15.array(valiObjectThingSchema),
+  thing_types: v15.optional(v15.array(valiThingTypeSchema)),
+  qualities: v15.optional(v15.array(valiQualitySchema))
 });
-var valiResponseInventoryGetWithUserSchema = v14.object({
+var valiResponseInventoryGetWithUserSchema = v15.object({
   ...valiResponseInventoryGetBaseSchema.entries,
   user: valiObjectUserSchema
 });
-var valiResponseInventoryGetLegacyWithUserSchema = v14.object({
+var valiResponseInventoryGetLegacyWithUserSchema = v15.object({
   ...valiResponseInventoryGetLegacySchema.entries,
   user: valiObjectUserSchema
 });
-var valiResponseInventoryGetWithEquippedArraySchema = v14.object({
+var valiResponseInventoryGetWithEquippedArraySchema = v15.object({
   ...valiResponseInventoryGetBaseSchema.entries,
   ...valiEquippedArraySchema.entries
 });
-var valiResponseInventoryGetWithEquippedTreeSchema = v14.object({
+var valiResponseInventoryGetWithEquippedTreeSchema = v15.object({
   ...valiResponseInventoryGetBaseSchema.entries,
   ...valiEquippedTreeSchema.entries
 });
-var valiResponseInventoryGetWithUserAndEquippedArraySchema = v14.object({
+var valiResponseInventoryGetWithUserAndEquippedArraySchema = v15.object({
   ...valiResponseInventoryGetBaseSchema.entries,
   ...valiEquippedArraySchema.entries,
   user: valiObjectUserSchema
 });
-var valiResponseInventoryGetWithUserAndEquippedTreeSchema = v14.object({
+var valiResponseInventoryGetWithUserAndEquippedTreeSchema = v15.object({
   ...valiResponseInventoryGetBaseSchema.entries,
   ...valiEquippedTreeSchema.entries,
   user: valiObjectUserSchema
 });
-var valiResponseInventoryGetLegacyWithEquippedArraySchema = v14.object({
+var valiResponseInventoryGetLegacyWithEquippedArraySchema = v15.object({
   ...valiResponseInventoryGetLegacySchema.entries,
   ...valiEquippedArraySchema.entries
 });
-var valiResponseInventoryGetLegacyWithEquippedTreeSchema = v14.object({
+var valiResponseInventoryGetLegacyWithEquippedTreeSchema = v15.object({
   ...valiResponseInventoryGetLegacySchema.entries,
   ...valiEquippedTreeSchema.entries
 });
-var valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema = v14.object({
+var valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema = v15.object({
   ...valiResponseInventoryGetLegacySchema.entries,
   ...valiEquippedArraySchema.entries,
   user: valiObjectUserSchema
 });
-var valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema = v14.object({
+var valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema = v15.object({
   ...valiResponseInventoryGetLegacySchema.entries,
   ...valiEquippedTreeSchema.entries,
   user: valiObjectUserSchema
@@ -841,43 +856,43 @@ class M1ApiOauth extends M1ApiBase {
 }
 
 // src/valibot/trades.ts
-import * as v15 from "valibot";
-var valiObjectTradeIdSchema = v15.object({
-  trade_id: v15.number()
+import * as v16 from "valibot";
+var valiObjectTradeIdSchema = v16.object({
+  trade_id: v16.number()
 });
-var valiObjectTradeSideSchema = v15.object({
-  user_id: v15.number(),
-  item_ids: v15.array(valiObjectItemSchema)
+var valiObjectTradeSideSchema = v16.object({
+  user_id: v16.number(),
+  item_ids: v16.array(valiObjectItemSchema)
 });
-var valiObjectTradeSchema = v15.object({
-  create_time: v15.number(),
-  reaction_time: v15.nullable(v15.number()),
-  status: v15.number(),
-  trade_id: v15.number(),
-  things_from: v15.array(valiObjectThingSchema),
-  things_to: v15.array(valiObjectThingSchema),
-  user_id_from: v15.number(),
-  user_id_to: v15.number()
+var valiObjectTradeSchema = v16.object({
+  create_time: v16.number(),
+  reaction_time: v16.nullable(v16.number()),
+  status: v16.number(),
+  trade_id: v16.number(),
+  things_from: v16.array(valiObjectThingSchema),
+  things_to: v16.array(valiObjectThingSchema),
+  user_id_from: v16.number(),
+  user_id_to: v16.number()
 });
-var valiObjectNewTradeSchema = v15.object({
-  trade_id: v15.number(),
-  status: v15.number(),
-  ts_created: v15.number(),
-  ts_completed: v15.nullable(v15.number()),
+var valiObjectNewTradeSchema = v16.object({
+  trade_id: v16.number(),
+  status: v16.number(),
+  ts_created: v16.number(),
+  ts_completed: v16.nullable(v16.number()),
   initiator: valiObjectTradeSideSchema,
   receiver: valiObjectTradeSideSchema
 });
-var valiObjectTradeListSchema = v15.object({
-  collections: v15.array(v15.number()),
-  qualities: v15.array(v15.number()),
-  item_ids_equipped: v15.optional(v15.array(v15.number())),
-  thing_types: v15.array(v15.number()),
-  trades: v15.array(valiObjectTradeSchema),
-  user_data: v15.array(valiObjectUserSchema)
+var valiObjectTradeListSchema = v16.object({
+  collections: v16.array(v16.number()),
+  qualities: v16.array(v16.number()),
+  item_ids_equipped: v16.optional(v16.array(v16.number())),
+  thing_types: v16.array(v16.number()),
+  trades: v16.array(valiObjectTradeSchema),
+  user_data: v16.array(valiObjectUserSchema)
 });
 
 // src/api/trades.ts
-import * as v16 from "valibot";
+import * as v17 from "valibot";
 class M1ApiTrades extends M1ApiBase {
   create(options) {
     const data = {
@@ -903,7 +918,7 @@ class M1ApiTrades extends M1ApiBase {
       data: {
         trade_id
       },
-      valiResponseSchema: v16.void()
+      valiResponseSchema: v17.void()
     });
   }
   decline(trade_id) {
@@ -913,7 +928,7 @@ class M1ApiTrades extends M1ApiBase {
       data: {
         trade_id
       },
-      valiResponseSchema: v16.void()
+      valiResponseSchema: v17.void()
     });
   }
   revoke(trade_id) {
@@ -923,7 +938,7 @@ class M1ApiTrades extends M1ApiBase {
       data: {
         trade_id
       },
-      valiResponseSchema: v16.void()
+      valiResponseSchema: v17.void()
     });
   }
   getIncoming(options) {
@@ -961,7 +976,7 @@ class M1ApiTrades extends M1ApiBase {
 }
 
 // src/api/users.ts
-import * as v17 from "valibot";
+import * as v18 from "valibot";
 function transformer(value) {
   const result = new Map;
   for (const user of value) {
@@ -969,10 +984,10 @@ function transformer(value) {
   }
   return result;
 }
-var valiApiResponseUsersGetSchema = v17.pipe(v17.array(valiObjectUserSchema), v17.transform(transformer));
-var valiApiResponseUsersGetShortSchema = v17.pipe(v17.array(valiObjectUserShortSchema), v17.transform(transformer));
-var valiApiResponseUsersGetOneSchema = v17.pipe(v17.array(valiObjectUserSchema), v17.transform((value) => value[0]));
-var valiApiResponseUsersGetShortOneSchema = v17.pipe(v17.array(valiObjectUserShortSchema), v17.transform((value) => value[0]));
+var valiApiResponseUsersGetSchema = v18.pipe(v18.array(valiObjectUserSchema), v18.transform(transformer));
+var valiApiResponseUsersGetShortSchema = v18.pipe(v18.array(valiObjectUserShortSchema), v18.transform(transformer));
+var valiApiResponseUsersGetOneSchema = v18.pipe(v18.array(valiObjectUserSchema), v18.transform((value) => value[0]));
+var valiApiResponseUsersGetShortOneSchema = v18.pipe(v18.array(valiObjectUserShortSchema), v18.transform((value) => value[0]));
 
 class M1ApiUsers extends M1ApiBase {
   get(arg0, arg1) {
