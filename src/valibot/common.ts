@@ -1,4 +1,4 @@
-import { optional, picklist, transform, pipe } from 'valibot';
+import * as v from 'valibot';
 
 /**
  * Creates bit schema.
@@ -6,8 +6,8 @@ import { optional, picklist, transform, pipe } from 'valibot';
  * @returns -
  */
 export function bit(default_value: 0 | 1) {
-	return pipe(
-		optional(picklist([0, 1]), default_value),
-		transform((value) => value === 1),
+	return v.pipe(
+		v.optional(v.picklist([0, 1]), default_value),
+		v.transform((value) => value === 1),
 	);
 }

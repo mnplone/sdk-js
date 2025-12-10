@@ -1,4 +1,4 @@
-import { test, expect, describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 
 const BOT_USER_ID = Number.parseInt(process.env.TEST_BOT_USER_ID ?? '112426');
@@ -26,9 +26,7 @@ describe('users.get', () => {
 			const response = await sdk.users.get(1, { short: true });
 			expect(response.request.data.type).toBe('short');
 			expect(response.data.user_id).toBe(1);
-
-			// @ts-expect-error yep we know it should be undefined
-			expect(response.data.nicks_old).toBeUndefined();
+			expect('nicks_old' in response.data).toBe(false);
 		});
 
 		test('bot', async () => {
@@ -37,8 +35,7 @@ describe('users.get', () => {
 				expect(response.data.bot).toStrictEqual({
 					owner_user_id: 1,
 				});
-				// @ts-expect-error yep we know it should be undefined
-				expect(response.data.bot_owner).toBeUndefined();
+				expect('bot_owner' in response.data).toBe(false);
 			}
 		});
 

@@ -6,11 +6,12 @@ import {
   M1ApiGchat,
   M1ApiIm,
   M1ApiInventory,
+  M1ApiOauth,
   M1ApiTrades,
   M1ApiUsers,
   maskString,
   parseWithNotice
-} from "./main-t1s2m1sq.js";
+} from "./main-n9qg1nyf.js";
 
 // src/hooks/session-refresh.ts
 var sessionRefreshHook = async function(options, data) {
@@ -41,7 +42,7 @@ import { ExtWSClient } from "@extws/client";
 import * as v from "valibot";
 var IS_TEST = false;
 var apiResponseParser = v.parser(v.object({
-  code: v.pipe(v.number(), v.minValue(0))
+  code: v.optional(v.pipe(v.number(), v.minValue(0)), 0)
 }));
 
 class M1 {
@@ -54,6 +55,7 @@ class M1 {
   gchat = new M1ApiGchat(this);
   im = new M1ApiIm(this);
   inventory = new M1ApiInventory(this);
+  oauth = new M1ApiOauth(this);
   trades = new M1ApiTrades(this);
   users = new M1ApiUsers(this);
   constructor(options) {
@@ -120,9 +122,14 @@ class M1 {
     }
     const { code } = apiResponseParser(response_data);
     if (code === 0) {
-      const { data: data2 } = parseWithNotice(v.object({
-        data: options.valiResponseSchema
-      }), response_data);
+      const { data: data2 } = parseWithNotice(v.pipe(v.object({
+        data: v.optional(options.valiResponseSchema),
+        result: v.optional(options.valiResponseSchema)
+      }), v.check((input) => !(input.data && input.result) || input.data === undefined && input.result === undefined), v.transform((input) => {
+        return {
+          data: input.data ?? input.result
+        };
+      })), response_data);
       return {
         success: true,
         data: data2,

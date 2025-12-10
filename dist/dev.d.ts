@@ -1,46 +1,26 @@
-import { M as M1ApiBase, A as ApiResponse, S as Session } from './auth-CZ2sRJsM.js';
-export { C as CallMethodOptions, j as CallMethodResponse, V as Dialog, G as GchatMessage, aw as Item, at as ItemProto, au as ItemShort, an as ItemVariant, a as M1ApiAuth, b as M1ApiBots, c as M1ApiData, d as M1ApiFriends, e as M1ApiGchat, f as M1ApiIm, g as M1ApiInventory, h as M1ApiTrades, i as M1ApiUsers, W as Message, aD as ObjectNewTrade, aB as ObjectTrade, az as ObjectTradeId, aF as ObjectTradeList, R as RequestOptions, t as ResponseFriendsGet, m as ResponseFriendsGetBase, w as ResponseFriendsGetRequests, y as ResponseFriendsGetRequestsShort, q as ResponseFriendsGetShort, s as ResponseFriendsGetShortWithUser, o as ResponseFriendsGetWithUser, F as ResponseGchatGet, I as ResponseGchatSend, Q as ResponseImDialogsGet, U as ResponseImHistoryGet, P as ResponseImSend, Y as ResponseInventoryCraft, al as ResponseInventoryGet, _ as ResponseInventoryGetBase, a0 as ResponseInventoryGetLegacy, ae as ResponseInventoryGetLegacyWithEquippedArray, ag as ResponseInventoryGetLegacyWithEquippedTree, a4 as ResponseInventoryGetLegacyWithUser, ai as ResponseInventoryGetLegacyWithUserAndEquippedArray, ak as ResponseInventoryGetLegacyWithUserAndEquippedTree, a6 as ResponseInventoryGetWithEquippedArray, a8 as ResponseInventoryGetWithEquippedTree, a2 as ResponseInventoryGetWithUser, aa as ResponseInventoryGetWithUserAndEquippedArray, ac as ResponseInventoryGetWithUserAndEquippedTree, ar as Thing, ap as ThingPrototype, T as TotpSessionToken, aL as User, aM as UserShort, aI as valiObjectActiveUserSchema, aG as valiObjectActiveUserShortSchema, L as valiObjectDialogSchema, B as valiObjectGchatMessageAdditionalDataSchema, z as valiObjectGchatMessageBaseSchema, D as valiObjectGchatMessageSchema, aH as valiObjectInactiveUserSchema, ax as valiObjectItemProtoLegacySchema, as as valiObjectItemProtoSchema, av as valiObjectItemSchema, am as valiObjectItemVariantSchema, K as valiObjectMessageSchema, aC as valiObjectNewTradeSchema, v as valiObjectSessionSchema, ao as valiObjectThingPrototypeSchema, aq as valiObjectThingSchema, ay as valiObjectTradeIdSchema, aE as valiObjectTradeListSchema, aA as valiObjectTradeSchema, aK as valiObjectUserSchema, aJ as valiObjectUserShortSchema, l as valiResponseFriendsGetBaseSchema, u as valiResponseFriendsGetRequestsSchema, x as valiResponseFriendsGetRequestsShortSchema, p as valiResponseFriendsGetShortSchema, r as valiResponseFriendsGetShortWithUserSchema, n as valiResponseFriendsGetWithUserSchema, E as valiResponseGchatGetSchema, H as valiResponseGchatSendSchema, N as valiResponseImDialogsGetSchema, O as valiResponseImHistoryGetSchema, J as valiResponseImSendSchema, X as valiResponseInventoryCraftSchema, Z as valiResponseInventoryGetBaseSchema, $ as valiResponseInventoryGetLegacySchema, ad as valiResponseInventoryGetLegacyWithEquippedArraySchema, af as valiResponseInventoryGetLegacyWithEquippedTreeSchema, ah as valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema, aj as valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema, a3 as valiResponseInventoryGetLegacyWithUserSchema, a5 as valiResponseInventoryGetWithEquippedArraySchema, a7 as valiResponseInventoryGetWithEquippedTreeSchema, a9 as valiResponseInventoryGetWithUserAndEquippedArraySchema, ab as valiResponseInventoryGetWithUserAndEquippedTreeSchema, a1 as valiResponseInventoryGetWithUserSchema, k as valiResponseTotpSessionTokenSchema } from './auth-CZ2sRJsM.js';
+export { C as CallMethodOptions, k as CallMethodResponse, P as Dialog, G as GchatMessage, aw as Item, at as ItemProto, au as ItemShort, an as ItemVariant, M as M1ApiAuth, a as M1ApiBase, b as M1ApiBots, c as M1ApiData, d as M1ApiFriends, e as M1ApiGchat, f as M1ApiIm, g as M1ApiInventory, h as M1ApiOauth, i as M1ApiTrades, j as M1ApiUsers, N as Message, aD as ObjectNewTrade, aB as ObjectTrade, az as ObjectTradeId, aF as ObjectTradeList, R as RequestOptions, u as ResponseFriendsGet, n as ResponseFriendsGetBase, x as ResponseFriendsGetRequests, z as ResponseFriendsGetRequestsShort, r as ResponseFriendsGetShort, t as ResponseFriendsGetShortWithUser, p as ResponseFriendsGetWithUser, F as ResponseGchatGet, I as ResponseGchatSend, U as ResponseImDialogsGet, W as ResponseImHistoryGet, K as ResponseImSend, Y as ResponseInventoryCraft, al as ResponseInventoryGet, _ as ResponseInventoryGetBase, a0 as ResponseInventoryGetLegacy, ae as ResponseInventoryGetLegacyWithEquippedArray, ag as ResponseInventoryGetLegacyWithEquippedTree, a4 as ResponseInventoryGetLegacyWithUser, ai as ResponseInventoryGetLegacyWithUserAndEquippedArray, ak as ResponseInventoryGetLegacyWithUserAndEquippedTree, a6 as ResponseInventoryGetWithEquippedArray, a8 as ResponseInventoryGetWithEquippedTree, a2 as ResponseInventoryGetWithUser, aa as ResponseInventoryGetWithUserAndEquippedArray, ac as ResponseInventoryGetWithUserAndEquippedTree, S as Session, ar as Thing, ap as ThingPrototype, T as TotpSessionToken, aL as User, aM as UserShort, aI as valiObjectActiveUserSchema, aG as valiObjectActiveUserShortSchema, O as valiObjectDialogSchema, B as valiObjectGchatMessageAdditionalDataSchema, A as valiObjectGchatMessageBaseSchema, D as valiObjectGchatMessageSchema, aH as valiObjectInactiveUserSchema, ax as valiObjectItemProtoLegacySchema, as as valiObjectItemProtoSchema, av as valiObjectItemSchema, am as valiObjectItemVariantSchema, L as valiObjectMessageSchema, aC as valiObjectNewTradeSchema, v as valiObjectSessionSchema, ao as valiObjectThingPrototypeSchema, aq as valiObjectThingSchema, ay as valiObjectTradeIdSchema, aE as valiObjectTradeListSchema, aA as valiObjectTradeSchema, aK as valiObjectUserSchema, aJ as valiObjectUserShortSchema, m as valiResponseFriendsGetBaseSchema, w as valiResponseFriendsGetRequestsSchema, y as valiResponseFriendsGetRequestsShortSchema, q as valiResponseFriendsGetShortSchema, s as valiResponseFriendsGetShortWithUserSchema, o as valiResponseFriendsGetWithUserSchema, E as valiResponseGchatGetSchema, H as valiResponseGchatSendSchema, Q as valiResponseImDialogsGetSchema, V as valiResponseImHistoryGetSchema, J as valiResponseImSendSchema, X as valiResponseInventoryCraftSchema, Z as valiResponseInventoryGetBaseSchema, $ as valiResponseInventoryGetLegacySchema, ad as valiResponseInventoryGetLegacyWithEquippedArraySchema, af as valiResponseInventoryGetLegacyWithEquippedTreeSchema, ah as valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema, aj as valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema, a3 as valiResponseInventoryGetLegacyWithUserSchema, a5 as valiResponseInventoryGetWithEquippedArraySchema, a7 as valiResponseInventoryGetWithEquippedTreeSchema, a9 as valiResponseInventoryGetWithUserAndEquippedArraySchema, ab as valiResponseInventoryGetWithUserAndEquippedTreeSchema, a1 as valiResponseInventoryGetWithUserSchema, l as valiResponseTotpSessionTokenSchema } from './auth-Cm_waNNc.js';
 import * as v from 'valibot';
-import { InferOutput } from 'valibot';
 import '@extws/client';
 import 'type-fest';
-
-declare class M1ApiOauth extends M1ApiBase {
-    /**
-     * Exchange a code for a session
-     * @param options - The parameters for the exchange
-     * @param options.app_id - The app ID
-     * @param options.app_secret - The app secret
-     * @param options.code - The code
-     * @param options.redirect_uri - The redirect URI
-     * @returns Session object
-     */
-    exchangeCode(options: {
-        app_id: number;
-        app_secret: string;
-        code: string;
-        redirect_uri: string;
-    }): Promise<ApiResponse<Session>>;
-}
 
 declare const valiObjectPropertyTitleSchema: v.ObjectSchema<{
     readonly id: v.NumberSchema<undefined>;
     readonly title: v.StringSchema<undefined>;
 }, undefined>;
-type ObjectPropertyTitle = InferOutput<typeof valiObjectPropertyTitleSchema>;
+type ObjectPropertyTitle = v.InferOutput<typeof valiObjectPropertyTitleSchema>;
 declare const valiObjectCollectionSchema: v.ObjectSchema<{
     readonly collection_id: v.NumberSchema<undefined>;
     readonly id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     readonly title: v.StringSchema<undefined>;
 }, undefined>;
-type ObjectCollection = InferOutput<typeof valiObjectCollectionSchema>;
+type ObjectCollection = v.InferOutput<typeof valiObjectCollectionSchema>;
 declare const valiObjectQualitySchema: v.ObjectSchema<{
     readonly id: v.NumberSchema<undefined>;
     readonly title: v.StringSchema<undefined>;
     readonly coeff_rent: v.NumberSchema<undefined>;
     readonly color: v.StringSchema<undefined>;
 }, undefined>;
-type ObjectQuality = InferOutput<typeof valiObjectQualitySchema>;
+type ObjectQuality = v.InferOutput<typeof valiObjectQualitySchema>;
 declare const valiResponseDataSearchItemProtosSchema: v.SchemaWithPipe<readonly [v.ObjectSchema<{
     readonly item_protos: v.ArraySchema<v.ObjectSchema<{
         readonly item_proto_id: v.NumberSchema<undefined>;
@@ -199,6 +179,6 @@ declare const valiResponseDataSearchItemProtosSchema: v.SchemaWithPipe<readonly 
         title: string;
     }>;
 }>]>;
-type ResponseDataSearchItemProtos = InferOutput<typeof valiResponseDataSearchItemProtosSchema>;
+type ResponseDataSearchItemProtos = v.InferOutput<typeof valiResponseDataSearchItemProtosSchema>;
 
-export { M1ApiBase, M1ApiOauth, type ObjectCollection, type ObjectPropertyTitle, type ObjectQuality, type ResponseDataSearchItemProtos, Session, valiObjectCollectionSchema, valiObjectPropertyTitleSchema, valiObjectQualitySchema, valiResponseDataSearchItemProtosSchema };
+export { type ObjectCollection, type ObjectPropertyTitle, type ObjectQuality, type ResponseDataSearchItemProtos, valiObjectCollectionSchema, valiObjectPropertyTitleSchema, valiObjectQualitySchema, valiResponseDataSearchItemProtosSchema };

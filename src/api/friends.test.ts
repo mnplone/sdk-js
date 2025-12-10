@@ -12,8 +12,7 @@ describe('friends.getRequests', () => {
 		if (response.data.requests.length > 0) {
 			const user = response.data.requests[0];
 			if (user.inactive === undefined) {
-				// @ts-expect-error yep we know it should be undefined
-				expect(user.games).toBe(undefined);
+				expect('games' in user).toBe(false);
 			}
 		}
 
@@ -37,8 +36,7 @@ describe('friends.get', () => {
 		const first_friend = response.data.friends?.[0];
 
 		if (first_friend && first_friend.inactive === undefined) {
-			// @ts-expect-error yep, same
-			expect(first_friend.games).toBeUndefined(); // user to be short
+			expect('games' in first_friend).toBe(false); // user to be short
 			expect(first_friend.online).toBe(true);
 			expect(response.data.user).toBeDefined();
 		}

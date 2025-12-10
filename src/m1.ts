@@ -7,6 +7,7 @@ import { M1ApiFriends } from './api/friends.js';
 import { M1ApiGchat } from './api/gchat.js';
 import { M1ApiIm } from './api/im.js';
 import { M1ApiInventory } from './api/inventory.js';
+import { M1ApiOauth } from './api/oauth.js';
 import { M1ApiTrades } from './api/trades.js';
 import { M1ApiUsers } from './api/users.js';
 import type { M1ApiResponseHooks } from './hooks.js';
@@ -79,7 +80,7 @@ type M1Options = {
 
 const apiResponseParser = v.parser(
 	v.object({
-		code: v.pipe(v.number(), v.minValue(0)),
+		code: v.optional(v.pipe(v.number(), v.minValue(0)), 0),
 	}),
 );
 
@@ -103,6 +104,7 @@ export class M1 {
 	gchat = new M1ApiGchat(this);
 	im = new M1ApiIm(this);
 	inventory = new M1ApiInventory(this);
+	oauth = new M1ApiOauth(this);
 	trades = new M1ApiTrades(this);
 	users = new M1ApiUsers(this);
 
@@ -149,6 +151,7 @@ export class M1 {
 	 * @param options.valiErrorDataSchema - Error data validator.
 	 * @returns - API response.
 	 */
+	// eslint-disable-next-line max-lines-per-function
 	async callMethod<
 		ValiResponseSchema extends ValiBaseSchema,
 		ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
@@ -215,9 +218,22 @@ export class M1 {
 
 		if (code === 0) {
 			const { data } = parseWithNotice(
-				v.object({
-					data: options.valiResponseSchema as ValiBaseSchema,
-				}),
+				v.pipe(
+					v.object({
+						data: v.optional(options.valiResponseSchema as ValiBaseSchema),
+						result: v.optional(options.valiResponseSchema as ValiBaseSchema),
+					}),
+					v.check(
+						(input) =>
+							!(input.data && input.result)
+							|| (input.data === undefined && input.result === undefined),
+					),
+					v.transform((input) => {
+						return {
+							data: input.data ?? input.result,
+						};
+					}),
+				),
 				response_data,
 			);
 

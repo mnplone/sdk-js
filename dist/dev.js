@@ -7,6 +7,7 @@ import {
   M1ApiGchat,
   M1ApiIm,
   M1ApiInventory,
+  M1ApiOauth,
   M1ApiTrades,
   M1ApiUsers,
   valiObjectActiveUserSchema,
@@ -59,18 +60,7 @@ import {
   valiResponseInventoryGetWithUserAndEquippedTreeSchema,
   valiResponseInventoryGetWithUserSchema,
   valiResponseTotpSessionTokenSchema
-} from "./main-t1s2m1sq.js";
-// src/api/oauth.ts
-class M1ApiOauth extends M1ApiBase {
-  exchangeCode(options) {
-    return this.baseClient.callMethod({
-      http_method: "POST",
-      api_method: "oauth.exchangeCode",
-      data: options,
-      valiResponseSchema: valiObjectSessionSchema
-    });
-  }
-}
+} from "./main-n9qg1nyf.js";
 export {
   valiResponseTotpSessionTokenSchema,
   valiResponseInventoryGetWithUserSchema,

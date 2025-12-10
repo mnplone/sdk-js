@@ -1,15 +1,23 @@
 import * as v from 'valibot';
-import { M1ApiBase } from './base.js';
-import { type ApiResponse } from '../types.js';
 import type { CallMethodOptionsData } from '../m1.js';
+import { type ApiResponse } from '../types.js';
 import {
-	valiObjectTradeIdSchema,
-	valiObjectTradeListSchema,
 	type ObjectTradeId,
 	type ObjectTradeList,
+	valiObjectTradeIdSchema,
+	valiObjectTradeListSchema,
 } from '../valibot/trades.js';
+import { M1ApiBase } from './base.js';
 
 export class M1ApiTrades extends M1ApiBase {
+	/**
+	 * Create trade.
+	 * @param options -
+	 * @param options.item_ids_offer -
+	 * @param options.item_ids_request -
+	 * @param options.user_id -
+	 * @returns =
+	 */
 	create(options: {
 		item_ids_offer?: number[];
 		item_ids_request?: number[];
@@ -35,6 +43,11 @@ export class M1ApiTrades extends M1ApiBase {
 		});
 	}
 
+	/**
+	 * Accept incoming trade.
+	 * @param trade_id -
+	 * @returns =
+	 */
 	accept(trade_id: number): Promise<ApiResponse<void>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -46,6 +59,11 @@ export class M1ApiTrades extends M1ApiBase {
 		});
 	}
 
+	/**
+	 * Decline incoming trade.
+	 * @param trade_id -
+	 * @returns =
+	 */
 	decline(trade_id: number): Promise<ApiResponse<void>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -57,6 +75,11 @@ export class M1ApiTrades extends M1ApiBase {
 		});
 	}
 
+	/**
+	 * Revoke outgoing trade.
+	 * @param trade_id -
+	 * @returns =
+	 */
 	revoke(trade_id: number): Promise<ApiResponse<void>> {
 		return this.baseClient.callMethod({
 			http_method: 'POST',
@@ -68,6 +91,13 @@ export class M1ApiTrades extends M1ApiBase {
 		});
 	}
 
+	/**
+	 * Returns list of incoming trades.
+	 * @param options -
+	 * @param options.offset -
+	 * @param options.count -
+	 * @returns =
+	 */
 	getIncoming(options: {
 		offset?: number;
 		count?: number;
@@ -80,6 +110,13 @@ export class M1ApiTrades extends M1ApiBase {
 		});
 	}
 
+	/**
+	 * Returns list of outgoing trades.
+	 * @param options -
+	 * @param options.offset -
+	 * @param options.count -
+	 * @returns =
+	 */
 	getOutgoing(options: {
 		offset?: number;
 		count?: number;
@@ -104,7 +141,7 @@ export class M1ApiTrades extends M1ApiBase {
 		count?: number;
 	}): Promise<ApiResponse<ObjectTradeList>>;
 	/**
-	 * Get the history of trades.
+	 * Get the history of trades specified user.
 	 * @param user_id - The user ID.
 	 * @param options -
 	 * @param options.count - The count of trades to return.
