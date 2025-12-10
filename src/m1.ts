@@ -14,7 +14,10 @@ import type { M1ApiResponseHooks } from './hooks.js';
 import { type ValiBaseSchema } from './types.js';
 import { maskString, parseWithNotice } from './utils.js';
 
-const IS_TEST = process.env.NODE_ENV === 'test';
+const IS_TEST =
+	('process' in globalThis && globalThis.process.env.NODE_ENV === 'test')
+	|| ('localStorage' in globalThis // eslint-disable-next-line n/no-unsupported-features/node-builtins
+		&& globalThis.localStorage.getItem('test') === '1');
 
 export type CallMethodOptionsData = Record<
 	string,
@@ -208,13 +211,19 @@ export class M1 {
 		const response = await fetch(url, request_init);
 
 		const response_data = await response.json();
-
-		if (IS_TEST && response_data.success === false) {
-			// oxlint-disable-next-line no-console
-			console.dir(response_data, { depth: null });
+		if (IS_TEST) {
+			console.log('response_data:', response_data);
 		}
 
+		// if (IS_TEST && response_data.success === false) {
+		// 	// oxlint-disable-next-line no-console
+		// 	console.dir(response_data, { depth: null });
+		// }
+
 		const { code } = apiResponseParser(response_data);
+		if (IS_TEST) {
+			console.log('code:', code);
+		}
 
 		if (code === 0) {
 			const { data } = parseWithNotice(

@@ -40,7 +40,7 @@ var sessionRefreshHook = async function(options, data) {
 // src/m1.ts
 import { ExtWSClient } from "@extws/client";
 import * as v from "valibot";
-var IS_TEST = false;
+var IS_TEST = "process" in globalThis && globalThis.process.env.NODE_ENV === "test" || "localStorage" in globalThis && globalThis.localStorage.getItem("test") === "1";
 var apiResponseParser = v.parser(v.object({
   code: v.optional(v.pipe(v.number(), v.minValue(0)), 0)
 }));
@@ -117,10 +117,13 @@ class M1 {
     }
     const response = await fetch(url, request_init);
     const response_data = await response.json();
-    if (IS_TEST && response_data.success === false) {
-      console.dir(response_data, { depth: null });
+    if (IS_TEST) {
+      console.log("response_data:", response_data);
     }
     const { code } = apiResponseParser(response_data);
+    if (IS_TEST) {
+      console.log("code:", code);
+    }
     if (code === 0) {
       const { data: data2 } = parseWithNotice(v.pipe(v.object({
         data: v.optional(options.valiResponseSchema),
