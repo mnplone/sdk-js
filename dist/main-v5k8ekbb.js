@@ -370,7 +370,7 @@ var valiObjectInactiveUserSchema = v9.object({
   online: absent(false),
   vip: absent(false),
   moderator: absent(false),
-  muted: absent(false)
+  muted: absent(true)
 });
 var valiObjectActiveUserSchema = v9.pipe(v9.object({
   ...valiInputActiveUserShortSchema.entries,

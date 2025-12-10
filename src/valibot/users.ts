@@ -74,7 +74,7 @@ export const valiObjectInactiveUserSchema = v.object({
 	online: vex.absent(false),
 	vip: vex.absent(false),
 	moderator: vex.absent(false),
-	muted: vex.absent(false),
+	muted: vex.absent(true),
 });
 
 export const valiObjectActiveUserSchema = v.pipe(
