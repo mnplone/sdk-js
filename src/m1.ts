@@ -15,9 +15,11 @@ import { type ValiBaseSchema } from './types.js';
 import { maskString, parseWithNotice } from './utils.js';
 
 const IS_TEST =
-	('process' in globalThis && globalThis.process.env.NODE_ENV === 'test')
+	'process' in globalThis && globalThis.process.env.NODE_ENV === 'test';
+const IS_DEBUG =
+	('process' in globalThis && globalThis.process.env.DEBUG === '1')
 	|| ('localStorage' in globalThis // eslint-disable-next-line n/no-unsupported-features/node-builtins
-		&& globalThis.localStorage.getItem('test') === '1');
+		&& globalThis.localStorage.getItem('m1-sdk-debug') === '1');
 
 export type CallMethodOptionsData = Record<
 	string,
@@ -154,7 +156,7 @@ export class M1 {
 	 * @param options.valiErrorDataSchema - Error data validator.
 	 * @returns - API response.
 	 */
-	// eslint-disable-next-line max-lines-per-function
+	// eslint-disable-next-line max-lines-per-function, max-statements
 	async callMethod<
 		ValiResponseSchema extends ValiBaseSchema,
 		ValiErrorDataSchema extends ValiBaseSchema | undefined = undefined,
@@ -211,18 +213,20 @@ export class M1 {
 		const response = await fetch(url, request_init);
 
 		const response_data = await response.json();
-		if (IS_TEST) {
-			console.log('response_data:', response_data);
+		if (IS_DEBUG) {
+			// oxlint-disable-next-line no-console
+			console.info('response_data:', response_data);
 		}
 
-		// if (IS_TEST && response_data.success === false) {
-		// 	// oxlint-disable-next-line no-console
-		// 	console.dir(response_data, { depth: null });
-		// }
+		if (IS_TEST && response_data.success === false) {
+			// oxlint-disable-next-line no-console
+			console.dir(response_data, { depth: null });
+		}
 
 		const { code } = apiResponseParser(response_data);
-		if (IS_TEST) {
-			console.log('code:', code);
+		if (IS_DEBUG) {
+			// oxlint-disable-next-line no-console
+			console.info('code:', code);
 		}
 
 		if (code === 0) {
