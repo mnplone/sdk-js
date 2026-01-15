@@ -100,6 +100,11 @@ declare const valiObjectThingSchema: v.ObjectSchema<{
         readonly user_id: v.NumberSchema<undefined>;
         readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
     }, undefined>, undefined>;
+    readonly gift: v.OptionalSchema<v.ObjectSchema<{
+        readonly from_user_id: v.NumberSchema<undefined>;
+        readonly to_user_id: v.NumberSchema<undefined>;
+        readonly ts: v.NumberSchema<undefined>;
+    }, undefined>, undefined>;
     readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
         readonly transactions: v.NumberSchema<undefined>;
         readonly money_inside: v.NumberSchema<undefined>;
@@ -212,6 +217,11 @@ declare const valiObjectItemShortSchema: v.ObjectSchema<{
         readonly user_id: v.NumberSchema<undefined>;
         readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
     }, undefined>, undefined>;
+    readonly gift: v.OptionalSchema<v.ObjectSchema<{
+        readonly from_user_id: v.NumberSchema<undefined>;
+        readonly to_user_id: v.NumberSchema<undefined>;
+        readonly ts: v.NumberSchema<undefined>;
+    }, undefined>, undefined>;
     readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
     readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
     readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -283,6 +293,11 @@ declare const valiObjectItemSchema: v.ObjectSchema<{
     readonly autograph: v.OptionalSchema<v.ObjectSchema<{
         readonly user_id: v.NumberSchema<undefined>;
         readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+    }, undefined>, undefined>;
+    readonly gift: v.OptionalSchema<v.ObjectSchema<{
+        readonly from_user_id: v.NumberSchema<undefined>;
+        readonly to_user_id: v.NumberSchema<undefined>;
+        readonly ts: v.NumberSchema<undefined>;
     }, undefined>, undefined>;
     readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
     readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -657,6 +672,11 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
             }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
+            }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
                 readonly money_inside: v.NumberSchema<undefined>;
@@ -761,6 +781,11 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -864,6 +889,11 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -972,6 +1002,11 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1106,6 +1141,11 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1199,545 +1239,10 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
             }, undefined>, undefined>;
-            readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
-                readonly transactions: v.NumberSchema<undefined>;
-                readonly money_inside: v.NumberSchema<undefined>;
-            }, undefined>, v.ObjectSchema<{
-                readonly numbers: v.ArraySchema<v.NumberSchema<undefined>, undefined>;
-            }, undefined>, v.ObjectSchema<{
-                readonly count: v.NumberSchema<undefined>;
-            }, undefined>], undefined>, undefined>;
-            readonly uses_left: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            readonly uses_origin: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
-                readonly id: v.NumberSchema<undefined>;
-                readonly is_default: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-                readonly is_selected: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-                readonly is_unlocked: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-                readonly image: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
-                readonly description: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
-                readonly unlock: v.OptionalSchema<v.ObjectSchema<{
-                    readonly moneybox: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-                    readonly buy_tokens_sp: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-                    readonly buy_tokens_cmpt: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-                }, undefined>, undefined>;
-            }, undefined>, undefined>, undefined>;
-            readonly thing_prototype_id: v.NumberSchema<undefined>;
-            readonly thing_prototype_status: v.NumberSchema<undefined>;
-            readonly thing_type: v.NumberSchema<undefined>;
-            readonly image: v.StringSchema<undefined>;
-            readonly title: v.StringSchema<undefined>;
-            readonly description: v.StringSchema<undefined>;
-            readonly group: v.OptionalSchema<v.SchemaWithPipe<readonly [v.NullableSchema<v.NumberSchema<undefined>, undefined>, v.TransformAction<number | null, number | undefined>]>, undefined>;
-            readonly quality: v.NumberSchema<undefined>;
-            readonly collection: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            readonly twin_thing_prototype_id: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
-            readonly delete_price: v.OptionalSchema<v.NullableSchema<v.NumberSchema<undefined>, undefined>, undefined>;
-            readonly can_be_upgraded: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-            readonly buy_cost: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            readonly key: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            readonly cases: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
-            readonly drop: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
-                readonly thing_prototype_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-                readonly hidden: v.OptionalSchema<v.BooleanSchema<undefined>, undefined>;
-                readonly is_primary: v.OptionalSchema<v.BooleanSchema<undefined>, undefined>;
-                readonly is_rare: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-                readonly is_secondary: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            }, undefined>, undefined>, undefined>;
-        }, undefined>, undefined>;
-        readonly friendship: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly muted: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-        readonly mfp_ban_history: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
-            readonly type: v.LiteralSchema<0, undefined>;
-            readonly count: v.NumberSchema<undefined>;
-            readonly ts_last_ban: v.NumberSchema<undefined>;
-            readonly ts_end: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        }, undefined>, v.ObjectSchema<{
-            readonly type: v.LiteralSchema<1, undefined>;
-            readonly ts_end: v.NumberSchema<undefined>;
-        }, undefined>], undefined>, undefined>;
-        readonly user_id: v.NumberSchema<undefined>;
-        readonly domain: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
-        readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
-        readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-        readonly nick: v.StringSchema<undefined>;
-        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-        readonly current_game: v.OptionalSchema<v.ObjectSchema<{
-            readonly gs_id: v.StringSchema<undefined>;
-            readonly gs_game_id: v.StringSchema<undefined>;
-        }, undefined>, undefined>;
-        readonly rank: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
-            readonly hidden: v.LiteralSchema<1, undefined>;
-        }, undefined>, v.ObjectSchema<{
-            readonly qual: v.NumberSchema<undefined>;
-        }, undefined>, v.ObjectSchema<{
-            readonly expired: v.LiteralSchema<1, undefined>;
-        }, undefined>, v.ObjectSchema<{
-            readonly id: v.NumberSchema<undefined>;
-            readonly pts: v.NumberSchema<undefined>;
-        }, undefined>], undefined>, undefined>;
-        readonly vip: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-        readonly bot: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-        readonly bot_owner: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly moderator: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
-    }, undefined>, v.TransformAction<{
-        nicks_old: string[];
-        profile_cover?: string | undefined;
-        social_vk?: number | undefined;
-        social_discord?: string | undefined;
-        social_twitch?: string | undefined;
-        games?: number | undefined;
-        games_wins?: number | undefined;
-        xp?: number | undefined;
-        xp_level?: number | undefined;
-        badge?: {
-            thing_id: number;
-            user_id: number;
-            owned_time: number;
-            can_give?: number | undefined;
-            can_sell?: number | undefined;
-            souvenir?: string | undefined;
-            autograph?: {
-                user_id: number;
-                text?: string | undefined;
-            } | undefined;
-            moneybox?: {
-                transactions: number;
-                money_inside: number;
-            } | {
-                numbers: number[];
-            } | {
-                count: number;
-            } | undefined;
-            uses_left?: number | undefined;
-            uses_origin?: number | undefined;
-            variants?: {
-                id: number;
-                is_default: boolean;
-                is_selected: boolean;
-                is_unlocked: boolean;
-                image?: string | undefined;
-                description?: string | undefined;
-                unlock?: {
-                    moneybox?: number | undefined;
-                    buy_tokens_sp?: number | undefined;
-                    buy_tokens_cmpt?: number | undefined;
-                } | undefined;
-            }[] | undefined;
-            thing_prototype_id: number;
-            thing_prototype_status: number;
-            thing_type: number;
-            image: string;
-            title: string;
-            description: string;
-            group?: number | undefined;
-            quality: number;
-            collection?: number | undefined;
-            twin_thing_prototype_id?: number[] | undefined;
-            delete_price?: number | null | undefined;
-            can_be_upgraded: boolean;
-            buy_cost?: number | undefined;
-            key?: number | undefined;
-            cases?: number[] | undefined;
-            drop?: {
-                thing_prototype_id?: number | undefined;
-                hidden?: boolean | undefined;
-                is_primary?: boolean | undefined;
-                is_rare?: number | undefined;
-                is_secondary?: number | undefined;
-            }[] | undefined;
-        } | undefined;
-        friendship?: number | undefined;
-        muted: boolean;
-        mfp_ban_history?: {
-            type: 0;
-            count: number;
-            ts_last_ban: number;
-            ts_end?: number | undefined;
-        } | {
-            type: 1;
-            ts_end: number;
-        } | undefined;
-        user_id: number;
-        domain?: string | undefined;
-        inactive?: undefined;
-        approved: boolean;
-        nick: string;
-        gender: 0 | 1;
-        avatar: string;
-        online: boolean;
-        current_game?: {
-            gs_id: string;
-            gs_game_id: string;
-        } | undefined;
-        rank?: {
-            hidden: 1;
-        } | {
-            qual: number;
-        } | {
-            expired: 1;
-        } | {
-            id: number;
-            pts: number;
-        } | undefined;
-        vip: boolean;
-        bot: boolean;
-        bot_owner?: number | undefined;
-        moderator: boolean;
-    }, Omit<{
-        nicks_old: string[];
-        profile_cover?: string | undefined;
-        social_vk?: number | undefined;
-        social_discord?: string | undefined;
-        social_twitch?: string | undefined;
-        games?: number | undefined;
-        games_wins?: number | undefined;
-        xp?: number | undefined;
-        xp_level?: number | undefined;
-        badge?: {
-            thing_id: number;
-            user_id: number;
-            owned_time: number;
-            can_give?: number | undefined;
-            can_sell?: number | undefined;
-            souvenir?: string | undefined;
-            autograph?: {
-                user_id: number;
-                text?: string | undefined;
-            } | undefined;
-            moneybox?: {
-                transactions: number;
-                money_inside: number;
-            } | {
-                numbers: number[];
-            } | {
-                count: number;
-            } | undefined;
-            uses_left?: number | undefined;
-            uses_origin?: number | undefined;
-            variants?: {
-                id: number;
-                is_default: boolean;
-                is_selected: boolean;
-                is_unlocked: boolean;
-                image?: string | undefined;
-                description?: string | undefined;
-                unlock?: {
-                    moneybox?: number | undefined;
-                    buy_tokens_sp?: number | undefined;
-                    buy_tokens_cmpt?: number | undefined;
-                } | undefined;
-            }[] | undefined;
-            thing_prototype_id: number;
-            thing_prototype_status: number;
-            thing_type: number;
-            image: string;
-            title: string;
-            description: string;
-            group?: number | undefined;
-            quality: number;
-            collection?: number | undefined;
-            twin_thing_prototype_id?: number[] | undefined;
-            delete_price?: number | null | undefined;
-            can_be_upgraded: boolean;
-            buy_cost?: number | undefined;
-            key?: number | undefined;
-            cases?: number[] | undefined;
-            drop?: {
-                thing_prototype_id?: number | undefined;
-                hidden?: boolean | undefined;
-                is_primary?: boolean | undefined;
-                is_rare?: number | undefined;
-                is_secondary?: number | undefined;
-            }[] | undefined;
-        } | undefined;
-        friendship?: number | undefined;
-        muted: boolean;
-        mfp_ban_history?: {
-            type: 0;
-            count: number;
-            ts_last_ban: number;
-            ts_end?: number | undefined;
-        } | {
-            type: 1;
-            ts_end: number;
-        } | undefined;
-        user_id: number;
-        domain?: string | undefined;
-        inactive?: undefined;
-        approved: boolean;
-        nick: string;
-        gender: 0 | 1;
-        avatar: string;
-        online: boolean;
-        current_game?: {
-            gs_id: string;
-            gs_game_id: string;
-        } | undefined;
-        rank?: {
-            hidden: 1;
-        } | {
-            qual: number;
-        } | {
-            expired: 1;
-        } | {
-            id: number;
-            pts: number;
-        } | undefined;
-        vip: boolean;
-        bot: boolean;
-        bot_owner?: number | undefined;
-        moderator: boolean;
-    }, "bot_owner" | "bot"> & {
-        bot: {
-            owner_user_id: number;
-        } | null;
-    }>, v.TransformAction<Omit<{
-        nicks_old: string[];
-        profile_cover?: string | undefined;
-        social_vk?: number | undefined;
-        social_discord?: string | undefined;
-        social_twitch?: string | undefined;
-        games?: number | undefined;
-        games_wins?: number | undefined;
-        xp?: number | undefined;
-        xp_level?: number | undefined;
-        badge?: {
-            thing_id: number;
-            user_id: number;
-            owned_time: number;
-            can_give?: number | undefined;
-            can_sell?: number | undefined;
-            souvenir?: string | undefined;
-            autograph?: {
-                user_id: number;
-                text?: string | undefined;
-            } | undefined;
-            moneybox?: {
-                transactions: number;
-                money_inside: number;
-            } | {
-                numbers: number[];
-            } | {
-                count: number;
-            } | undefined;
-            uses_left?: number | undefined;
-            uses_origin?: number | undefined;
-            variants?: {
-                id: number;
-                is_default: boolean;
-                is_selected: boolean;
-                is_unlocked: boolean;
-                image?: string | undefined;
-                description?: string | undefined;
-                unlock?: {
-                    moneybox?: number | undefined;
-                    buy_tokens_sp?: number | undefined;
-                    buy_tokens_cmpt?: number | undefined;
-                } | undefined;
-            }[] | undefined;
-            thing_prototype_id: number;
-            thing_prototype_status: number;
-            thing_type: number;
-            image: string;
-            title: string;
-            description: string;
-            group?: number | undefined;
-            quality: number;
-            collection?: number | undefined;
-            twin_thing_prototype_id?: number[] | undefined;
-            delete_price?: number | null | undefined;
-            can_be_upgraded: boolean;
-            buy_cost?: number | undefined;
-            key?: number | undefined;
-            cases?: number[] | undefined;
-            drop?: {
-                thing_prototype_id?: number | undefined;
-                hidden?: boolean | undefined;
-                is_primary?: boolean | undefined;
-                is_rare?: number | undefined;
-                is_secondary?: number | undefined;
-            }[] | undefined;
-        } | undefined;
-        friendship?: number | undefined;
-        muted: boolean;
-        mfp_ban_history?: {
-            type: 0;
-            count: number;
-            ts_last_ban: number;
-            ts_end?: number | undefined;
-        } | {
-            type: 1;
-            ts_end: number;
-        } | undefined;
-        user_id: number;
-        domain?: string | undefined;
-        inactive?: undefined;
-        approved: boolean;
-        nick: string;
-        gender: 0 | 1;
-        avatar: string;
-        online: boolean;
-        current_game?: {
-            gs_id: string;
-            gs_game_id: string;
-        } | undefined;
-        rank?: {
-            hidden: 1;
-        } | {
-            qual: number;
-        } | {
-            expired: 1;
-        } | {
-            id: number;
-            pts: number;
-        } | undefined;
-        vip: boolean;
-        bot: boolean;
-        bot_owner?: number | undefined;
-        moderator: boolean;
-    }, "bot_owner" | "bot"> & {
-        bot: {
-            owner_user_id: number;
-        } | null;
-    }, {
-        games: {
-            total: number | undefined;
-            won: number | undefined;
-        };
-        user_id: number;
-        nick: string;
-        domain?: string | undefined;
-        inactive?: undefined;
-        gender: 0 | 1;
-        current_game?: {
-            gs_id: string;
-            gs_game_id: string;
-        } | undefined;
-        rank?: {
-            hidden: 1;
-        } | {
-            qual: number;
-        } | {
-            expired: 1;
-        } | {
-            id: number;
-            pts: number;
-        } | undefined;
-        approved: boolean;
-        avatar: string;
-        online: boolean;
-        vip: boolean;
-        moderator: boolean;
-        nicks_old: string[];
-        profile_cover?: string | undefined;
-        social_vk?: number | undefined;
-        social_discord?: string | undefined;
-        social_twitch?: string | undefined;
-        xp?: number | undefined;
-        xp_level?: number | undefined;
-        badge?: {
-            thing_id: number;
-            user_id: number;
-            owned_time: number;
-            can_give?: number | undefined;
-            can_sell?: number | undefined;
-            souvenir?: string | undefined;
-            autograph?: {
-                user_id: number;
-                text?: string | undefined;
-            } | undefined;
-            moneybox?: {
-                transactions: number;
-                money_inside: number;
-            } | {
-                numbers: number[];
-            } | {
-                count: number;
-            } | undefined;
-            uses_left?: number | undefined;
-            uses_origin?: number | undefined;
-            variants?: {
-                id: number;
-                is_default: boolean;
-                is_selected: boolean;
-                is_unlocked: boolean;
-                image?: string | undefined;
-                description?: string | undefined;
-                unlock?: {
-                    moneybox?: number | undefined;
-                    buy_tokens_sp?: number | undefined;
-                    buy_tokens_cmpt?: number | undefined;
-                } | undefined;
-            }[] | undefined;
-            thing_prototype_id: number;
-            thing_prototype_status: number;
-            thing_type: number;
-            image: string;
-            title: string;
-            description: string;
-            group?: number | undefined;
-            quality: number;
-            collection?: number | undefined;
-            twin_thing_prototype_id?: number[] | undefined;
-            delete_price?: number | null | undefined;
-            can_be_upgraded: boolean;
-            buy_cost?: number | undefined;
-            key?: number | undefined;
-            cases?: number[] | undefined;
-            drop?: {
-                thing_prototype_id?: number | undefined;
-                hidden?: boolean | undefined;
-                is_primary?: boolean | undefined;
-                is_rare?: number | undefined;
-                is_secondary?: number | undefined;
-            }[] | undefined;
-        } | undefined;
-        friendship?: number | undefined;
-        mfp_ban_history?: {
-            type: 0;
-            count: number;
-            ts_last_ban: number;
-            ts_end?: number | undefined;
-        } | {
-            type: 1;
-            ts_end: number;
-        } | undefined;
-        muted: boolean;
-        bot: {
-            owner_user_id: number;
-        } | null;
-    }>]>, v.ObjectSchema<{
-        readonly nick: v.StringSchema<undefined>;
-        readonly avatar: v.StringSchema<undefined>;
-        readonly avatar_key: v.StringSchema<undefined>;
-        readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
-        readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
-    readonly count: v.NumberSchema<undefined>;
-    readonly friends: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
-        readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
-        readonly profile_cover: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
-        readonly social_vk: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly social_discord: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
-        readonly social_twitch: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
-        readonly games: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly games_wins: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly xp: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly xp_level: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-        readonly badge: v.OptionalSchema<v.ObjectSchema<{
-            readonly thing_id: v.NumberSchema<undefined>;
-            readonly user_id: v.NumberSchema<undefined>;
-            readonly owned_time: v.NumberSchema<undefined>;
-            readonly can_give: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            readonly can_sell: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
-            readonly souvenir: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
-            readonly autograph: v.OptionalSchema<v.ObjectSchema<{
-                readonly user_id: v.NumberSchema<undefined>;
-                readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -1843,6 +1348,11 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -1946,6 +1456,11 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2054,6 +1569,11 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2188,6 +1708,576 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
+            moneybox?: {
+                transactions: number;
+                money_inside: number;
+            } | {
+                numbers: number[];
+            } | {
+                count: number;
+            } | undefined;
+            uses_left?: number | undefined;
+            uses_origin?: number | undefined;
+            variants?: {
+                id: number;
+                is_default: boolean;
+                is_selected: boolean;
+                is_unlocked: boolean;
+                image?: string | undefined;
+                description?: string | undefined;
+                unlock?: {
+                    moneybox?: number | undefined;
+                    buy_tokens_sp?: number | undefined;
+                    buy_tokens_cmpt?: number | undefined;
+                } | undefined;
+            }[] | undefined;
+            thing_prototype_id: number;
+            thing_prototype_status: number;
+            thing_type: number;
+            image: string;
+            title: string;
+            description: string;
+            group?: number | undefined;
+            quality: number;
+            collection?: number | undefined;
+            twin_thing_prototype_id?: number[] | undefined;
+            delete_price?: number | null | undefined;
+            can_be_upgraded: boolean;
+            buy_cost?: number | undefined;
+            key?: number | undefined;
+            cases?: number[] | undefined;
+            drop?: {
+                thing_prototype_id?: number | undefined;
+                hidden?: boolean | undefined;
+                is_primary?: boolean | undefined;
+                is_rare?: number | undefined;
+                is_secondary?: number | undefined;
+            }[] | undefined;
+        } | undefined;
+        friendship?: number | undefined;
+        mfp_ban_history?: {
+            type: 0;
+            count: number;
+            ts_last_ban: number;
+            ts_end?: number | undefined;
+        } | {
+            type: 1;
+            ts_end: number;
+        } | undefined;
+        muted: boolean;
+        bot: {
+            owner_user_id: number;
+        } | null;
+    }>]>, v.ObjectSchema<{
+        readonly nick: v.StringSchema<undefined>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly avatar_key: v.StringSchema<undefined>;
+        readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
+        readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+    }, undefined>], undefined>;
+    readonly count: v.NumberSchema<undefined>;
+    readonly friends: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
+        readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
+        readonly profile_cover: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        readonly social_vk: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly social_discord: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        readonly social_twitch: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        readonly games: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly games_wins: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly xp: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly xp_level: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly badge: v.OptionalSchema<v.ObjectSchema<{
+            readonly thing_id: v.NumberSchema<undefined>;
+            readonly user_id: v.NumberSchema<undefined>;
+            readonly owned_time: v.NumberSchema<undefined>;
+            readonly can_give: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly can_sell: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly souvenir: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            readonly autograph: v.OptionalSchema<v.ObjectSchema<{
+                readonly user_id: v.NumberSchema<undefined>;
+                readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
+            }, undefined>, undefined>;
+            readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
+                readonly transactions: v.NumberSchema<undefined>;
+                readonly money_inside: v.NumberSchema<undefined>;
+            }, undefined>, v.ObjectSchema<{
+                readonly numbers: v.ArraySchema<v.NumberSchema<undefined>, undefined>;
+            }, undefined>, v.ObjectSchema<{
+                readonly count: v.NumberSchema<undefined>;
+            }, undefined>], undefined>, undefined>;
+            readonly uses_left: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly uses_origin: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
+                readonly id: v.NumberSchema<undefined>;
+                readonly is_default: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+                readonly is_selected: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+                readonly is_unlocked: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+                readonly image: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+                readonly description: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+                readonly unlock: v.OptionalSchema<v.ObjectSchema<{
+                    readonly moneybox: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+                    readonly buy_tokens_sp: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+                    readonly buy_tokens_cmpt: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+                }, undefined>, undefined>;
+            }, undefined>, undefined>, undefined>;
+            readonly thing_prototype_id: v.NumberSchema<undefined>;
+            readonly thing_prototype_status: v.NumberSchema<undefined>;
+            readonly thing_type: v.NumberSchema<undefined>;
+            readonly image: v.StringSchema<undefined>;
+            readonly title: v.StringSchema<undefined>;
+            readonly description: v.StringSchema<undefined>;
+            readonly group: v.OptionalSchema<v.SchemaWithPipe<readonly [v.NullableSchema<v.NumberSchema<undefined>, undefined>, v.TransformAction<number | null, number | undefined>]>, undefined>;
+            readonly quality: v.NumberSchema<undefined>;
+            readonly collection: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly twin_thing_prototype_id: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
+            readonly delete_price: v.OptionalSchema<v.NullableSchema<v.NumberSchema<undefined>, undefined>, undefined>;
+            readonly can_be_upgraded: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+            readonly buy_cost: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly key: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            readonly cases: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
+            readonly drop: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
+                readonly thing_prototype_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+                readonly hidden: v.OptionalSchema<v.BooleanSchema<undefined>, undefined>;
+                readonly is_primary: v.OptionalSchema<v.BooleanSchema<undefined>, undefined>;
+                readonly is_rare: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+                readonly is_secondary: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+            }, undefined>, undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly friendship: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly muted: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+        readonly mfp_ban_history: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
+            readonly type: v.LiteralSchema<0, undefined>;
+            readonly count: v.NumberSchema<undefined>;
+            readonly ts_last_ban: v.NumberSchema<undefined>;
+            readonly ts_end: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        }, undefined>, v.ObjectSchema<{
+            readonly type: v.LiteralSchema<1, undefined>;
+            readonly ts_end: v.NumberSchema<undefined>;
+        }, undefined>], undefined>, undefined>;
+        readonly user_id: v.NumberSchema<undefined>;
+        readonly domain: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        readonly inactive: v.OptionalSchema<v.UndefinedSchema<undefined>, undefined>;
+        readonly approved: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+        readonly nick: v.StringSchema<undefined>;
+        readonly gender: v.UnionSchema<[v.LiteralSchema<0, undefined>, v.LiteralSchema<1, undefined>], undefined>;
+        readonly avatar: v.StringSchema<undefined>;
+        readonly online: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+        readonly current_game: v.OptionalSchema<v.ObjectSchema<{
+            readonly gs_id: v.StringSchema<undefined>;
+            readonly gs_game_id: v.StringSchema<undefined>;
+        }, undefined>, undefined>;
+        readonly rank: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
+            readonly hidden: v.LiteralSchema<1, undefined>;
+        }, undefined>, v.ObjectSchema<{
+            readonly qual: v.NumberSchema<undefined>;
+        }, undefined>, v.ObjectSchema<{
+            readonly expired: v.LiteralSchema<1, undefined>;
+        }, undefined>, v.ObjectSchema<{
+            readonly id: v.NumberSchema<undefined>;
+            readonly pts: v.NumberSchema<undefined>;
+        }, undefined>], undefined>, undefined>;
+        readonly vip: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+        readonly bot: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+        readonly bot_owner: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+        readonly moderator: v.SchemaWithPipe<readonly [v.OptionalSchema<v.PicklistSchema<[0, 1], undefined>, 0 | 1>, v.TransformAction<0 | 1, boolean>]>;
+    }, undefined>, v.TransformAction<{
+        nicks_old: string[];
+        profile_cover?: string | undefined;
+        social_vk?: number | undefined;
+        social_discord?: string | undefined;
+        social_twitch?: string | undefined;
+        games?: number | undefined;
+        games_wins?: number | undefined;
+        xp?: number | undefined;
+        xp_level?: number | undefined;
+        badge?: {
+            thing_id: number;
+            user_id: number;
+            owned_time: number;
+            can_give?: number | undefined;
+            can_sell?: number | undefined;
+            souvenir?: string | undefined;
+            autograph?: {
+                user_id: number;
+                text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
+            moneybox?: {
+                transactions: number;
+                money_inside: number;
+            } | {
+                numbers: number[];
+            } | {
+                count: number;
+            } | undefined;
+            uses_left?: number | undefined;
+            uses_origin?: number | undefined;
+            variants?: {
+                id: number;
+                is_default: boolean;
+                is_selected: boolean;
+                is_unlocked: boolean;
+                image?: string | undefined;
+                description?: string | undefined;
+                unlock?: {
+                    moneybox?: number | undefined;
+                    buy_tokens_sp?: number | undefined;
+                    buy_tokens_cmpt?: number | undefined;
+                } | undefined;
+            }[] | undefined;
+            thing_prototype_id: number;
+            thing_prototype_status: number;
+            thing_type: number;
+            image: string;
+            title: string;
+            description: string;
+            group?: number | undefined;
+            quality: number;
+            collection?: number | undefined;
+            twin_thing_prototype_id?: number[] | undefined;
+            delete_price?: number | null | undefined;
+            can_be_upgraded: boolean;
+            buy_cost?: number | undefined;
+            key?: number | undefined;
+            cases?: number[] | undefined;
+            drop?: {
+                thing_prototype_id?: number | undefined;
+                hidden?: boolean | undefined;
+                is_primary?: boolean | undefined;
+                is_rare?: number | undefined;
+                is_secondary?: number | undefined;
+            }[] | undefined;
+        } | undefined;
+        friendship?: number | undefined;
+        muted: boolean;
+        mfp_ban_history?: {
+            type: 0;
+            count: number;
+            ts_last_ban: number;
+            ts_end?: number | undefined;
+        } | {
+            type: 1;
+            ts_end: number;
+        } | undefined;
+        user_id: number;
+        domain?: string | undefined;
+        inactive?: undefined;
+        approved: boolean;
+        nick: string;
+        gender: 0 | 1;
+        avatar: string;
+        online: boolean;
+        current_game?: {
+            gs_id: string;
+            gs_game_id: string;
+        } | undefined;
+        rank?: {
+            hidden: 1;
+        } | {
+            qual: number;
+        } | {
+            expired: 1;
+        } | {
+            id: number;
+            pts: number;
+        } | undefined;
+        vip: boolean;
+        bot: boolean;
+        bot_owner?: number | undefined;
+        moderator: boolean;
+    }, Omit<{
+        nicks_old: string[];
+        profile_cover?: string | undefined;
+        social_vk?: number | undefined;
+        social_discord?: string | undefined;
+        social_twitch?: string | undefined;
+        games?: number | undefined;
+        games_wins?: number | undefined;
+        xp?: number | undefined;
+        xp_level?: number | undefined;
+        badge?: {
+            thing_id: number;
+            user_id: number;
+            owned_time: number;
+            can_give?: number | undefined;
+            can_sell?: number | undefined;
+            souvenir?: string | undefined;
+            autograph?: {
+                user_id: number;
+                text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
+            moneybox?: {
+                transactions: number;
+                money_inside: number;
+            } | {
+                numbers: number[];
+            } | {
+                count: number;
+            } | undefined;
+            uses_left?: number | undefined;
+            uses_origin?: number | undefined;
+            variants?: {
+                id: number;
+                is_default: boolean;
+                is_selected: boolean;
+                is_unlocked: boolean;
+                image?: string | undefined;
+                description?: string | undefined;
+                unlock?: {
+                    moneybox?: number | undefined;
+                    buy_tokens_sp?: number | undefined;
+                    buy_tokens_cmpt?: number | undefined;
+                } | undefined;
+            }[] | undefined;
+            thing_prototype_id: number;
+            thing_prototype_status: number;
+            thing_type: number;
+            image: string;
+            title: string;
+            description: string;
+            group?: number | undefined;
+            quality: number;
+            collection?: number | undefined;
+            twin_thing_prototype_id?: number[] | undefined;
+            delete_price?: number | null | undefined;
+            can_be_upgraded: boolean;
+            buy_cost?: number | undefined;
+            key?: number | undefined;
+            cases?: number[] | undefined;
+            drop?: {
+                thing_prototype_id?: number | undefined;
+                hidden?: boolean | undefined;
+                is_primary?: boolean | undefined;
+                is_rare?: number | undefined;
+                is_secondary?: number | undefined;
+            }[] | undefined;
+        } | undefined;
+        friendship?: number | undefined;
+        muted: boolean;
+        mfp_ban_history?: {
+            type: 0;
+            count: number;
+            ts_last_ban: number;
+            ts_end?: number | undefined;
+        } | {
+            type: 1;
+            ts_end: number;
+        } | undefined;
+        user_id: number;
+        domain?: string | undefined;
+        inactive?: undefined;
+        approved: boolean;
+        nick: string;
+        gender: 0 | 1;
+        avatar: string;
+        online: boolean;
+        current_game?: {
+            gs_id: string;
+            gs_game_id: string;
+        } | undefined;
+        rank?: {
+            hidden: 1;
+        } | {
+            qual: number;
+        } | {
+            expired: 1;
+        } | {
+            id: number;
+            pts: number;
+        } | undefined;
+        vip: boolean;
+        bot: boolean;
+        bot_owner?: number | undefined;
+        moderator: boolean;
+    }, "bot_owner" | "bot"> & {
+        bot: {
+            owner_user_id: number;
+        } | null;
+    }>, v.TransformAction<Omit<{
+        nicks_old: string[];
+        profile_cover?: string | undefined;
+        social_vk?: number | undefined;
+        social_discord?: string | undefined;
+        social_twitch?: string | undefined;
+        games?: number | undefined;
+        games_wins?: number | undefined;
+        xp?: number | undefined;
+        xp_level?: number | undefined;
+        badge?: {
+            thing_id: number;
+            user_id: number;
+            owned_time: number;
+            can_give?: number | undefined;
+            can_sell?: number | undefined;
+            souvenir?: string | undefined;
+            autograph?: {
+                user_id: number;
+                text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
+            moneybox?: {
+                transactions: number;
+                money_inside: number;
+            } | {
+                numbers: number[];
+            } | {
+                count: number;
+            } | undefined;
+            uses_left?: number | undefined;
+            uses_origin?: number | undefined;
+            variants?: {
+                id: number;
+                is_default: boolean;
+                is_selected: boolean;
+                is_unlocked: boolean;
+                image?: string | undefined;
+                description?: string | undefined;
+                unlock?: {
+                    moneybox?: number | undefined;
+                    buy_tokens_sp?: number | undefined;
+                    buy_tokens_cmpt?: number | undefined;
+                } | undefined;
+            }[] | undefined;
+            thing_prototype_id: number;
+            thing_prototype_status: number;
+            thing_type: number;
+            image: string;
+            title: string;
+            description: string;
+            group?: number | undefined;
+            quality: number;
+            collection?: number | undefined;
+            twin_thing_prototype_id?: number[] | undefined;
+            delete_price?: number | null | undefined;
+            can_be_upgraded: boolean;
+            buy_cost?: number | undefined;
+            key?: number | undefined;
+            cases?: number[] | undefined;
+            drop?: {
+                thing_prototype_id?: number | undefined;
+                hidden?: boolean | undefined;
+                is_primary?: boolean | undefined;
+                is_rare?: number | undefined;
+                is_secondary?: number | undefined;
+            }[] | undefined;
+        } | undefined;
+        friendship?: number | undefined;
+        muted: boolean;
+        mfp_ban_history?: {
+            type: 0;
+            count: number;
+            ts_last_ban: number;
+            ts_end?: number | undefined;
+        } | {
+            type: 1;
+            ts_end: number;
+        } | undefined;
+        user_id: number;
+        domain?: string | undefined;
+        inactive?: undefined;
+        approved: boolean;
+        nick: string;
+        gender: 0 | 1;
+        avatar: string;
+        online: boolean;
+        current_game?: {
+            gs_id: string;
+            gs_game_id: string;
+        } | undefined;
+        rank?: {
+            hidden: 1;
+        } | {
+            qual: number;
+        } | {
+            expired: 1;
+        } | {
+            id: number;
+            pts: number;
+        } | undefined;
+        vip: boolean;
+        bot: boolean;
+        bot_owner?: number | undefined;
+        moderator: boolean;
+    }, "bot_owner" | "bot"> & {
+        bot: {
+            owner_user_id: number;
+        } | null;
+    }, {
+        games: {
+            total: number | undefined;
+            won: number | undefined;
+        };
+        user_id: number;
+        nick: string;
+        domain?: string | undefined;
+        inactive?: undefined;
+        gender: 0 | 1;
+        current_game?: {
+            gs_id: string;
+            gs_game_id: string;
+        } | undefined;
+        rank?: {
+            hidden: 1;
+        } | {
+            qual: number;
+        } | {
+            expired: 1;
+        } | {
+            id: number;
+            pts: number;
+        } | undefined;
+        approved: boolean;
+        avatar: string;
+        online: boolean;
+        vip: boolean;
+        moderator: boolean;
+        nicks_old: string[];
+        profile_cover?: string | undefined;
+        social_vk?: number | undefined;
+        social_discord?: string | undefined;
+        social_twitch?: string | undefined;
+        xp?: number | undefined;
+        xp_level?: number | undefined;
+        badge?: {
+            thing_id: number;
+            user_id: number;
+            owned_time: number;
+            can_give?: number | undefined;
+            can_sell?: number | undefined;
+            souvenir?: string | undefined;
+            autograph?: {
+                user_id: number;
+                text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2570,6 +2660,11 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
             }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
+            }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
                 readonly money_inside: v.NumberSchema<undefined>;
@@ -2674,6 +2769,11 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -2777,6 +2877,11 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2885,6 +2990,11 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -3019,6 +3129,11 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -3897,6 +4012,11 @@ declare const valiResponseInventoryCraftSchema: v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
         readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -3976,6 +4096,11 @@ declare const valiResponseInventoryGetBaseSchema: v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
         readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -4048,6 +4173,11 @@ declare const valiResponseInventoryGetLegacySchema: v.ObjectSchema<{
         readonly autograph: v.OptionalSchema<v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -4128,6 +4258,11 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
             }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
+            }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
                 readonly money_inside: v.NumberSchema<undefined>;
@@ -4232,6 +4367,11 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -4335,6 +4475,11 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4443,6 +4588,11 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4577,6 +4727,11 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4668,6 +4823,11 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
         readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -4745,6 +4905,11 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -4850,6 +5015,11 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -4953,6 +5123,11 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5061,6 +5236,11 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5196,6 +5376,11 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -5279,6 +5464,11 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
         readonly autograph: v.OptionalSchema<v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -5360,6 +5550,11 @@ declare const valiResponseInventoryGetWithEquippedArraySchema: v.ObjectSchema<{
         readonly autograph: v.OptionalSchema<v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -5447,6 +5642,11 @@ declare const valiResponseInventoryGetWithEquippedTreeSchema: v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
         readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -5524,6 +5724,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -5629,6 +5834,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -5732,6 +5942,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5840,6 +6055,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5974,6 +6194,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6066,6 +6291,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
         readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -6143,6 +6373,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -6248,6 +6483,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -6351,6 +6591,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6459,6 +6704,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6593,6 +6843,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6691,6 +6946,11 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
         readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -6764,6 +7024,11 @@ declare const valiResponseInventoryGetLegacyWithEquippedArraySchema: v.ObjectSch
         readonly autograph: v.OptionalSchema<v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -6846,6 +7111,11 @@ declare const valiResponseInventoryGetLegacyWithEquippedTreeSchema: v.ObjectSche
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
             readonly money_inside: v.NumberSchema<undefined>;
@@ -6924,6 +7194,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -7029,6 +7304,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -7132,6 +7412,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7240,6 +7525,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7374,6 +7664,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7460,6 +7755,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
             readonly money_inside: v.NumberSchema<undefined>;
@@ -7538,6 +7838,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -7643,6 +7948,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -7746,6 +8056,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7854,6 +8169,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7988,6 +8308,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -8079,6 +8404,11 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
         readonly autograph: v.OptionalSchema<v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -8223,6 +8553,11 @@ declare const valiObjectTradeSchema: v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
             readonly money_inside: v.NumberSchema<undefined>;
@@ -8279,6 +8614,11 @@ declare const valiObjectTradeSchema: v.ObjectSchema<{
         readonly autograph: v.OptionalSchema<v.ObjectSchema<{
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+        }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -8354,6 +8694,11 @@ declare const valiObjectNewTradeSchema: v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
             }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
+            }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
             readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
             readonly variants: v.OptionalSchema<v.ArraySchema<v.ObjectSchema<{
@@ -8427,6 +8772,11 @@ declare const valiObjectNewTradeSchema: v.ObjectSchema<{
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
             readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -8506,6 +8856,11 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
             }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
+            }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
                 readonly money_inside: v.NumberSchema<undefined>;
@@ -8562,6 +8917,11 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -8632,6 +8992,11 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
             readonly autograph: v.OptionalSchema<v.ObjectSchema<{
                 readonly user_id: v.NumberSchema<undefined>;
                 readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
+            }, undefined>, undefined>;
+            readonly gift: v.OptionalSchema<v.ObjectSchema<{
+                readonly from_user_id: v.NumberSchema<undefined>;
+                readonly to_user_id: v.NumberSchema<undefined>;
+                readonly ts: v.NumberSchema<undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -8737,6 +9102,11 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 user_id: number;
                 text?: string | undefined;
             } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
+            } | undefined;
             moneybox?: {
                 transactions: number;
                 money_inside: number;
@@ -8840,6 +9210,11 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -8948,6 +9323,11 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -9082,6 +9462,11 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
             autograph?: {
                 user_id: number;
                 text?: string | undefined;
+            } | undefined;
+            gift?: {
+                from_user_id: number;
+                to_user_id: number;
+                ts: number;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -9348,6 +9733,11 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
             readonly money_inside: v.NumberSchema<undefined>;
@@ -9452,6 +9842,11 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
             user_id: number;
             text?: string | undefined;
         } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
+        } | undefined;
         moneybox?: {
             transactions: number;
             money_inside: number;
@@ -9555,6 +9950,11 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
         autograph?: {
             user_id: number;
             text?: string | undefined;
+        } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -9663,6 +10063,11 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
         autograph?: {
             user_id: number;
             text?: string | undefined;
+        } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -9797,6 +10202,11 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
         autograph?: {
             user_id: number;
             text?: string | undefined;
+        } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -9973,6 +10383,11 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
             readonly user_id: v.NumberSchema<undefined>;
             readonly text: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
         }, undefined>, undefined>;
+        readonly gift: v.OptionalSchema<v.ObjectSchema<{
+            readonly from_user_id: v.NumberSchema<undefined>;
+            readonly to_user_id: v.NumberSchema<undefined>;
+            readonly ts: v.NumberSchema<undefined>;
+        }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
             readonly money_inside: v.NumberSchema<undefined>;
@@ -10077,6 +10492,11 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
             user_id: number;
             text?: string | undefined;
         } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
+        } | undefined;
         moneybox?: {
             transactions: number;
             money_inside: number;
@@ -10180,6 +10600,11 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
         autograph?: {
             user_id: number;
             text?: string | undefined;
+        } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10288,6 +10713,11 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
         autograph?: {
             user_id: number;
             text?: string | undefined;
+        } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10422,6 +10852,11 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
         autograph?: {
             user_id: number;
             text?: string | undefined;
+        } | undefined;
+        gift?: {
+            from_user_id: number;
+            to_user_id: number;
+            ts: number;
         } | undefined;
         moneybox?: {
             transactions: number;

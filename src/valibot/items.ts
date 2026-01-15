@@ -70,6 +70,13 @@ export const valiObjectThingSchema = v.object({
 			text: v.optional(v.string()),
 		}),
 	),
+	gift: v.optional(
+		v.object({
+			from_user_id: v.number(),
+			to_user_id: v.number(),
+			ts: v.number(),
+		}),
+	),
 	moneybox: v.optional(
 		v.union([
 			v.object({
@@ -153,6 +160,13 @@ const valiObjectItemShortSchema = v.object({
 		v.object({
 			user_id: v.number(),
 			text: v.optional(v.string()),
+		}),
+	),
+	gift: v.optional(
+		v.object({
+			from_user_id: v.number(),
+			to_user_id: v.number(),
+			ts: v.number(),
 		}),
 	),
 	moneybox: v.optional(v.record(v.string(), v.unknown())),
