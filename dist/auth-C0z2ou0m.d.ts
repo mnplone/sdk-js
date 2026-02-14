@@ -104,6 +104,7 @@ declare const valiObjectThingSchema: v.ObjectSchema<{
         readonly from_user_id: v.NumberSchema<undefined>;
         readonly to_user_id: v.NumberSchema<undefined>;
         readonly ts: v.NumberSchema<undefined>;
+        readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     }, undefined>, undefined>;
     readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
         readonly transactions: v.NumberSchema<undefined>;
@@ -221,6 +222,7 @@ declare const valiObjectItemShortSchema: v.ObjectSchema<{
         readonly from_user_id: v.NumberSchema<undefined>;
         readonly to_user_id: v.NumberSchema<undefined>;
         readonly ts: v.NumberSchema<undefined>;
+        readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     }, undefined>, undefined>;
     readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
     readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -298,6 +300,7 @@ declare const valiObjectItemSchema: v.ObjectSchema<{
         readonly from_user_id: v.NumberSchema<undefined>;
         readonly to_user_id: v.NumberSchema<undefined>;
         readonly ts: v.NumberSchema<undefined>;
+        readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     }, undefined>, undefined>;
     readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
     readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -676,6 +679,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -785,6 +789,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -894,6 +899,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1007,6 +1013,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1146,6 +1153,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1243,6 +1251,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -1352,6 +1361,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1461,6 +1471,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1574,6 +1585,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1713,6 +1725,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -1808,6 +1821,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -1917,6 +1931,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2026,6 +2041,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2139,6 +2155,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2278,6 +2295,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2664,6 +2682,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -2773,6 +2792,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2882,6 +2902,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -2995,6 +3016,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -3134,6 +3156,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4016,6 +4039,7 @@ declare const valiResponseInventoryCraftSchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -4100,6 +4124,7 @@ declare const valiResponseInventoryGetBaseSchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -4178,6 +4203,7 @@ declare const valiResponseInventoryGetLegacySchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -4262,6 +4288,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -4371,6 +4398,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4480,6 +4508,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4593,6 +4622,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4732,6 +4762,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -4827,6 +4858,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -4910,6 +4942,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -5019,6 +5052,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5128,6 +5162,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5241,6 +5276,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5380,6 +5416,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5469,6 +5506,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -5555,6 +5593,7 @@ declare const valiResponseInventoryGetWithEquippedArraySchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -5646,6 +5685,7 @@ declare const valiResponseInventoryGetWithEquippedTreeSchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -5729,6 +5769,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -5838,6 +5879,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -5947,6 +5989,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6060,6 +6103,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6199,6 +6243,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6295,6 +6340,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -6378,6 +6424,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -6487,6 +6534,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6596,6 +6644,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6709,6 +6758,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6848,6 +6898,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -6950,6 +7001,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
         readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -7029,6 +7081,7 @@ declare const valiResponseInventoryGetLegacyWithEquippedArraySchema: v.ObjectSch
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -7115,6 +7168,7 @@ declare const valiResponseInventoryGetLegacyWithEquippedTreeSchema: v.ObjectSche
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -7199,6 +7253,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -7308,6 +7363,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7417,6 +7473,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7530,6 +7587,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7669,6 +7727,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -7759,6 +7818,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -7843,6 +7903,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -7952,6 +8013,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -8061,6 +8123,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -8174,6 +8237,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -8313,6 +8377,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -8409,6 +8474,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -8557,6 +8623,7 @@ declare const valiObjectTradeSchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -8619,6 +8686,7 @@ declare const valiObjectTradeSchema: v.ObjectSchema<{
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -8698,6 +8766,7 @@ declare const valiObjectNewTradeSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
             readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -8777,6 +8846,7 @@ declare const valiObjectNewTradeSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.RecordSchema<v.StringSchema<undefined>, v.UnknownSchema, undefined>, undefined>;
             readonly seed: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NumberSchema<undefined>], undefined>, undefined>;
@@ -8860,6 +8930,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -8922,6 +8993,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -8997,6 +9069,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 readonly from_user_id: v.NumberSchema<undefined>;
                 readonly to_user_id: v.NumberSchema<undefined>;
                 readonly ts: v.NumberSchema<undefined>;
+                readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
             }, undefined>, undefined>;
             readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
                 readonly transactions: v.NumberSchema<undefined>;
@@ -9106,6 +9179,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -9215,6 +9289,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -9328,6 +9403,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -9467,6 +9543,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
                 from_user_id: number;
                 to_user_id: number;
                 ts: number;
+                type?: number | undefined;
             } | undefined;
             moneybox?: {
                 transactions: number;
@@ -9737,6 +9814,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -9846,6 +9924,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -9955,6 +10034,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10068,6 +10148,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10207,6 +10288,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10387,6 +10469,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
             readonly from_user_id: v.NumberSchema<undefined>;
             readonly to_user_id: v.NumberSchema<undefined>;
             readonly ts: v.NumberSchema<undefined>;
+            readonly type: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         }, undefined>, undefined>;
         readonly moneybox: v.OptionalSchema<v.UnionSchema<[v.ObjectSchema<{
             readonly transactions: v.NumberSchema<undefined>;
@@ -10496,6 +10579,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10605,6 +10689,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10718,6 +10803,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;
@@ -10857,6 +10943,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
             from_user_id: number;
             to_user_id: number;
             ts: number;
+            type?: number | undefined;
         } | undefined;
         moneybox?: {
             transactions: number;

@@ -75,6 +75,7 @@ export const valiObjectThingSchema = v.object({
 			from_user_id: v.number(),
 			to_user_id: v.number(),
 			ts: v.number(),
+			type: v.optional(v.number()),
 		}),
 	),
 	moneybox: v.optional(
@@ -167,6 +168,7 @@ const valiObjectItemShortSchema = v.object({
 			from_user_id: v.number(),
 			to_user_id: v.number(),
 			ts: v.number(),
+			type: v.optional(v.number()),
 		}),
 	),
 	moneybox: v.optional(v.record(v.string(), v.unknown())),

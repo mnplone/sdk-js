@@ -151,7 +151,8 @@ var valiObjectThingSchema = v5.object({
   gift: v5.optional(v5.object({
     from_user_id: v5.number(),
     to_user_id: v5.number(),
-    ts: v5.number()
+    ts: v5.number(),
+    type: v5.optional(v5.number())
   })),
   moneybox: v5.optional(v5.union([
     v5.object({
@@ -218,7 +219,8 @@ var valiObjectItemShortSchema = v5.object({
   gift: v5.optional(v5.object({
     from_user_id: v5.number(),
     to_user_id: v5.number(),
-    ts: v5.number()
+    ts: v5.number(),
+    type: v5.optional(v5.number())
   })),
   moneybox: v5.optional(v5.record(v5.string(), v5.unknown())),
   seed: v5.optional(v5.union([v5.string(), v5.number()])),
