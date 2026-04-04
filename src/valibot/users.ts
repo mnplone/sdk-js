@@ -1,6 +1,32 @@
+// eslint-disable eslint/no-bitwise
+
 import * as v from 'valibot';
 import { bit } from './common.js';
 import { valiObjectThingSchema } from './items.js';
+
+// eslint-disable-next-line jsdoc/require-jsdoc
+function getFakeId(domain: string): number {
+	let h1 = 0xdeadbeef;
+	for (let i = 0; i < domain.length; i++) {
+		const k1 = domain.codePointAt(i);
+		h1 = Math.imul(h1 ^ k1!, 2654435761);
+	}
+
+	return (h1 ^ (h1 >>> 16)) | 0x80000000;
+}
+
+// eslint-disable-next-line jsdoc/require-jsdoc
+function transformerInactiveUser<
+	const T extends v.InferOutput<typeof valiInputInactiveUserSchema>,
+>(value: T) {
+	const { domain, user_id, ...value_rest } = value;
+
+	return {
+		...value_rest,
+		domain,
+		user_id: user_id || getFakeId(domain!),
+	};
+}
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 function transformerBot<
@@ -61,7 +87,7 @@ export const valiObjectActiveUserShortSchema = v.pipe(
 	v.transform(transformerBot),
 );
 
-export const valiObjectInactiveUserSchema = v.object({
+export const valiInputInactiveUserSchema = v.object({
 	nick: v.string(),
 	avatar: v.string(),
 	avatar_key: v.string(),
@@ -69,6 +95,11 @@ export const valiObjectInactiveUserSchema = v.object({
 	domain: v.optional(v.union([v.string(), v.null()])),
 	inactive: v.picklist(['not_exists', 'global_ban']),
 });
+
+export const valiObjectInactiveUserSchema = v.pipe(
+	valiInputInactiveUserSchema,
+	v.transform(transformerInactiveUser),
+);
 
 export const valiObjectActiveUserSchema = v.pipe(
 	v.object({

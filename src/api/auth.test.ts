@@ -14,7 +14,7 @@ describe('authorization flow', () => {
 			TEST_AUTH_USER_ID: v.pipe(
 				v.string(),
 				v.minLength(1),
-				v.transform((value) => Number.parseInt(value)),
+				v.transform((value) => Number.parseInt(value, 10)),
 				v.number(),
 			),
 		}),

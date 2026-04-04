@@ -10,6 +10,7 @@ import {
   M1ApiOauth,
   M1ApiTrades,
   M1ApiUsers,
+  valiInputInactiveUserSchema,
   valiObjectActiveUserSchema,
   valiObjectActiveUserShortSchema,
   valiObjectCollectionSchema,
@@ -60,7 +61,7 @@ import {
   valiResponseInventoryGetWithUserAndEquippedTreeSchema,
   valiResponseInventoryGetWithUserSchema,
   valiResponseTotpSessionTokenSchema
-} from "./main-a72mzhsg.js";
+} from "./main-3b2mc6fa.js";
 export {
   valiResponseTotpSessionTokenSchema,
   valiResponseInventoryGetWithUserSchema,
@@ -112,6 +113,7 @@ export {
   valiObjectCollectionSchema,
   valiObjectActiveUserShortSchema,
   valiObjectActiveUserSchema,
+  valiInputInactiveUserSchema,
   M1ApiUsers,
   M1ApiTrades,
   M1ApiOauth,

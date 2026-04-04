@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-invalid-this */
-
 import type { M1ApiResponseHook } from '../hooks.js';
 
 /**

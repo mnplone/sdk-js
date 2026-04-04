@@ -1,7 +1,10 @@
 import { describe, expect, test } from 'vitest';
 import { sdk } from '../../test/sdk.js';
 
-const BOT_USER_ID = Number.parseInt(process.env.TEST_BOT_USER_ID ?? '112426');
+const BOT_USER_ID = Number.parseInt(
+	process.env.TEST_BOT_USER_ID ?? '112426',
+	10,
+);
 
 describe('users.get', () => {
 	describe('single user', () => {
@@ -48,7 +51,6 @@ describe('users.get', () => {
 
 		test('user not exists', async () => {
 			const response = await sdk.users.get(1337 ** 4);
-
 			expect(response.success).toBe(true);
 			expect(response.data.inactive).toBe('not_exists');
 		});
@@ -69,8 +71,13 @@ describe('users.get', () => {
 
 		test('1 symbol domain', async () => {
 			const response = await sdk.users.get('a');
-
 			expect(response.data.inactive).toBe('not_exists');
 		});
+
+		// test('not existed domain', async () => {
+		// 	const response = await sdk.users.get(process.env.NOT_EXISTING_DOMAIN!);
+		// 	expect(response.data.inactive).toBe('not_exists');
+		// 	expect(response.data.user_id).toBe(Number(process.env.NOT_EXISTING_ID!));
+		// });
 	});
 });

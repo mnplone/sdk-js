@@ -1111,6 +1111,7 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -1127,7 +1128,6 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -1215,14 +1215,31 @@ declare const valiResponseFriendsGetBaseSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetBase = v.InferOutput<typeof valiResponseFriendsGetBaseSchema>;
 declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
@@ -1683,6 +1700,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -1699,7 +1717,6 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -1787,14 +1804,31 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly friends: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
@@ -2253,6 +2287,7 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -2269,7 +2304,6 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -2357,14 +2391,31 @@ declare const valiResponseFriendsGetWithUserSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetWithUser = v.InferOutput<typeof valiResponseFriendsGetWithUserSchema>;
 declare const valiResponseFriendsGetShortSchema: v.ObjectSchema<{
@@ -2454,14 +2505,31 @@ declare const valiResponseFriendsGetShortSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetShort = v.InferOutput<typeof valiResponseFriendsGetShortSchema>;
 declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
@@ -2550,14 +2618,31 @@ declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly friends: v.ArraySchema<v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly user_id: v.NumberSchema<undefined>;
@@ -2644,14 +2729,31 @@ declare const valiResponseFriendsGetShortWithUserSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetShortWithUser = v.InferOutput<typeof valiResponseFriendsGetShortWithUserSchema>;
 type ResponseFriendsGet<S extends boolean, U extends boolean> = If<S, If<U, ResponseFriendsGetShortWithUser, ResponseFriendsGetShort>, If<U, ResponseFriendsGetWithUser, ResponseFriendsGetBase>>;
@@ -3114,6 +3216,7 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -3130,7 +3233,6 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -3218,14 +3320,31 @@ declare const valiResponseFriendsGetRequestsSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetRequests = v.InferOutput<typeof valiResponseFriendsGetRequestsSchema>;
 declare const valiResponseFriendsGetRequestsShortSchema: v.ObjectSchema<{
@@ -3315,14 +3434,31 @@ declare const valiResponseFriendsGetRequestsShortSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseFriendsGetRequestsShort = v.InferOutput<typeof valiResponseFriendsGetRequestsShortSchema>;
 
@@ -3552,14 +3688,31 @@ declare const valiResponseGchatGetSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
     readonly item_protos: v.ArraySchema<v.ObjectSchema<{
         readonly item_proto_id: v.NumberSchema<undefined>;
         readonly item_proto_status: v.OptionalSchema<v.PicklistSchema<[0, 1, 2], undefined>, 0>;
@@ -3792,14 +3945,31 @@ declare const valiResponseImDialogsGetSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseImDialogsGet = v.InferOutput<typeof valiResponseImDialogsGetSchema>;
 declare const valiResponseImHistoryGetSchema: v.ObjectSchema<{
@@ -3920,14 +4090,31 @@ declare const valiResponseImHistoryGetSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ResponseImHistoryGet = v.InferOutput<typeof valiResponseImHistoryGetSchema>;
 
@@ -4720,6 +4907,7 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -4736,7 +4924,6 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -4824,14 +5011,31 @@ declare const valiResponseInventoryGetWithUserSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly collections: v.ArraySchema<v.ObjectSchema<{
         readonly collection_id: v.NumberSchema<undefined>;
@@ -5374,6 +5578,7 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -5390,7 +5595,6 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -5478,14 +5682,31 @@ declare const valiResponseInventoryGetLegacyWithUserSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly collections: v.ArraySchema<v.ObjectSchema<{
         readonly collection_id: v.NumberSchema<undefined>;
@@ -6201,6 +6422,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -6217,7 +6439,6 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -6305,14 +6526,31 @@ declare const valiResponseInventoryGetWithUserAndEquippedArraySchema: v.ObjectSc
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly item_ids_equipped: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly collections: v.ArraySchema<v.ObjectSchema<{
@@ -6856,6 +7094,7 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -6872,7 +7111,6 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -6960,14 +7198,31 @@ declare const valiResponseInventoryGetWithUserAndEquippedTreeSchema: v.ObjectSch
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly equipped: v.OptionalSchema<v.ObjectSchema<{
         readonly game: v.RecordSchema<v.StringSchema<undefined>, v.ObjectSchema<{
             readonly cards: v.RecordSchema<v.StringSchema<undefined>, v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
@@ -7685,6 +7940,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -7701,7 +7957,6 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -7789,14 +8044,31 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema: v.Ob
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly item_ids_equipped: v.OptionalSchema<v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
     readonly count: v.NumberSchema<undefined>;
     readonly collections: v.ArraySchema<v.ObjectSchema<{
@@ -8335,6 +8607,7 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -8351,7 +8624,6 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -8439,14 +8711,31 @@ declare const valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema: v.Obj
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>;
     readonly equipped: v.OptionalSchema<v.ObjectSchema<{
         readonly game: v.RecordSchema<v.StringSchema<undefined>, v.ObjectSchema<{
             readonly cards: v.RecordSchema<v.StringSchema<undefined>, v.ArraySchema<v.NumberSchema<undefined>, undefined>, undefined>;
@@ -9501,6 +9790,7 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
         nick: string;
         domain?: string | undefined;
         inactive?: undefined;
+        avatar: string;
         gender: 0 | 1;
         current_game?: {
             gs_id: string;
@@ -9517,7 +9807,6 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
             pts: number;
         } | undefined;
         approved: boolean;
-        avatar: string;
         online: boolean;
         vip: boolean;
         moderator: boolean;
@@ -9605,14 +9894,31 @@ declare const valiObjectTradeListSchema: v.ObjectSchema<{
         bot: {
             owner_user_id: number;
         } | null;
-    }>]>, v.ObjectSchema<{
+    }>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
         readonly nick: v.StringSchema<undefined>;
         readonly avatar: v.StringSchema<undefined>;
         readonly avatar_key: v.StringSchema<undefined>;
         readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
         readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
         readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-    }, undefined>], undefined>, undefined>;
+    }, undefined>, v.TransformAction<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, Omit<{
+        nick: string;
+        avatar: string;
+        avatar_key: string;
+        user_id?: number | undefined;
+        domain?: string | null | undefined;
+        inactive: "not_exists" | "global_ban";
+    }, "user_id" | "domain"> & {
+        domain: string | null | undefined;
+        user_id: number;
+    }>]>], undefined>, undefined>;
 }, undefined>;
 type ObjectTradeList = v.InferOutput<typeof valiObjectTradeListSchema>;
 
@@ -9781,7 +10087,7 @@ declare const valiObjectActiveUserShortSchema: v.SchemaWithPipe<readonly [v.Obje
         owner_user_id: number;
     } | null;
 }>]>;
-declare const valiObjectInactiveUserSchema: v.ObjectSchema<{
+declare const valiInputInactiveUserSchema: v.ObjectSchema<{
     readonly nick: v.StringSchema<undefined>;
     readonly avatar: v.StringSchema<undefined>;
     readonly avatar_key: v.StringSchema<undefined>;
@@ -9789,6 +10095,31 @@ declare const valiObjectInactiveUserSchema: v.ObjectSchema<{
     readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
     readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
 }, undefined>;
+declare const valiObjectInactiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSchema<{
+    readonly nick: v.StringSchema<undefined>;
+    readonly avatar: v.StringSchema<undefined>;
+    readonly avatar_key: v.StringSchema<undefined>;
+    readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
+    readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
+    readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
+}, undefined>, v.TransformAction<{
+    nick: string;
+    avatar: string;
+    avatar_key: string;
+    user_id?: number | undefined;
+    domain?: string | null | undefined;
+    inactive: "not_exists" | "global_ban";
+}, Omit<{
+    nick: string;
+    avatar: string;
+    avatar_key: string;
+    user_id?: number | undefined;
+    domain?: string | null | undefined;
+    inactive: "not_exists" | "global_ban";
+}, "user_id" | "domain"> & {
+    domain: string | null | undefined;
+    user_id: number;
+}>]>;
 declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSchema<{
     readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
     readonly profile_cover: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
@@ -10246,6 +10577,7 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
     nick: string;
     domain?: string | undefined;
     inactive?: undefined;
+    avatar: string;
     gender: 0 | 1;
     current_game?: {
         gs_id: string;
@@ -10262,7 +10594,6 @@ declare const valiObjectActiveUserSchema: v.SchemaWithPipe<readonly [v.ObjectSch
         pts: number;
     } | undefined;
     approved: boolean;
-    avatar: string;
     online: boolean;
     vip: boolean;
     moderator: boolean;
@@ -10436,14 +10767,31 @@ declare const valiObjectUserShortSchema: v.VariantSchema<"inactive", [v.SchemaWi
     bot: {
         owner_user_id: number;
     } | null;
-}>]>, v.ObjectSchema<{
+}>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
     readonly nick: v.StringSchema<undefined>;
     readonly avatar: v.StringSchema<undefined>;
     readonly avatar_key: v.StringSchema<undefined>;
     readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
     readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-}, undefined>], undefined>;
+}, undefined>, v.TransformAction<{
+    nick: string;
+    avatar: string;
+    avatar_key: string;
+    user_id?: number | undefined;
+    domain?: string | null | undefined;
+    inactive: "not_exists" | "global_ban";
+}, Omit<{
+    nick: string;
+    avatar: string;
+    avatar_key: string;
+    user_id?: number | undefined;
+    domain?: string | null | undefined;
+    inactive: "not_exists" | "global_ban";
+}, "user_id" | "domain"> & {
+    domain: string | null | undefined;
+    user_id: number;
+}>]>], undefined>;
 declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPipe<readonly [v.ObjectSchema<{
     readonly nicks_old: v.ArraySchema<v.StringSchema<undefined>, undefined>;
     readonly profile_cover: v.OptionalSchema<v.StringSchema<undefined>, undefined>;
@@ -10901,6 +11249,7 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
     nick: string;
     domain?: string | undefined;
     inactive?: undefined;
+    avatar: string;
     gender: 0 | 1;
     current_game?: {
         gs_id: string;
@@ -10917,7 +11266,6 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
         pts: number;
     } | undefined;
     approved: boolean;
-    avatar: string;
     online: boolean;
     vip: boolean;
     moderator: boolean;
@@ -11005,14 +11353,31 @@ declare const valiObjectUserSchema: v.VariantSchema<"inactive", [v.SchemaWithPip
     bot: {
         owner_user_id: number;
     } | null;
-}>]>, v.ObjectSchema<{
+}>]>, v.SchemaWithPipe<readonly [v.ObjectSchema<{
     readonly nick: v.StringSchema<undefined>;
     readonly avatar: v.StringSchema<undefined>;
     readonly avatar_key: v.StringSchema<undefined>;
     readonly user_id: v.OptionalSchema<v.NumberSchema<undefined>, undefined>;
     readonly domain: v.OptionalSchema<v.UnionSchema<[v.StringSchema<undefined>, v.NullSchema<undefined>], undefined>, undefined>;
     readonly inactive: v.PicklistSchema<["not_exists", "global_ban"], undefined>;
-}, undefined>], undefined>;
+}, undefined>, v.TransformAction<{
+    nick: string;
+    avatar: string;
+    avatar_key: string;
+    user_id?: number | undefined;
+    domain?: string | null | undefined;
+    inactive: "not_exists" | "global_ban";
+}, Omit<{
+    nick: string;
+    avatar: string;
+    avatar_key: string;
+    user_id?: number | undefined;
+    domain?: string | null | undefined;
+    inactive: "not_exists" | "global_ban";
+}, "user_id" | "domain"> & {
+    domain: string | null | undefined;
+    user_id: number;
+}>]>], undefined>;
 type User = v.InferOutput<typeof valiObjectUserSchema>;
 type UserShort = v.InferOutput<typeof valiObjectUserShortSchema>;
 
@@ -11170,4 +11535,4 @@ declare class M1ApiAuth extends M1ApiBase {
     refresh(refresh_token: string): Promise<ApiResponse<Session>>;
 }
 
-export { valiResponseInventoryGetLegacySchema as $, valiObjectGchatMessageBaseSchema as A, valiObjectGchatMessageAdditionalDataSchema as B, type CallMethodOptions as C, valiObjectGchatMessageSchema as D, valiResponseGchatGetSchema as E, type ResponseGchatGet as F, type GchatMessage as G, valiResponseGchatSendSchema as H, type ResponseGchatSend as I, valiResponseImSendSchema as J, type ResponseImSend as K, valiObjectMessageSchema as L, M1ApiAuth as M, type Message as N, valiObjectDialogSchema as O, type Dialog as P, valiResponseImDialogsGetSchema as Q, type RequestOptions as R, type Session as S, type TotpSessionToken as T, type ResponseImDialogsGet as U, valiResponseImHistoryGetSchema as V, type ResponseImHistoryGet as W, valiResponseInventoryCraftSchema as X, type ResponseInventoryCraft as Y, valiResponseInventoryGetBaseSchema as Z, type ResponseInventoryGetBase as _, M1ApiBase as a, type ResponseInventoryGetLegacy as a0, valiResponseInventoryGetWithUserSchema as a1, type ResponseInventoryGetWithUser as a2, valiResponseInventoryGetLegacyWithUserSchema as a3, type ResponseInventoryGetLegacyWithUser as a4, valiResponseInventoryGetWithEquippedArraySchema as a5, type ResponseInventoryGetWithEquippedArray as a6, valiResponseInventoryGetWithEquippedTreeSchema as a7, type ResponseInventoryGetWithEquippedTree as a8, valiResponseInventoryGetWithUserAndEquippedArraySchema as a9, valiObjectTradeSchema as aA, type ObjectTrade as aB, valiObjectNewTradeSchema as aC, type ObjectNewTrade as aD, valiObjectTradeListSchema as aE, type ObjectTradeList as aF, valiObjectActiveUserShortSchema as aG, valiObjectInactiveUserSchema as aH, valiObjectActiveUserSchema as aI, valiObjectUserShortSchema as aJ, valiObjectUserSchema as aK, type User as aL, type UserShort as aM, type M1ApiResponseHook as aN, M1 as aO, type ResponseInventoryGetWithUserAndEquippedArray as aa, valiResponseInventoryGetWithUserAndEquippedTreeSchema as ab, type ResponseInventoryGetWithUserAndEquippedTree as ac, valiResponseInventoryGetLegacyWithEquippedArraySchema as ad, type ResponseInventoryGetLegacyWithEquippedArray as ae, valiResponseInventoryGetLegacyWithEquippedTreeSchema as af, type ResponseInventoryGetLegacyWithEquippedTree as ag, valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema as ah, type ResponseInventoryGetLegacyWithUserAndEquippedArray as ai, valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema as aj, type ResponseInventoryGetLegacyWithUserAndEquippedTree as ak, type ResponseInventoryGet as al, valiObjectItemVariantSchema as am, type ItemVariant as an, valiObjectThingPrototypeSchema as ao, type ThingPrototype as ap, valiObjectThingSchema as aq, type Thing as ar, valiObjectItemProtoSchema as as, type ItemProto as at, type ItemShort as au, valiObjectItemSchema as av, type Item as aw, valiObjectItemProtoLegacySchema as ax, valiObjectTradeIdSchema as ay, type ObjectTradeId as az, M1ApiBots as b, M1ApiData as c, M1ApiFriends as d, M1ApiGchat as e, M1ApiIm as f, M1ApiInventory as g, M1ApiOauth as h, M1ApiTrades as i, M1ApiUsers as j, type CallMethodResponse as k, valiResponseTotpSessionTokenSchema as l, valiResponseFriendsGetBaseSchema as m, type ResponseFriendsGetBase as n, valiResponseFriendsGetWithUserSchema as o, type ResponseFriendsGetWithUser as p, valiResponseFriendsGetShortSchema as q, type ResponseFriendsGetShort as r, valiResponseFriendsGetShortWithUserSchema as s, type ResponseFriendsGetShortWithUser as t, type ResponseFriendsGet as u, valiObjectSessionSchema as v, valiResponseFriendsGetRequestsSchema as w, type ResponseFriendsGetRequests as x, valiResponseFriendsGetRequestsShortSchema as y, type ResponseFriendsGetRequestsShort as z };
+export { valiResponseInventoryGetLegacySchema as $, valiObjectGchatMessageBaseSchema as A, valiObjectGchatMessageAdditionalDataSchema as B, type CallMethodOptions as C, valiObjectGchatMessageSchema as D, valiResponseGchatGetSchema as E, type ResponseGchatGet as F, type GchatMessage as G, valiResponseGchatSendSchema as H, type ResponseGchatSend as I, valiResponseImSendSchema as J, type ResponseImSend as K, valiObjectMessageSchema as L, M1ApiAuth as M, type Message as N, valiObjectDialogSchema as O, type Dialog as P, valiResponseImDialogsGetSchema as Q, type RequestOptions as R, type Session as S, type TotpSessionToken as T, type ResponseImDialogsGet as U, valiResponseImHistoryGetSchema as V, type ResponseImHistoryGet as W, valiResponseInventoryCraftSchema as X, type ResponseInventoryCraft as Y, valiResponseInventoryGetBaseSchema as Z, type ResponseInventoryGetBase as _, M1ApiBase as a, type ResponseInventoryGetLegacy as a0, valiResponseInventoryGetWithUserSchema as a1, type ResponseInventoryGetWithUser as a2, valiResponseInventoryGetLegacyWithUserSchema as a3, type ResponseInventoryGetLegacyWithUser as a4, valiResponseInventoryGetWithEquippedArraySchema as a5, type ResponseInventoryGetWithEquippedArray as a6, valiResponseInventoryGetWithEquippedTreeSchema as a7, type ResponseInventoryGetWithEquippedTree as a8, valiResponseInventoryGetWithUserAndEquippedArraySchema as a9, valiObjectTradeSchema as aA, type ObjectTrade as aB, valiObjectNewTradeSchema as aC, type ObjectNewTrade as aD, valiObjectTradeListSchema as aE, type ObjectTradeList as aF, valiObjectActiveUserShortSchema as aG, valiInputInactiveUserSchema as aH, valiObjectInactiveUserSchema as aI, valiObjectActiveUserSchema as aJ, valiObjectUserShortSchema as aK, valiObjectUserSchema as aL, type User as aM, type UserShort as aN, type M1ApiResponseHook as aO, M1 as aP, type ResponseInventoryGetWithUserAndEquippedArray as aa, valiResponseInventoryGetWithUserAndEquippedTreeSchema as ab, type ResponseInventoryGetWithUserAndEquippedTree as ac, valiResponseInventoryGetLegacyWithEquippedArraySchema as ad, type ResponseInventoryGetLegacyWithEquippedArray as ae, valiResponseInventoryGetLegacyWithEquippedTreeSchema as af, type ResponseInventoryGetLegacyWithEquippedTree as ag, valiResponseInventoryGetLegacyWithUserAndEquippedArraySchema as ah, type ResponseInventoryGetLegacyWithUserAndEquippedArray as ai, valiResponseInventoryGetLegacyWithUserAndEquippedTreeSchema as aj, type ResponseInventoryGetLegacyWithUserAndEquippedTree as ak, type ResponseInventoryGet as al, valiObjectItemVariantSchema as am, type ItemVariant as an, valiObjectThingPrototypeSchema as ao, type ThingPrototype as ap, valiObjectThingSchema as aq, type Thing as ar, valiObjectItemProtoSchema as as, type ItemProto as at, type ItemShort as au, valiObjectItemSchema as av, type Item as aw, valiObjectItemProtoLegacySchema as ax, valiObjectTradeIdSchema as ay, type ObjectTradeId as az, M1ApiBots as b, M1ApiData as c, M1ApiFriends as d, M1ApiGchat as e, M1ApiIm as f, M1ApiInventory as g, M1ApiOauth as h, M1ApiTrades as i, M1ApiUsers as j, type CallMethodResponse as k, valiResponseTotpSessionTokenSchema as l, valiResponseFriendsGetBaseSchema as m, type ResponseFriendsGetBase as n, valiResponseFriendsGetWithUserSchema as o, type ResponseFriendsGetWithUser as p, valiResponseFriendsGetShortSchema as q, type ResponseFriendsGetShort as r, valiResponseFriendsGetShortWithUserSchema as s, type ResponseFriendsGetShortWithUser as t, type ResponseFriendsGet as u, valiObjectSessionSchema as v, valiResponseFriendsGetRequestsSchema as w, type ResponseFriendsGetRequests as x, valiResponseFriendsGetRequestsShortSchema as y, type ResponseFriendsGetRequestsShort as z };
