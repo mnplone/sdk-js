@@ -20,13 +20,13 @@
 		"valibot": "^1.1.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.6",
-		"@kirick/lint": "github:kirick-ts/lint#0c378cae6a1153061773118bf411a173b46fba3d",
+		"@biomejs/biome": "2.3.11",
+		"@kirick/lint": "0.2.13",
 		"@types/bun": "1.2.23",
 		"@types/node": "^22.2",
-		"eslint": "9.37.0",
+		"eslint": "9.38.0",
 		"otplib": "^12.0.1",
-		"oxlint": "1.23.0",
+		"oxlint": "1.39.0",
 		"publint": "^0.3.12",
 		"tsdown": "0.12.8",
 		"tsup": "8.5.0",
