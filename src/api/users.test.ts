@@ -15,6 +15,13 @@ describe('users.get', () => {
 			}
 		});
 
+		test('empty params', async () => {
+			const response = await sdk.users.get();
+
+			expect(response.request.data.user_ids).toBeUndefined();
+			expect(response.data.user_id).toBeTypeOf('number');
+		});
+
 		test('multiple users', async () => {
 			const response = await sdk.users.get([1, 2]);
 

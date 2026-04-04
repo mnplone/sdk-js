@@ -120,7 +120,7 @@ export class M1ApiUsers extends M1ApiBase {
 			data.type = 'short';
 		}
 
-		data.user_ids = user_ids.join(',');
+		data.user_ids = user_ids.length > 0 ? user_ids.join(',') : undefined;
 
 		return this.baseClient.callMethod({
 			http_method: 'GET',
